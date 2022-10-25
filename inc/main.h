@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/24 16:57:18 by mpignet          ###   ########.fr       */
+/*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
+/*   Updated: 2022/10/25 16:18:50 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef MAIN_H
+# define MAIN_H
 
-void	ft_env(char **envp)
-{
-	int	i;
+# include "../libft/inc/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-	i = -1;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
-}
+typedef struct s_lst {
+	
+	char	*cmd_name;
+	char	**args;
+}		t_lst;
+
+int		ft_echo(t_lst *cmd);
+int		ft_cd(t_lst *cmd);
+int		ft_pwd(char **envp);
+void	ft_env(char **envp);
+
+#endif

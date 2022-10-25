@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/21 17:29:48 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:19:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../inc/main.h"
 
 /* Echo builtin :
 	1 - checks if flag "-n" is present

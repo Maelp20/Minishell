@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/24 16:59:59 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:45:13 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../inc/main.h"
 
 char	*ft_strjoin_spec(char *s1, char *s2)
 {
@@ -45,12 +45,15 @@ int main(int ac, char **av, char **envp)
 	int		i = 0;
 	t_lst cmd;
 
-	cmd.args = malloc (sizeof(char **) * ac - 1);
-	cmd.cmd_name = av[1];
-	while (i < (ac - 2))
+	if (ac > 1)
 	{
-		cmd.args[i] = ft_strjoin_spec(cmd.args[i], av[i + 1]);
-		i++;
+		cmd.args = malloc (sizeof(char **) * ac - 1);
+		cmd.cmd_name = av[1];
+		while (i < (ac - 1))
+		{
+			cmd.args[i] = ft_strjoin_spec(cmd.args[i], av[i + 1]);
+			i++;
+		}	
 	}
 	// ft_echo(&cmd);
 	// ft_cd(&cmd);

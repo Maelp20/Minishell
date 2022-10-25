@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/24 16:51:48 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:42:44 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../inc/main.h"
 
 /* Pwd builtin :
 	Before using getcwd, pwd looks into env to see if a PWD path is set. If it is, it returns it.
@@ -21,6 +21,8 @@ char *seek_pwd_in_env(char **envp)
 	int		i;
 
 	i = 0;
+	if (!envp)
+		return (NULL);
 	while (envp[i])
 	{
 		pwd_line = ft_strnstr(envp[i], "PWD=", 4);
@@ -36,19 +38,19 @@ char *seek_pwd_in_env(char **envp)
 	return (pwd_line);
 }
 
-void	ft_pwd(char **envp)
+int	ft_pwd(char **envp)
 {
 	char	*path;
 	
 	path = seek_pwd_in_env(envp);
 	if (!path)
 	{
-		path = malloc (sizeof(char) * FILENAME_MAX);
+		path = getcwd(NULL, 0);
 		if (!path)
-			return ;
-		path = getcwd(path, FILENAME_MAX);
+			return (perror("getcwd"), 1);
 	}
 	printf("%s\n", path);
+	return (free(path), 0);
 }
 
 /* pour EXIT builtin :
