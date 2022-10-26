@@ -37,6 +37,26 @@ void	parse_env(char *line, t_envp *env)
 	printf("%s\n%s\n", env->var[0], env->var[1]);
 }
 
+t_envp	*lstnew(char **content)
+{
+	t_envp	*dest;
+
+	dest = malloc(sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	dest->var = content;
+	dest->var[0]= ft_strjoin(dest->var[0], "=");
+	dest->next = NULL;
+	return (dest);
+}
+
+void	lstadd_back(t_envp **lst, t_envp *new)
+{
+	if (*lst == ((void *)0))
+		*lst = new;
+	else
+		lstadd_back(&((*lst)->next), new);
+}
 void	get_env(char **envi, t_envp *envp)
 {
 	int i;
@@ -44,12 +64,12 @@ void	get_env(char **envi, t_envp *envp)
 	i = -1;
 	while (envi[++i])
 	{
-		ft_lstadd_back(&envp ,ft_lstnew(ft_split(envi[i], '=')));
+		lstadd_back(&envp ,lstnew(ft_split(envi[i], '=')));
 		//envp->var[0] = ft_strjoin(envp->var[0], "=");
 	}
 	while(envp)
 	{
-		printf("%s %s\n", envp->var[0],envp->var[1] );
+		printf("%s\n %s\n", envp->var[0],envp->var[1] );
 		envp = envp->next;
 	}
 
