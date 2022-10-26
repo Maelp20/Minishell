@@ -2,33 +2,6 @@
 #include "../libft/libft.h"
 
 
-// char **parse_env(char *line)
-// {
-// 	char **str;
-// 	int lim; 
-// 	int i;
-// 	int j;
-
-// 	lim = ft_strlen(line) - ft_strlen(ft_strchr(line, '=')) +1;
-// 	printf("%d\n", lim);
-// 	j = -1;
-// 	str = malloc(sizeof(char *) * 2);
-// 	while (++j < 2)
-// 	{
-// 		i = -1;
-// 		str[j] = malloc(sizeof(char) * (lim +1));
-// 		while (++i < lim)
-// 		{
-// 			str[j][i] = line[i];
-// 		}
-// 		printf("%s\n", str[j]);
-// 		free(str[j]);		
-// 	}
-// 	free(str);
-// 	return (NULL);
-// }
-
-
 void	parse_env(char *line, t_envp *env)
 {
 	
