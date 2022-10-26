@@ -6,15 +6,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-typedef struct s_env
+typedef struct s_envp
 {
-	char 	**env;
-	struct	s_env *next;
-}	t_env;
+	char 	**var;
+	struct	s_envp *next;
+}	t_envp;
 
 typedef struct s_data
 {
-	t_env	envp;
+	t_envp	envp;
 	char	*path;
 	char	*cmd;
 	struct s_data *prev;

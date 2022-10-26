@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(int))
+void	ft_lstdelone(t_list *lst, void (*del)(char**))
 {
 	if (!del)
 		return ;
