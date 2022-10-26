@@ -1,48 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/25 18:23:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/26 16:32:25 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/main.h"
+#include "../inc/exec.h"
 
-char *seek_var_in_env(char **envp, char *var)
+int	ft_unset(t_cmd *cmd, t_envp *envp)
 {
-	char	*var_line;
-	char	*needle;
 	int		i;
-
+	
 	i = 0;
-	needle = ft_strjoin(var, "=");
-	if (!needle || !envp)
+	if (!envp)
 		return (NULL);
-	while (envp[i])
+	while (envp->var)
 	{
-		var_line = ft_strnstr(envp[i], needle, 4);
-		if (var_line)
-		{
-			var_line = ft_substr(envp[i], 4, ft_strlen(envp[i]));
-			if (!var_line)
-				return (perror("Malloc"), NULL);
+		if (ft_strnstr(envp->var[0], cmd->args[1], ft_strlen(cmd->args[1])))
 			break ;
-		}
-		i++;
+		envp = envp->next;
 	}
-	return (var_line);
-}
-
-int	ft_unset(t_lst *cmd, char **envp)
-{
-	char	*line;
-
-	line = seek_var_in_env(envp, cmd->args[1]);
-	if (!line)
-		return (1);
-	// need to modify env next... use export ?
+	free(envp->var[0]);
+	free(envp->var[1]);
 }

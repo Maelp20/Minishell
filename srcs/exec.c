@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/25 16:45:13 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/26 15:33:16 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/main.h"
+#include "../inc/exec.h"
 
 char	*ft_strjoin_spec(char *s1, char *s2)
 {
@@ -43,7 +43,7 @@ char	*ft_strjoin_spec(char *s1, char *s2)
 int main(int ac, char **av, char **envp)
 {
 	int		i = 0;
-	t_lst cmd;
+	t_cmd cmd;
 
 	if (ac > 1)
 	{

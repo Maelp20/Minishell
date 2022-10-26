@@ -6,22 +6,24 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/10/25 16:26:07 by mpignet          ###   ########.fr        #
+#    Updated: 2022/10/26 16:33:29 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	= \
-			main.c\
-			ft_cd.c\
-			ft_echo.c\
-			ft_pwd.c\
-			ft_env.c\
+			exec.c\
+			builtin_cd.c\
+			builtin_echo.c\
+			builtin_pwd.c\
+			builtin_env.c\
+			builtin_exit.c\
+			ft_exec_utils.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
 OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
-INC			= inc/main.h
+INC			= inc/exec.h
 
 # /* ~~~~~~~ INCLUDING LIBFT ~~~~~~~ */
 LIBFT_DIR = ./libft

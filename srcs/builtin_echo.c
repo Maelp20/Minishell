@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/25 16:19:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:38:49 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/main.h"
+#include "../inc/exec.h"
 
 /* Echo builtin :
 	1 - checks if flag "-n" is present
@@ -35,7 +35,7 @@ int	is_valid_flag(char *str)
 	return (0);
 }
 
-int	ft_echo(t_lst *cmd)
+int	ft_echo(t_cmd *cmd)
 {
 	int	i;
 	int	flag;

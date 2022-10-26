@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/25 16:30:54 by mpignet          ###   ########.fr       */
+/*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
+/*   Updated: 2022/10/26 15:59:28 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/main.h"
+#include "../inc/exec.h"
 
-/* Cd builtin :
-	Using chdir to change directory... could it be that simple ?
-	DOUBT
-	ATTENTION : CD changes env in order to redefine the current directory (line "PWD=" in env);
-		Don't forget to add "OLD PWD=" in env after the change.
-*/
-int	ft_cd(t_lst *cmd)
+void	ft_env(t_envp *envp)
 {
-	int	i;
-
-	// printf("%s\n", getcwd(NULL, 0));
-	i = chdir(cmd->args[1]);
-	// printf("%s\n", getcwd(NULL, 0));
-	return (i);
+	while (envp->var)
+	{
+		printf("%s", envp->var[0]);
+		printf("%s\n", envp->var[1]);
+		envp = envp->next;
+	}
 }
