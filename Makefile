@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 19:41:43 by yanthoma          #+#    #+#              #
-#    Updated: 2022/10/26 14:46:39 by yanthoma         ###   ########.fr        #
+#    Updated: 2022/10/29 15:13:58 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RM			= rm -rf
 #               SOURCES              #
 # ################################## #
 C_DIR		= srcs
-C_FILES		=	main.c \
+C_FILES		=	get_env.c get_path.c main.c \
 
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 
@@ -56,7 +56,7 @@ LIBFT		= ./libft/libft.a
 all:		$(NAME)
 
 $(NAME):	$(O_DIR) $(LIBFT) $(OBJS)
-			$(CC) $(CFLAGS) $(MFLAG) $(OBJS) $(LIBFT) -o $@
+			$(CC) $(CFLAGS)  $(OBJS) $(MFLAG) $(LIBFT) -o $@
 
 $(O_DIR)/%.o: $(C_DIR)/%.c
 			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
