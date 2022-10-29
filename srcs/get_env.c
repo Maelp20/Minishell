@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/10/28 12:51:02 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/10/29 15:50:34 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	get_env(char **envi, t_data *data)
 {
 	int i;
 
+	data->envp = NULL;
 	i = -1;
 	while (envi[++i])
 		lstadd_back_env(&data->envp ,lstnew_env(ft_split(envi[i], '=')));

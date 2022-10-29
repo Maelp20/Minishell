@@ -9,7 +9,7 @@ int main(int ac, char **av, char **env)
 	int i = 0;
 	t_data *data;
 
-	data = malloc(sizeof(data));
+	data = malloc(sizeof(t_data));
 	(void)av;
 	(void)ac;
 	
