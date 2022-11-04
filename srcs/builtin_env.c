@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 15:59:28 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/04 13:55:36 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_env(t_envp *envp)
 {
+	if (!envp)
+		return ;
 	while (envp->var)
 	{
 		printf("%s", envp->var[0]);

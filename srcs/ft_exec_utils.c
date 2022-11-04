@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 16:36:29 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:58:25 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,22 @@ char	*seek_var_in_env(t_envp *envp, char *var)
 		envp = envp->next;
 	}
 	return (var_line);
+}
+
+char *seek_pwd_in_env(t_envp *envp)
+{
+	char	*pwd_line;
+
+	if (!envp)
+		return (NULL);
+	while (envp->var)
+	{
+		pwd_line = ft_strnstr(envp->var[0], "PWD=", 4);
+		if (pwd_line)
+			break ;
+		envp=envp->next;
+	}
+	if (!pwd_line)
+		return (NULL);
+	return (envp->var[1]);
 }

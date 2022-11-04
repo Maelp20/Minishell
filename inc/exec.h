@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 16:38:21 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:58:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ t_envp	*ft_envpnew(char *var, char *value);
 t_envp	*ft_envplast(t_envp *envp);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
 char	*seek_var_in_env(t_envp *envp, char *var);
+char 	*seek_pwd_in_env(t_envp *envp);
 
 #endif
