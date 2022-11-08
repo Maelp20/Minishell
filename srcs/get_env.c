@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/08 14:38:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:41:55 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_envp	*lstnew_env(char **content)
 
 void	lstadd_back_env(t_envp **lst, t_envp *new)
 {
-	t_env *last = ft_last(lst);
+	//t_env *last = ft_last(lst);
 	
 	if (*lst == ((void *)0))
 		*lst = new;

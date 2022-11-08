@@ -26,6 +26,7 @@ typedef struct s_data
 
 void	init_struct(t_data *data);
 void	init_args(t_data *data, char *arg);
+void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
 

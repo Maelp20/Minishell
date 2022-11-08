@@ -43,18 +43,41 @@ void	destroy_struct(t_data *data)
 }
 
 
+t_data	*lstnew_args(char *content)
+{
+	t_data  *dest;
+
+	dest = malloc(sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	dest->cmd = content;
+	dest->next = NULL;
+	return (dest);
+}
+
+void	lstadd_back_args(t_data **lst, t_data *new)
+{
+	//t_env *last = ft_last(lst);
+	
+	if (*lst == ((void *)0))
+		*lst = new;
+	else
+		lstadd_back_args(&((*lst)->next), new);
+		//lstadd_back_env(&((*lst)->prev), last);
+}
+
 void	init_args(t_data *data, char *arg)
 {
-	char 	**tmp;
-	int		i;
 
+	int i;
+	char **tmp;
+	
+	data = NULL;
 	i = 0;
-	tmp = ft_split(arg,' ');
+	tmp = ft_split(arg, ' ');
 	while (tmp[i])
 	{
-		data->cmd = strdup(tmp[i]);
-		data = data->next;
+		lstadd_back_args(&data ,lstnew_args(tmp[i]));
 		i++;
 	}
-	free_array(tmp);
 }
