@@ -14,23 +14,24 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	
 	get_env(env, data);
-	// while(data->envp)
-	// {
-	// 	printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
-	// 	data->envp = data->envp->next;
-	// }
 	check_access(data);
 	i = 0;
-	while(data->path[i])
-	{
-		printf("%s\n", data->path[i]);
-		i++;
-	}
 	while (ac > 0)
 	{
 		input = readline("Minishell>");
 		if (input && *input)
+		{
+			
 			add_history(input);
+			init_args(data, input);
+			while(data)
+			{
+				printf("%s success\n", data->cmd);
+				data = data->next;
+			}
+			//is_in_quote(input);
+
+		}
 		printf("%s\n",input);
 		i++;
 	}

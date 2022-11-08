@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 19:41:43 by yanthoma          #+#    #+#              #
-#    Updated: 2022/10/29 15:13:58 by yanthoma         ###   ########.fr        #
+#    Updated: 2022/11/03 13:46:55 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RM			= rm -rf
 #               SOURCES              #
 # ################################## #
 C_DIR		= srcs
-C_FILES		=	get_env.c get_path.c main.c \
+C_FILES		= get_env.c get_path.c lexer_spe_char.c init.c main.c \
 
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 

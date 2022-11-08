@@ -21,6 +21,12 @@ typedef struct s_data
 	struct s_data *next;
 }	t_data;
 
+
+
+
+void	init_struct(t_data *data);
+void	init_args(t_data *data, char *arg);
+void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
 
 t_envp	*lstnew_env(char **content);
@@ -29,4 +35,7 @@ void	get_env(char **envi, t_data *data);
 
 /*--------------------------------------PATH---------------------------------*/
 char	*check_access(t_data *data);
+
+/*---------------------------------------LEX---------------------------------*/
+int	is_in_quote(char *arg);
 #endif
