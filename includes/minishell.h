@@ -17,7 +17,6 @@ typedef struct s_data
 	char	*cmd;
 	char	**path;
 	t_envp	*envp;
-	struct s_data *prev;
 	struct s_data *next;
 }	t_data;
 
@@ -25,7 +24,7 @@ typedef struct s_data
 
 
 void	init_struct(t_data *data);
-void	init_args(t_data *data, char *arg);
+void	init_args(t_data **data, char *arg);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
@@ -35,7 +34,7 @@ void	lstadd_back_env(t_envp **lst, t_envp *new);
 void	get_env(char **envi, t_data *data);
 
 /*--------------------------------------PATH---------------------------------*/
-char	*check_access(t_data *data);
+char	*get_path(t_data *data);
 
 /*---------------------------------------LEX---------------------------------*/
 int	is_in_quote(char *arg);

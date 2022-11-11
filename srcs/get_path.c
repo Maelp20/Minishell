@@ -6,14 +6,14 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:18:12 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/08 15:04:02 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:43:00 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-char	*check_access(t_data *data)
+char	*get_path(t_data *data)
 {
 	int		i;
 	t_envp	*tmp;

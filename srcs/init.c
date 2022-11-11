@@ -29,12 +29,12 @@ void	destroy_struct(t_data *data)
 		if (data->cmd)
 			free(data->cmd);
 		if (data->path)
-			free_array(data->path);
+		 	free_array(data->path);
 		while (data->envp)
 		{
-			if (data->envp->var)
-				free_array(data->envp->var);
-			data->envp = data->envp->next;
+		 	if (data->envp->var)
+		 		free_array(data->envp->var);
+		 	data->envp = data->envp->next;
 		}
 		free(data->envp);
 		data = data->next;
@@ -50,7 +50,7 @@ t_data	*lstnew_args(char *content)
 	dest = malloc(sizeof(*dest));
 	if (!dest)
 		return (NULL);
-	dest->cmd = content;
+	dest->cmd = ft_strdup(content);
 	dest->next = NULL;
 	return (dest);
 }
@@ -59,25 +59,30 @@ void	lstadd_back_args(t_data **lst, t_data *new)
 {
 	//t_env *last = ft_last(lst);
 	
-	if (*lst == ((void *)0))
+	if (!(*lst))
 		*lst = new;
 	else
 		lstadd_back_args(&((*lst)->next), new);
 		//lstadd_back_env(&((*lst)->prev), last);
 }
 
-void	init_args(t_data *data, char *arg)
+void	init_args(t_data **data, char *arg)
 {
 
 	int i;
 	char **tmp;
 	
-	data = NULL;
+	*data = NULL;
 	i = 0;
 	tmp = ft_split(arg, ' ');
 	while (tmp[i])
 	{
-		lstadd_back_args(&data ,lstnew_args(tmp[i]));
+		lstadd_back_args(data ,lstnew_args(tmp[i]));
 		i++;
 	}
+	// while(data)
+	// {
+	//  	printf("%s\n", data->cmd);
+	//  	data = data->next;
+	// }
 }
