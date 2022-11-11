@@ -6,11 +6,32 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/04 16:58:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:00:51 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/exec.h"
+
+
+t_envp	*ft_envplast(t_envp *envp)
+{
+	if (!envp)
+		return (0);
+	while (envp->next)
+		envp = envp->next;
+	return (envp);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
 t_envp	*ft_envpnew(char *var, char *value)
 {
