@@ -14,13 +14,6 @@ void	free_array(char** array)
 	free(array);
 }
 
-void	init_struct(t_data *data)
-{
-	data = malloc(sizeof(t_data));
-	data->cmd = NULL;
-	data->path = NULL;
-	data->envp = NULL;
-}
 
 void	destroy_struct(t_data *data)
 {
@@ -42,6 +35,14 @@ void	destroy_struct(t_data *data)
 	free(data);
 }
 
+t_data	*ft_lstlast_arg(t_data *lst)
+{
+	if (!lst)
+		return (NULL);
+	if (lst->next == NULL)
+		return (lst);
+	return (ft_lstlast_arg(lst->next));
+}
 
 t_data	*lstnew_args(char *content)
 {
@@ -57,13 +58,10 @@ t_data	*lstnew_args(char *content)
 
 void	lstadd_back_args(t_data **lst, t_data *new)
 {
-	//t_env *last = ft_last(lst);
-	
 	if (!(*lst))
 		*lst = new;
 	else
 		lstadd_back_args(&((*lst)->next), new);
-		//lstadd_back_env(&((*lst)->prev), last);
 }
 
 void	init_args(t_data **data, char *arg)
@@ -80,9 +78,5 @@ void	init_args(t_data **data, char *arg)
 		lstadd_back_args(data ,lstnew_args(tmp[i]));
 		i++;
 	}
-	// while(data)
-	// {
-	//  	printf("%s\n", data->cmd);
-	//  	data = data->next;
-	// }
+	free_array(tmp);
 }

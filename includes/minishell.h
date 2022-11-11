@@ -17,6 +17,7 @@ typedef struct s_data
 	char	*cmd;
 	char	**path;
 	t_envp	*envp;
+	struct s_data *prev;
 	struct s_data *next;
 }	t_data;
 

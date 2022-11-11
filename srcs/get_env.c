@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/11 11:20:31 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:37:34 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ t_envp	*lstnew_env(char **content)
 
 void	lstadd_back_env(t_envp **lst, t_envp *new)
 {
-	//t_env *last = ft_last(lst);
-	
 	if (*lst == ((void *)0))
 		*lst = new;
 	else
 		lstadd_back_env(&((*lst)->next), new);
-		//lstadd_back_env(&((*lst)->prev), last);
 }
 
 void	get_env(char **envi, t_data *data)
@@ -45,9 +42,4 @@ void	get_env(char **envi, t_data *data)
 	i = -1;
 	while (envi[++i])
 		lstadd_back_env(&data->envp ,lstnew_env(ft_split(envi[i], '=')));
-	// while(envp)
-	// {
-	// 	printf("%s\n %s\n", envp->var[0],envp->var[1] );
-	// 	envp = envp->next;
-	// }
 }

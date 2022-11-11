@@ -10,10 +10,6 @@ int main(int ac, char **av, char **env)
 	t_data *data;
 
 	(void)av;
-	(void)ac;
-	
-	
-
 	i = 0;
 	while (ac > 0)
 	{
@@ -21,20 +17,21 @@ int main(int ac, char **av, char **env)
 		input = readline("Minishell>");
 		if (input && *input)
 		{
+			if (ft_strncmp(input,"exit",4)  == 0)
+				return(free(input),destroy_struct(data), exit(0), 0);
 			data = NULL;
 			add_history(input);
 			init_args(&data, input);
 			get_env(env, data);
 			get_path(data);
-			printf("test\n");
 			//is_in_quote(input);
-
 		}
 			while(data)
 			{
 	 			printf("%s\n", data->cmd);
 	 			data = data->next;
-			}	
+			}
+		free(input);
 		destroy_struct(data);
 		i++;
 	}

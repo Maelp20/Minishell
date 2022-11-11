@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char				*dest;
 	unsigned int		i;
@@ -37,7 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	dest[i] = 0;
-	return (dest);
+	return (free(s1), dest);
 }
 /*
 #include <stdio.h>
