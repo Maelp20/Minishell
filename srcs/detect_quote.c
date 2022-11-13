@@ -1,37 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_spe_char.c                                   :+:      :+:    :+:   */
+/*   detect_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/12 12:42:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:29:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-int	is_in_quote(char *arg)
+int is_quote(char c)
 {
-	int	i;
+	int i;
+
+	i = 0;
+	if ( c == '\"')
+		i++;
+	else if (c == '\'')
+		i++;
+	return (i);
+}
+
+
+int	is_in_quote(char *arg, int i)
+{
 	int	dbq;
 	int	q;
+	int l;
 	
-	i = 0;
+	l = i;
 	dbq = 0;
 	q = 0;
-	while (arg[i])
+	
+	while (arg[l] && dbq != 2 && q != 2)
 	{
-		if (arg[i] == '\"' && dbq == 0 && q < 2)
+		if (arg[l] == '\"' && dbq == 0 && q == 0)
 			dbq++;
-		else if (arg[i] == '\'' && dbq == 0)
+		else if (arg[l] == '\'' && dbq == 0 && q ==0 )
 			q++;
-		else if (arg[i] == '\"' && dbq == 1)
-			return (1);
-		else if (arg[i])
-		
+		else if (arg[l] == '\"' && dbq == 1)
+			dbq++;
+		else if (arg[l] == '\'' && q == 1)
+			q++;
+		printf(" char2 %c\n", arg[l]);
+		l++;
 	}
-	return(0);
+	printf("l = %d\n", l - i);
+	if (dbq == 2 || q == 2)
+		return(l - i);
+	else
+		return (0);
 }
+

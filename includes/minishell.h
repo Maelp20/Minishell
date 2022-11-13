@@ -38,5 +38,6 @@ void	get_env(char **envi, t_data *data);
 char	*get_path(t_data *data);
 
 /*---------------------------------------LEX---------------------------------*/
-int	is_in_quote(char *arg);
+int is_quote(char c);
+int	is_in_quote(char *arg, int i);
 #endif
