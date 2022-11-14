@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/13 17:49:18 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:23:12 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,4 @@ int	is_in_quote(char *arg, int i)
 		return(l - i);
 	else
 		return (0);
-}
-
-char *token_quote(char *arg, int l)
-{
-	char *dest;
-	
 }

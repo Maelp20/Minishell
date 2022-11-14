@@ -15,9 +15,8 @@ typedef struct s_envp
 typedef struct s_data
 {
 	char	*cmd;
-	char	**path;
+	char	**args;
 	t_envp	*envp;
-	struct s_data *prev;
 	struct s_data *next;
 }	t_data;
 
