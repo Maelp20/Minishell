@@ -20,6 +20,11 @@ typedef struct s_data
 	struct s_data *next;
 }	t_data;
 
+typedef	struct s_tok
+{
+	char* token;
+	struct s_tok *next;
+}	t_tok;
 
 
 

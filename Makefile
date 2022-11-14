@@ -1,87 +1,72 @@
+
+
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
+#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/06 19:41:43 by yanthoma          #+#    #+#              #
-#    Updated: 2022/11/13 11:08:14 by yanthoma         ###   ########.fr        #
+#    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
+#    Updated: 2022/11/14 15:30:55 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# /* ~~~~~~ SOURCES ~~~~~~ */
+SRCS	= \
+			exec.c\
+			builtin_cd.c\
+			builtin_echo.c\
+			builtin_pwd.c\
+			builtin_env.c\
+			builtin_exit.c\
+			ft_exec_utils.c\
+			get_env.c get_path.c detect_quote.c init.c main.c\
+
+SRCDIR		= srcs/
+OBJDIR 		= objs
+OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
+INC			= inc/exec.h
+CINC		= -I ./inc/
+
+# /* ~~~~~~~ INCLUDING LIBFT ~~~~~~~ */
+LIBFT_DIR = ./libft
+LIBFT = ${LIBFT_DIR}/libft.a
 
 
-NAME		= minishell
+# /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
-# ################################## #
-#               COMMAND              #
-# ################################## #
-CC			= cc
-MKDIR		= mkdir -p
-RM			= rm -rf
-
-
-# ################################## #
-#               SOURCES              #
-# ################################## #
-C_DIR		= srcs
-C_FILES		= get_env.c get_path.c detect_quote.c init.c main.c \
-
-SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
-
-# ################################## #
-#               OBJECTS              #
-# ################################## #
-O_DIR		= objs
-O_FILES		= $(C_FILES:.c=.o)
-OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
-
-# ################################## #
-#                FLAGS               #
-# ################################## #
-CFLAGS		= -Wall -Wextra -Werror -g
+CC		= gcc
+CFLAGS	= -g -Wall -Wextra
+LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG		= -lreadline
+NAME	= minishell
+RM		= rm -fd
 
-CINCLUDES	= -I ./includes	\
-			  -I ./libft
+all:		${NAME}
 
-LIBFT		= ./libft/libft.a
+${OBJDIR}/%.o : ${SRCDIR}%.c ${INC}
+				mkdir -p ${OBJDIR}
+				${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
+${LIBFT} :	
+			make -C ${LIBFT_DIR} --no-print-directory
 
-# ################################## #
-#                RULES               #
-# ################################## #
-
-all:		$(NAME)
-
-$(NAME):	$(O_DIR) $(LIBFT) $(OBJS)
-			$(CC) $(CFLAGS)  $(OBJS) $(MFLAG) $(LIBFT) -o $@
-
-$(O_DIR)/%.o: $(C_DIR)/%.c
-			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
-
-$(O_DIR):
-			$(MKDIR) $(O_DIR)
-
-# ################################## #
-#             DEPENDECIES...         #
-# ################################## #
-
-$(LIBFT):
-			@make -C ./libft
-
-# ################################## #
-#                CLEAN               #
-# ################################## #
+${NAME}:	${OBJS}	${LIBFT}
+			${CC} ${CFLAGS} ${OBJS} ${MFLAG} ${LFLAGS} -o ${NAME}
 
 clean:
-			@$(RM) $(O_DIR)
-			@make -C ./libft clean
-fclean:		clean
-			@$(RM) $(NAME)
-			@make -C ./libft fclean
+			${RM} ${OBJS} ${OBJDIR}
+			make clean -C ${LIBFT_DIR} --no-print-directory
 
-re:			fclean all
+fclean:		
+			${RM} ${OBJS} ${OBJDIR}
+			${RM} ${NAME}
+			make fclean -C ${LIBFT_DIR} --no-print-directory
 
-.PHONY: all check clean fclean re
+re:			fclean
+			make all
+
+.PHONY: 	all clean fclean re
+
+.SILENT:

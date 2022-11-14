@@ -14,7 +14,6 @@ void	free_array(char** array)
 	free(array);
 }
 
-
 void	destroy_struct(t_data *data)
 {
 	while (data)
