@@ -19,6 +19,7 @@ SRCS	= \
 			builtin_env.c\
 			builtin_exit.c\
 			ft_exec_utils.c\
+			get_env.c get_path.c detect_quote.c init.c main.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
@@ -36,6 +37,7 @@ LIBFT = ${LIBFT_DIR}/libft.a
 CC		= gcc
 CFLAGS	= -g -Wall -Wextra
 LFLAGS	= -L ${LIBFT_DIR} -lft
+MFLAG		= -lreadline
 NAME	= minishell
 RM		= rm -fd
 
@@ -49,7 +51,7 @@ ${LIBFT} :
 			make -C ${LIBFT_DIR} --no-print-directory
 
 ${NAME}:	${OBJS}	${LIBFT}
-			${CC} ${CFLAGS} ${OBJS} ${LFLAGS} -o ${NAME}
+			${CC} ${CFLAGS} ${OBJS} ${MFLAG} ${LFLAGS} -o ${NAME}
 
 clean:
 			${RM} ${OBJS} ${OBJDIR}
