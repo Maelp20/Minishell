@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/11 17:01:40 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:29:28 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,9 @@
 t_envp	*sort_envp(t_envp *envp)
 {
 	char	*buff;
-	t_envp	*begin;
-	t_envp	*last;
-	int		i;
+	t_envp	*first_node;
 
-	begin = envp;
-	last = ft_envplast(envp);
-	i = 0;
-	while (envp->next->next)
-	{
-		if (envp->var[0][0] < 'A' || envp->var[0][0] > 'Z')
-		{
-			
-		}
-	}
+	first_node = envp;
 	while (envp->next->next)
 	{
 		if ((ft_strcmp(envp->var[0], envp->next->var[0])))
@@ -36,12 +25,12 @@ t_envp	*sort_envp(t_envp *envp)
 			buff = envp->var[0];
 			envp->var[0] = envp->next->var[0];
 			envp->next->var[0] = buff;
-			envp = begin;
+			envp = first_node;
 		}
 		else
 			envp = envp->next;
 	}
-	envp = begin;
+	envp = first_node;
 	return (envp);
 }
 
@@ -62,7 +51,17 @@ void	ft_show_export(t_envp *envp)
 
 void	ft_export(t_cmd *cmd, t_envp *envp)
 {
+	t_envp	*new;
+	
+	new = malloc (sizeof(t_envp));
+	if (!new)
+		return ;
 	if (!cmd->args[1])
 		ft_show_export(envp);
 	else
+	{
+		new->var = ft_split(cmd->args, '=');
+		new->var[0] = ft_strjoin_spec(new->var[0], "=");
+		ft_envpadd_front(&envp, new);
+	}
 }

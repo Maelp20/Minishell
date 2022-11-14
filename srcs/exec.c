@@ -6,58 +6,48 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 15:33:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 16:39:44 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/exec.h"
 
-char	*ft_strjoin_spec(char *s1, char *s2)
+int	ft_data_size(t_data *data)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	int	nb;
 
-	if (!s1)
+	if (!data)
+		return (0);
+	nb = 0;
+	while (data)
 	{
-		s1 = malloc(sizeof(char));
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
+		data = data->next;
+		nb++;
 	}
-	if (!s2)
-		return (NULL);
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	j = 0;
-	while (s2[j])
-		dest[i++] = s2[j++];
-	dest[i] = '\0';
-	return (dest);
+	return (nb);
 }
 
-int main(int ac, char **av, char **envp)
+int exec(t_data *data)
 {
-	int		i = 0;
-	t_cmd cmd;
+	int	nb_cmds;
 
-	if (ac > 1)
+	nb_cmds = ft_data_size(data);
+	if (nb_cmds == 1 && data->is_builtin)
+		return ;//exec builtin
+	while (nb_cmds > 0)
 	{
-		cmd.args = malloc (sizeof(char **) * ac - 1);
-		cmd.cmd_name = av[1];
-		while (i < (ac - 1))
+		d.pids[d.child] = fork();
+		if (d.pids[d.child] == -1)
 		{
-			cmd.args[i] = ft_strjoin_spec(cmd.args[i], av[i + 1]);
-			i++;
-		}	
+			ft_close_fds(&d);
+			exit_error("Fork", &d);
+		}
+		else if (d.pids[d.child] == 0)
+			child(&d, av);
+		d.child++;
 	}
-	// ft_echo(&cmd);
-	// ft_cd(&cmd);
-	// ft_pwd(envp);
-	// ft_env(envp);
+	ft_close_pipes(data);
+	ft_free_close(data);
+	ft_wait(data);
 	return (0);
 }
