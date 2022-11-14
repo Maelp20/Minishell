@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/04 16:58:45 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:34:04 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
 /* Cd builtin :
 	If PWD= is set, We add "OLD PWD=" in env with the current "PWD=" value.;
@@ -58,11 +58,11 @@ void	update_pwd_env(t_envp *envp)
 	envp->var[1] = getcwd(NULL, 0);
 }
 
-int	ft_cd(t_cmd *cmd, t_envp *envp)
+int	ft_cd(t_data *cmd)
 {
 	int	i;
 
-	update_old_pwd_env(envp);
+	update_old_pwd_env(cmd->envp);
 	i = chdir(cmd->args[1]);
 	update_pwd_env(envp);
 	return (i);

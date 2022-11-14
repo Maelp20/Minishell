@@ -6,17 +6,17 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 14:59:51 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:38 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
 /* Pwd builtin :
 	Before using getcwd, pwd looks into env to see if a PWD path is set. If it is, it returns it.
 */
 
-int	ft_pwd(t_cmd *cmd, t_envp *envp)
+int	ft_pwd(t_data *cmd)
 {
 	char	*path;
 

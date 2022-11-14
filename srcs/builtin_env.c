@@ -6,13 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/04 13:55:36 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:25 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
-void	ft_env(t_envp *envp)
+void	ft_env(t_data *cmd)
 {
 	if (!envp)
 		return ;

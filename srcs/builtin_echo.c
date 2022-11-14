@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 11:38:49 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
 /* Echo builtin :
 	1 - checks if flag "-n" is present
@@ -35,7 +35,7 @@ int	is_valid_flag(char *str)
 	return (0);
 }
 
-int	ft_echo(t_cmd *cmd)
+int	ft_echo(t_data *cmd)
 {
 	int	i;
 	int	flag;

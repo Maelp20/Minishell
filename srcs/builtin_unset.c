@@ -6,13 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/04 15:16:53 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:43 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
-int	ft_unset(t_cmd *cmd, t_envp *envp)
+int	ft_unset(t_data *cmd)
 {
 	int		i;
 	int		found;

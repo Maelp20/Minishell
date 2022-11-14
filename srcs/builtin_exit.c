@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 15:29:32 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:29 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	ATTENTION : la valeur de retour sera entre 0 et 255. exit doit tout nettoyer (free et close).
  */
 
-void	ft_exit(t_cmd *cmd)
+void	ft_exit(t_data *cmd)
 {
 	int	code;
 	

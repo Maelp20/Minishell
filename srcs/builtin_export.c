@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 14:29:28 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:32:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
 t_envp	*sort_envp(t_envp *envp)
 {
@@ -49,7 +49,7 @@ void	ft_show_export(t_envp *envp)
 	}	
 }
 
-void	ft_export(t_cmd *cmd, t_envp *envp)
+void	ft_export(t_data *cmd)
 {
 	t_envp	*new;
 	
