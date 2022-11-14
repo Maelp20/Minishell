@@ -6,7 +6,7 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/10/26 16:33:29 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/14 15:30:55 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCDIR		= srcs/
 OBJDIR 		= objs
 OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
 INC			= inc/exec.h
+CINC		= -I ./inc/
 
 # /* ~~~~~~~ INCLUDING LIBFT ~~~~~~~ */
 LIBFT_DIR = ./libft
@@ -42,7 +43,7 @@ all:		${NAME}
 
 ${OBJDIR}/%.o : ${SRCDIR}%.c ${INC}
 				mkdir -p ${OBJDIR}
-				${CC} ${CFLAGS} -c $< -o $@
+				${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
 ${LIBFT} :	
 			make -C ${LIBFT_DIR} --no-print-directory

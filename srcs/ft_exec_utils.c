@@ -6,20 +6,38 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/11 17:00:51 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:09:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/exec.h"
 
-
-t_envp	*ft_envplast(t_envp *envp)
+char	*ft_strjoin_spec(char *s1, char *s2)
 {
-	if (!envp)
-		return (0);
-	while (envp->next)
-		envp = envp->next;
-	return (envp);
+	int		i;
+	int		j;
+	char	*dest;
+
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char));
+		if (!s1)
+			return (NULL);
+		s1[0] = '\0';
+	}
+	if (!s2)
+		return (NULL);
+	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		dest[i] = s1[i];
+	j = 0;
+	while (s2[j])
+		dest[i++] = s2[j++];
+	dest[i] = '\0';
+	return (dest);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -53,6 +71,14 @@ t_envp	*ft_envplast(t_envp *envp)
 	while (envp->next)
 		envp = envp->next;
 	return (envp);
+}
+
+void	ft_envpadd_front(t_envp **envp, t_envp *new)
+{
+	if (!envp || !new)
+		return ;
+	new->next = *envp;
+	*envp = new;
 }
 
 void	ft_envpadd_back(t_envp **envp, t_envp *new)
