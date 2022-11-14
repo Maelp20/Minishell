@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
+/*   Updated: 2022/11/14 14:59:51 by mpignet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/exec.h"
+
+/* Pwd builtin :
+	Before using getcwd, pwd looks into env to see if a PWD path is set. If it is, it returns it.
+*/
+
+int	ft_pwd(t_cmd *cmd, t_envp *envp)
+{
+	char	*path;
+
+	if (cmd->args[1] && cmd->args[1][0] == '-')
+		return (ft_putstr_fd("minishell: pwd: invalid option", 2) , 1);
+	path = seek_pwd_in_env(envp);
+	if (!path)
+	{
+		path = getcwd(NULL, 0);
+		if (!path)
+			return (perror("getcwd"), 1);
+	}
+	printf("%s\n", path);
+	return (free(path), 0);
+}

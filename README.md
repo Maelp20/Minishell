@@ -60,3 +60,5 @@ Le reste (isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr, tcgetattr, tgetent
 Liens utiles :
 
 https://github.com/vportens/minishell
+
+https://brennan.io/2015/01/16/write-a-shell-in-c/
