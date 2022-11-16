@@ -6,11 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 11:38:49 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:04:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/exec.h"
+#include "exec.h"
 
 /* Echo builtin :
 	1 - checks if flag "-n" is present
@@ -35,21 +35,21 @@ int	is_valid_flag(char *str)
 	return (0);
 }
 
-int	ft_echo(t_cmd *cmd)
+int	ft_echo(t_data *data)
 {
 	int	i;
 	int	flag;
 
 	i = 1;
 	flag = 0;
-	while (cmd->args[i] && is_valid_flag(cmd->args[i]))
+	while (data->args[i] && is_valid_flag(data->args[i]))
 	{
 		flag = 1;
 		i++;
 	}
-	while (cmd->args[i + 1])
-		printf("%s ", cmd->args[i++]);
-	printf("%s", cmd->args[i]);
+	while (data->args[i + 1])
+		printf("%s ", data->args[i++]);
+	printf("%s", data->args[i]);
 	if (flag == 0)
 		printf("\n");
 	return (0);
