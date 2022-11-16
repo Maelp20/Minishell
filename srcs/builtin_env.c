@@ -6,20 +6,20 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:32:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:03:41 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_env(t_data *cmd)
+void	ft_env(t_data *data)
 {
-	if (!envp)
+	if (!data->envp)
 		return ;
-	while (envp->var)
+	while (data->envp->var)
 	{
-		printf("%s", envp->var[0]);
-		printf("%s\n", envp->var[1]);
-		envp = envp->next;
+		printf("%s", data->envp->var[0]);
+		printf("%s\n", data->envp->var[1]);
+		data->envp = data->envp->next;
 	}
 }

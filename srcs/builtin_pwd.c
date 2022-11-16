@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:32:38 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:04:58 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 	Before using getcwd, pwd looks into env to see if a PWD path is set. If it is, it returns it.
 */
 
-int	ft_pwd(t_data *cmd)
+int	ft_pwd(t_data *data)
 {
 	char	*path;
 
-	if (cmd->args[1] && cmd->args[1][0] == '-')
+	if (data->args[1] && data->args[1][0] == '-')
 		return (ft_putstr_fd("minishell: pwd: invalid option", 2) , 1);
-	path = seek_pwd_in_env(envp);
+	path = seek_pwd_in_env(data->envp);
 	if (!path)
 	{
 		path = getcwd(NULL, 0);

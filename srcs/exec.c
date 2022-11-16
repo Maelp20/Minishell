@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:28:23 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 17:50:30 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,27 @@ int	ft_data_size(t_data *data)
 	nb = 0;
 	while (data)
 	{
-		data = data->next;
 		nb++;
+		data = data->next;
 	}
 	return (nb);
 }
 
 int exec(t_data *data)
 {
-	int	nb_cmds;
-
-	nb_cmds = ft_data_size(data);
-	if (nb_cmds == 1 && data->is_builtin)
+	if (ft_data_size(data) == 1 && data->is_builtin)
 		return ;//exec builtin
-	while (nb_cmds > 0)
+	while (data)
 	{
 		d.pids[d.child] = fork();
 		if (d.pids[d.child] == -1)
 		{
-			ft_close_fds(&d);
-			exit_error("Fork", &d);
+			ft_close_fds(&data);
+			exit_error("Fork", &data);
 		}
 		else if (d.pids[d.child] == 0)
-			child(&d, av);
-		d.child++;
+			child(&data, data->args);
+		data = data->next;
 	}
 	ft_close_pipes(data);
 	ft_free_close(data);

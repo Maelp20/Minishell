@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:34:04 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:03:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ void	update_pwd_env(t_envp *envp)
 	envp->var[1] = getcwd(NULL, 0);
 }
 
-int	ft_cd(t_data *cmd)
+int	ft_cd(t_data *data)
 {
 	int	i;
 
-	update_old_pwd_env(cmd->envp);
-	i = chdir(cmd->args[1]);
-	update_pwd_env(envp);
+	update_old_pwd_env(data->envp);
+	i = chdir(data->args[1]);
+	update_pwd_env(data->envp);
 	return (i);
 }

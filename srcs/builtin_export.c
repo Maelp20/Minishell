@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:32:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:04:39 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ void	ft_show_export(t_envp *envp)
 	}	
 }
 
-void	ft_export(t_data *cmd)
+void	ft_export(t_data *data)
 {
 	t_envp	*new;
 	
 	new = malloc (sizeof(t_envp));
 	if (!new)
 		return ;
-	if (!cmd->args[1])
-		ft_show_export(envp);
+	if (!data->args[1])
+		ft_show_export(data->envp);
 	else
 	{
-		new->var = ft_split(cmd->args, '=');
+		new->var = ft_split(data->args, '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
-		ft_envpadd_front(&envp, new);
+		ft_envpadd_front(&(data->envp), new);
 	}
 }
