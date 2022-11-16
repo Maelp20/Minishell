@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 17:50:30 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/16 18:15:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int exec(t_data *data)
 		return ;//exec builtin
 	while (data)
 	{
-		d.pids[d.child] = fork();
-		if (d.pids[d.child] == -1)
+		data->pid = fork();
+		if (data->pid == -1)
 		{
 			ft_close_fds(&data);
 			exit_error("Fork", &data);
 		}
-		else if (d.pids[d.child] == 0)
+		else if (data->pid == 0)
 			child(&data, data->args);
 		data = data->next;
 	}
