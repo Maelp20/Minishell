@@ -6,7 +6,7 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/14 15:30:55 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/16 16:21:17 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LIBFT = ${LIBFT_DIR}/libft.a
 CC		= gcc
 CFLAGS	= -g -Wall -Wextra
 LFLAGS	= -L ${LIBFT_DIR} -lft
-MFLAG		= -lreadline
+MFLAG	= -lreadline
 NAME	= minishell
 RM		= rm -fd
 

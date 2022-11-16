@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:06:47 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:54:17 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,14 @@ typedef struct s_data
 	char	*cmd;
 	char	**args;
 	t_envp	*envp;
-	struct s_data *next;
+	pid_t	pid;
+	int		is_builtin;
+	int		in_fd;
+	int		out_fd;
+	int		in_pipe;
+	int		out_pipe;
+	int		is_append;
+	struct s_data	*next;
 }	t_data;
 
 /* typedef struct s_exp {
@@ -47,11 +54,13 @@ typedef struct s_data
 	struct s_exp *next;
 }		t_exp; */
 
-int		ft_echo(t_cmd *cmd);
-int		ft_cd(t_cmd *cmd, t_envp *envp);
-int		ft_pwd(t_cmd *cmd, t_envp *envp);
-void	ft_env(t_envp *envp);
-int		ft_unset(t_cmd *cmd, t_envp *envp);
+int		ft_echo(t_data *data);
+int		ft_cd(t_data *data);
+int		ft_pwd(t_data *data);
+void	ft_env(t_data *data);
+int		ft_unset(t_data *data);
+void	ft_export(t_data *data);
+void	ft_exit(t_data *data);
 
 t_envp	*ft_envpnew(char *var, char *value);
 t_envp	*ft_envplast(t_envp *envp);
