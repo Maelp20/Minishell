@@ -6,7 +6,7 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/16 16:21:17 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/17 16:27:56 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,13 @@ SRCS	= \
 			builtin_pwd.c\
 			builtin_env.c\
 			builtin_exit.c\
+			builtin_unset.c\
+			builtin_export.c\
 			ft_exec_utils.c\
-			get_env.c get_path.c detect_quote.c init.c main.c\
+			get_env.c\
+			get_path.c\
+			detect_quote.c\
+			init.c main.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs

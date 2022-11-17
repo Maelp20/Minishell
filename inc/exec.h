@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 17:54:17 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/17 16:29:59 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef	struct s_tok
 {
@@ -26,33 +26,44 @@ typedef	struct s_tok
 	struct s_tok *next;
 }	t_tok;
 
-typedef struct s_envp {
-	
+typedef struct s_pipes
+{	
+	int	pipe1[2];
+	int	pipe2[2];
+}		t_pipes;
+
+typedef struct s_envp 
+{	
 	char	**var;
 	struct s_envp *next;
 }		t_envp;
 
+/*
+Data struct changes :
+- I put *cmd_path back in the struct but I'm still not sure if we can check for access during parsing,
+or if I must do it for each cmd right before executing;
+- If there are pipes before and/or after the command, we fill the "fds" t_pipes struct using the pipe function,
+ and put 0 or 1 in "in_pipe" and "out_pipe" just to say "there is a pipe";
+- If there is a file to read from, I think we open it in "in_fd" / Same with a file to write to, we open it in "out_fd";
+ */
+
 typedef struct s_data
 {
-	char	*cmd;
-	char	**args;
-	t_envp	*envp;
-	pid_t	pid;
-	int		is_builtin;
-	int		in_fd;
-	int		out_fd;
-	int		in_pipe;
-	int		out_pipe;
-	int		is_append;
+	char			**args;
+	char			*cmd_path;
+	
+	t_envp			*envp;
+	t_pipes			*fds;
+	pid_t			pid;
+	
+	int				is_builtin;
+	int				in_fd;
+	int				out_fd;
+	int				in_pipe;
+	int				out_pipe;
+	int				is_append;
 	struct s_data	*next;
 }	t_data;
-
-/* typedef struct s_exp {
-	
-	int		index;
-	char	**var;
-	struct s_exp *next;
-}		t_exp; */
 
 int		ft_echo(t_data *data);
 int		ft_cd(t_data *data);
@@ -70,7 +81,7 @@ char	*seek_var_in_env(t_envp *envp, char *var);
 char 	*seek_pwd_in_env(t_envp *envp);
 
 int		ft_strcmp(const char *s1, const char *s2);
-
+int		ft_data_size(t_data *data);
 
 
 
