@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/17 16:34:19 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/17 17:42:46 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,24 @@ static void	redirect_fds(t_data *data)
 
 void	exec_builtin(t_data *data)
 {
-	
+	int	len;
+
+	len = ft_strlen(data->args[0]);
+	redirect_fds(data);
+	if (!ft_strncmp(data->args[0], "cd", len))
+		ft_cd(data);
+	else if (!ft_strncmp(data->args[0], "echo", len))
+		ft_echo(data);
+	else if (!ft_strncmp(data->args[0], "env", len))
+		ft_env(data);
+	else if (!ft_strncmp(data->args[0], "exit", len))
+		ft_exit(data);
+	else if (!ft_strncmp(data->args[0], "export", len))
+		ft_export(data);
+	else if (!ft_strncmp(data->args[0], "pwd", len))
+		ft_pwd(data);
+	else if (!ft_strncmp(data->args[0], "unset", len))
+		ft_unset(data);
 }
 
 static void	child(t_data *data)
@@ -73,6 +90,14 @@ static void	child(t_data *data)
 	}
 
 }
+
+/* 
+Special condition : if there is only one command and its a builtin, we need to execute it in the parent and not a child. 
+This is to reproduce bash behaviour, where a single builtin call can modify environment variables in parent for example.
+
+The rest of execution is pretty much like pipex except for the in and outs management, 
+since at all times it can be a file or a pipe.
+ */
 
 int exec(t_data *data)
 {
