@@ -6,11 +6,26 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:28:27 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/17 16:13:35 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	ft_data_size(t_data *data)
+{
+	int	nb;
+
+	if (!data)
+		return (0);
+	nb = 0;
+	while (data)
+	{
+		nb++;
+		data = data->next;
+	}
+	return (nb);
+}
 
 char	*ft_strjoin_spec(char *s1, char *s2)
 {
