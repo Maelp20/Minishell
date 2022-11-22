@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 15:51:06 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/22 19:24:23 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,27 @@ int main(int ac, char **av, char **env)
 		i++;
 	}
 }
+
+
+// MAIN DE TEST MAEL
+
+/* int main(int ac, char **av, char **envp)
+{
+	int		i = 0;
+	t_data	data;
+
+	if (ac > 1)
+	{
+		data.args = malloc (sizeof(char **) * ac - 1);
+		while (i < (ac - 1))
+		{
+			data.args[i] = ft_strjoin_spec(data.args[i], av[i + 1]);
+			i++;
+		}
+	}
+	ft_echo(&data);
+	// ft_cd(&data);
+	// ft_pwd(envp);
+	// ft_env(envp);
+	return (0);
+} */

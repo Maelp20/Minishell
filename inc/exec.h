@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/17 16:29:59 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:22:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 typedef	struct s_tok
 {
@@ -40,53 +41,38 @@ typedef struct s_envp
 
 /*
 Data struct changes :
-- I put *cmd_path back in the struct but I'm still not sure if we can check for access during parsing,
-or if I must do it for each cmd right before executing;
-- If there are pipes before and/or after the command, we fill the "fds" t_pipes struct using the pipe function,
- and put 0 or 1 in "in_pipe" and "out_pipe" just to say "there is a pipe";
-- If there is a file to read from, I think we open it in "in_fd" / Same with a file to write to, we open it in "out_fd";
+- I will check for access for each cmd right before executing, and put the correct path in *cmd_path;
+- If there are pipes before and/or after the command, in_pipe = 1 and/or out_pipe = 1.
+	I will pipe accordingly using the t_pipes fds struct;
+- If there is a file to read from or to, you must fill *infile and/or *outfile with their names.
+	I will open them in "in_fd" and/or "out_fd";
+- If there is a heredoc, put the limiter in *is_heredoc, I will create it during exec.
  */
 
 typedef struct s_data
 {
 	char			**args;
 	char			*cmd_path;
+	char			*is_heredoc;
+	char			*infile;
+	char			*outfile;
 	
 	t_envp			*envp;
 	t_pipes			*fds;
 	pid_t			pid;
 	
 	int				is_builtin;
+	int				is_append;
 	int				in_fd;
 	int				out_fd;
 	int				in_pipe;
 	int				out_pipe;
-	int				is_append;
 	struct s_data	*next;
 }	t_data;
 
-int		ft_echo(t_data *data);
-int		ft_cd(t_data *data);
-int		ft_pwd(t_data *data);
-void	ft_env(t_data *data);
-int		ft_unset(t_data *data);
-void	ft_export(t_data *data);
-void	ft_exit(t_data *data);
+			/*---------------------PARSING----------------------*/
 
-t_envp	*ft_envpnew(char *var, char *value);
-t_envp	*ft_envplast(t_envp *envp);
-void	ft_envpadd_front(t_envp **envp, t_envp *new);
-void	ft_envpadd_back(t_envp **envp, t_envp *new);
-char	*seek_var_in_env(t_envp *envp, char *var);
-char 	*seek_pwd_in_env(t_envp *envp);
-
-int		ft_strcmp(const char *s1, const char *s2);
-int		ft_data_size(t_data *data);
-
-
-
-
-
+/*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);
 void	init_args(t_data **data, char *arg);
 void	destroy_struct(t_data *data);
@@ -103,5 +89,34 @@ char	*get_path(t_data *data);
 /*---------------------------------------LEX---------------------------------*/
 int is_quote(char c);
 int	is_in_quote(char *arg, int i);
+
+
+			/*---------------------EXEC----------------------*/
+
+/*-------------------------------------BUILTINS-------------------------------*/
+
+int		ft_echo(t_data *data);
+int		ft_cd(t_data *data);
+int		ft_pwd(t_data *data);
+void	ft_env(t_data *data);
+int		ft_unset(t_data *data);
+void	ft_export(t_data *data);
+void	ft_exit(t_data *data);
+
+/*-------------------------------------UTILS----------------------------------*/
+
+t_envp	*ft_envpnew(char *var, char *value);
+t_envp	*ft_envplast(t_envp *envp);
+void	ft_envpadd_front(t_envp **envp, t_envp *new);
+void	ft_envpadd_back(t_envp **envp, t_envp *new);
+char	*seek_var_in_env(t_envp *envp, char *var);
+char 	*seek_pwd_in_env(t_envp *envp);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_data_size(t_data *data);
+
+/*---------------------------------OPEN/HEREDOC-------------------------------*/
+
+void	ft_open_infile(t_data *data);
+void	ft_open_outfile(t_data *data);
 
 #endif

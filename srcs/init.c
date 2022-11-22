@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:55 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:28:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/22 19:12:26 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	destroy_struct(t_data *data)
 {
 	while (data)
 	{
-		if (data->cmd)
-			free(data->cmd);
-		if (data->path)
-		 	free_array(data->path);
+		if(data->args)
+		 	free_array(data->args);
+		if (data->cmd_path)
+			free(data->cmd_path);
 		while (data->envp)
 		{
 		 	if (data->envp->var)
@@ -61,7 +61,7 @@ t_data	*lstnew_args(char *content)
 	dest = malloc(sizeof(*dest));
 	if (!dest)
 		return (NULL);
-	dest->cmd = ft_strdup(content);
+	dest->args = ft_strdup(content);
 	dest->next = NULL;
 	return (dest);
 }
