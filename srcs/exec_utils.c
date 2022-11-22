@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_utils.c                                    :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/17 16:13:35 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/22 19:16:57 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,33 @@ int	ft_data_size(t_data *data)
 	return (nb);
 }
 
-char	*ft_strjoin_spec(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*dest;
+// char	*ft_strjoin_spec(char *s1, char *s2)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*dest;
 
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char));
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
-	}
-	if (!s2)
-		return (NULL);
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	j = 0;
-	while (s2[j])
-		dest[i++] = s2[j++];
-	dest[i] = '\0';
-	return (dest);
-}
+// 	if (!s1)
+// 	{
+// 		s1 = malloc(sizeof(char));
+// 		if (!s1)
+// 			return (NULL);
+// 		s1[0] = '\0';
+// 	}
+// 	if (!s2)
+// 		return (NULL);
+// 	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+// 	if (!dest)
+// 		return (NULL);
+// 	i = -1;
+// 	while (s1[++i])
+// 		dest[i] = s1[i];
+// 	j = 0;
+// 	while (s2[j])
+// 		dest[i++] = s2[j++];
+// 	dest[i] = '\0';
+// 	return (dest);
+// }
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

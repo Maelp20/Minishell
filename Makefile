@@ -6,13 +6,15 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/17 16:27:56 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/22 19:08:36 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	= \
 			exec.c\
+			exec_open_files.c\
+			exec_utils.c\
 			builtin_cd.c\
 			builtin_echo.c\
 			builtin_pwd.c\
@@ -20,9 +22,7 @@ SRCS	= \
 			builtin_exit.c\
 			builtin_unset.c\
 			builtin_export.c\
-			ft_exec_utils.c\
 			get_env.c\
-			get_path.c\
 			detect_quote.c\
 			init.c main.c\
 
