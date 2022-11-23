@@ -6,7 +6,7 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/22 19:08:36 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/23 12:32:56 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS	= \
 			exec.c\
 			exec_open_files.c\
 			exec_utils.c\
+			exec_error_management.c\
 			builtin_cd.c\
 			builtin_echo.c\
 			builtin_pwd.c\
