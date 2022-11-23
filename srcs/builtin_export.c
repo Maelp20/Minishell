@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 16:04:39 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/23 14:02:28 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,25 @@ void	ft_show_export(t_envp *envp)
 
 void	ft_export(t_data *data)
 {
+	int		i;
 	t_envp	*new;
 	
+	i = 0;
 	new = malloc (sizeof(t_envp));
 	if (!new)
-		return ;
+		exit(EXIT_FAILURE);
 	if (!data->args[1])
+	{		
 		ft_show_export(data->envp);
-	else
+		exit(EXIT_SUCCESS);
+	}
+	while (data->args[++i])
 	{
-		new->var = ft_split(data->args, '=');
+		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
-		ft_envpadd_front(&(data->envp), new);
+		if (seek_var_in_env(data->envp, data->args[1]))
+			data->envp->var[1] = ft_strjoin(NULL, data->args[1]);
+		else
+			ft_envpadd_front(&(data->envp), new);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/22 19:15:19 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:07:44 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	redirect_fds(t_data *data)
 
 void	exec_builtin(t_data *data)
 {
+	ft_printf("exec builtin\n");
 	int	len;
 
 	len = ft_strlen(data->args[0]);
@@ -95,26 +96,29 @@ The rest of execution is pretty much like pipex except for the in and outs manag
 since at all times it can be a heredoc, a file or a pipe.
  */
 
-int exec(t_data *data)
+int ft_exec(t_data *data)
 {
 	if (ft_data_size(data) == 1 && data->is_builtin)
 		exec_builtin(data);
-	while (data)
-	{
-		data->pid = fork();
-		if (data->pid == -1)
+	else
+	{		
+		while (data)
 		{
-			// ft_close_fds(&data);
-			// exit_error("Fork", &data);
+			data->pid = fork();
+			// if (data->pid == -1)
+			// {
+			// 	ft_close_fds(&data);
+			// 	exit_error("Fork", &data);
+			// }
+			if (data->pid == 0)
+				child(data);
+			// if (data->is_heredoc)
+			// 	unlink(".heredoc.tmp");
+			data = data->next;
 		}
-		else if (data->pid == 0)
-			child(data);
-		if (data->is_heredoc)
-			unlink(".heredoc.tmp");
-		data = data->next;
+		// ft_close_pipes(data);
+		// ft_free_close(data);
+		// ft_wait(data);
 	}
-	// ft_close_pipes(data);
-	// ft_free_close(data);
-	// ft_wait(data);
 	return (0);
 }

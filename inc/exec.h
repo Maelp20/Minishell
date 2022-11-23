@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/22 16:22:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/23 13:56:07 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 typedef	struct s_tok
 {
@@ -93,6 +94,8 @@ int	is_in_quote(char *arg, int i);
 
 			/*---------------------EXEC----------------------*/
 
+int ft_exec(t_data *data);
+
 /*-------------------------------------BUILTINS-------------------------------*/
 
 int		ft_echo(t_data *data);
@@ -109,10 +112,19 @@ t_envp	*ft_envpnew(char *var, char *value);
 t_envp	*ft_envplast(t_envp *envp);
 void	ft_envpadd_front(t_envp **envp, t_envp *new);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
-char	*seek_var_in_env(t_envp *envp, char *var);
+t_envp	*seek_var_in_env(t_envp *envp, char *var);
 char 	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
+
+/*-----------------------------------ERR/CLEAN--------------------------------*/
+
+void	exit_error(char *err, t_data *data);
+void	ft_close_fds(t_data *data);
+void	ft_free_close(t_data *data);
+void	ft_close_pipes(t_data *data);
+void	ft_free_dble_array(void **tab);
+void	ft_wait(t_data *data);
 
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 

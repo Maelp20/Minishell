@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 16:03:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:08:59 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	update_pwd_env(t_envp *envp)
 
 int	ft_cd(t_data *data)
 {
+	ft_printf("ft_cd\n");
 	int	i;
 
 	update_old_pwd_env(data->envp);
