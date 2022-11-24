@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_utils.c                                    :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/14 18:28:27 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/11/23 13:58:16 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*ft_strjoin_spec(char *s1, char *s2)
+int	ft_data_size(t_data *data)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	int	nb;
 
-	if (!s1)
+	nb = 0;
+	if (!data)
+		return (0);
+	while (data)
 	{
-		s1 = malloc(sizeof(char));
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
+		nb++;
+		data = data->next;
 	}
-	if (!s2)
-		return (NULL);
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	j = 0;
-	while (s2[j])
-		dest[i++] = s2[j++];
-	dest[i] = '\0';
-	return (dest);
+	ft_printf("size = %d\n", nb);
+	return (nb);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -96,27 +84,20 @@ void	ft_envpadd_back(t_envp **envp, t_envp *new)
 	}
 }
 
-char	*seek_var_in_env(t_envp *envp, char *var)
+t_envp	*seek_var_in_env(t_envp *envp, char *var)
 {
-	char	*var_line;
 	char	*needle;
 
 	needle = ft_strjoin(var, "=");
 	if (!needle || !envp)
 		return (NULL);
-	while (envp->var)
+	while (envp)
 	{
-		var_line = ft_strnstr(envp->var[0], needle, ft_strlen(needle));
-		if (var_line)
-		{
-			var_line = ft_strjoin(envp->var[0], envp->var[1]);
-			if (!var_line)
-				return (perror("Malloc"), NULL);
+		if(ft_strnstr(envp->var[0], needle, ft_strlen(needle)))
 			break ;
-		}
 		envp = envp->next;
 	}
-	return (var_line);
+	return (envp);
 }
 
 char *seek_pwd_in_env(t_envp *envp)
