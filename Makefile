@@ -3,32 +3,33 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/23 12:32:56 by mpignet          ###   ########.fr        #
+#    Updated: 2022/11/29 16:20:13 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS	= \
-			exec.c\
-			exec_open_files.c\
-			exec_utils.c\
-			exec_error_management.c\
-			builtin_cd.c\
-			builtin_echo.c\
-			builtin_pwd.c\
-			builtin_env.c\
-			builtin_exit.c\
-			builtin_unset.c\
-			builtin_export.c\
-			get_env.c\
-			detect_quote.c\
-			init.c main.c\
+			exec/exec.c\
+			exec/exec_open_files.c\
+			exec/exec_utils.c\
+			exec/exec_error_management.c\
+			exec/builtin_cd.c\
+			exec/builtin_echo.c\
+			exec/builtin_pwd.c\
+			exec/builtin_env.c\
+			exec/builtin_exit.c\
+			exec/builtin_unset.c\
+			exec/builtin_export.c\
+			parsing/get_env.c\
+			parsing/detect_quote.c\
+			parsing/init.c main.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
+SUBOBJ		= objs/exec objs/parsing
 OBJS		= ${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
 INC			= inc/exec.h
 CINC		= -I ./inc/
@@ -45,12 +46,12 @@ CFLAGS	= -g -Wall -Wextra
 LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG	= -lreadline
 NAME	= minishell
-RM		= rm -fd
+RM		= rm -rfd
 
 all:		${NAME}
 
 ${OBJDIR}/%.o : ${SRCDIR}%.c ${INC}
-				mkdir -p ${OBJDIR}
+				mkdir -p ${OBJDIR} ${SUBOBJ}
 				${CC} ${CFLAGS} ${CINC} -c $< -o $@
 
 ${LIBFT} :	
