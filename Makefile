@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/11/29 16:20:13 by yanthoma         ###   ########.fr        #
+#    Updated: 2022/11/29 16:24:25 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS	= \
 			exec/builtin_export.c\
 			parsing/get_env.c\
 			parsing/detect_quote.c\
-			parsing/init.c main.c\
+			parsing/init.c parsing/main.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs
