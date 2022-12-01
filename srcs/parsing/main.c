@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 14:10:54 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/01 01:03:55 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,9 @@ int main(int ac, char **av, char **env)
 			// get_env(env, data);
 			// get_path(data);
 			i = 0;
-			while (input[i])
-			{
-				if (is_quote(input[i]))
-				{
-					printf("i main = %d\n", i);
-					i += is_in_quote(input, i);
-				}
-				else
+			while (input[i] && !is_in_quote(input, next_quote))
 					i++;
-
-				printf("i boucle %d\n", i);
-			}
-
+			printf("%d\n", i);
 		}
 			while(data)
 			{
