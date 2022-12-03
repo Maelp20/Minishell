@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/03 00:51:57 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/03 02:09:19 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	split_dbq(char *input, int i, t_tok **lst)
 	int		j;
 	char	*tmp;
 	
-	j = i;
+	j = i + 1;
+	printf("i = %d\n", i);
 	while (is_quote(input[j]) != 2)
 		j++;
-	j -= i;	
-	tmp = malloc(j + 1);
+	tmp = malloc(j);
 	if (!tmp)
 		return (0);
 	j = 0;
@@ -42,5 +42,5 @@ int	split_dbq(char *input, int i, t_tok **lst)
 	}
 	tmp[j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), i);
+	return (free(tmp), i++);
 } 

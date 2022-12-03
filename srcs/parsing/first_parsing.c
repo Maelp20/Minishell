@@ -31,7 +31,7 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	while(input[i])
 	{
 		if (input[i] == '\"')
-			i = split_dbq(input, i, &tok_lst);
+			i = split_dbq(input, ++i, &tok_lst);
 		i++;
 	}
 			while(tok_lst)
