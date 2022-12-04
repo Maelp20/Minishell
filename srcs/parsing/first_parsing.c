@@ -46,6 +46,7 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 			i = split_sq(input, ++i, &tok_lst);
 		if (i >= 0 && input[i] && !is_sep(input[i]))
 		 	i = split_space(input, i, &tok_lst);
+		printf("i end %d\n", i);
 		i++;
 	}
 	while(tok_lst)
