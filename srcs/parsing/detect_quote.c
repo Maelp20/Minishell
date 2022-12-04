@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/04 19:32:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/04 23:40:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,17 @@ int	split_space(char *input, int i, t_tok **lst)
 	int		j;
 	char	*tmp;
 	
-	printf("i first %d\n",i);
 	j = i;
-	printf("c = %c\n", input[i]);
-	while (!is_sep(input[j]) && input[j])
+	while (input[j] && !is_sep(input[j]))
 		j++;
-	// if (input[j] != ' ' && input [j + 1] =='\0')
-	// 	return (-2);
 	tmp = malloc(sizeof(char) * (j - i + 1));
 	if (!tmp)
 		return (-2);
 	j = -1;
-	printf("i minus %d\n", i);
 	i--;
-	printf("test1\n");
-	while(input[i] && !is_sep(input[++i]))
+	while(input[++i] && !is_sep(input[i]))
 		tmp[++j] = input[i];
 	tmp[++j] = '\0';
-	printf("test2\n");
-	printf("i last%d\n", i);
 	lstadd_back_token(lst, lstnew_token(tmp));
 	return (free(tmp), i);
 }
