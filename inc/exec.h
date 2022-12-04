@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/04 17:06:31 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:47:56 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,12 @@ typedef struct s_data
 /*---------------------PARSING----------------------*/
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
+t_tok	*ft_lstlast_tok(t_tok *lst);
 t_tok	*init_token_lst(char *input, t_data	**lst);
+int	is_sep(char c);
 int	split_dbq(char *input, int i, t_tok **lst);
 int	split_sq(char *input, int i, t_tok **lst);
+int	split_space(char *input, int i, t_tok **lst);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);
