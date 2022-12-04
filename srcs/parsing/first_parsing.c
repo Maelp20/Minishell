@@ -28,16 +28,23 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	(void)lst;
 	i = 0;
 	tok_lst = NULL;
-	while(input[i])
+	while(i >= 0 && input[i])
 	{
 		if (input[i] == '\"')
 			i = split_dbq(input, ++i, &tok_lst);
 		i++;
 	}
-			while(tok_lst)
-			{
-	 			printf("%s\n", tok_lst->token);
-	 			tok_lst = tok_lst->next;
-			}
+
+	while(i >= 0 && input[i])
+	{
+		if (input[i] == '\'')
+			i = split_sq(input, ++i, &tok_lst);
+		i++;
+	}
+	while(tok_lst)
+	{
+	 	printf("%s\n", tok_lst->token);
+	 	tok_lst = tok_lst->next;
+	}
 	return (tok_lst);
 }

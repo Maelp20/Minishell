@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/03 00:55:25 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:06:31 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*init_token_lst(char *input, t_data	**lst);
 int	split_dbq(char *input, int i, t_tok **lst);
+int	split_sq(char *input, int i, t_tok **lst);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);
