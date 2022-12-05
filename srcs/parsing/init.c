@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:55 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/22 19:12:26 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/02 23:35:46 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_data	*lstnew_args(char *content)
 	dest = malloc(sizeof(*dest));
 	if (!dest)
 		return (NULL);
-	dest->args = ft_strdup(content);
+	dest->args[0] = ft_strdup(content);
 	dest->next = NULL;
 	return (dest);
 }
@@ -74,19 +74,4 @@ void	lstadd_back_args(t_data **lst, t_data *new)
 		lstadd_back_args(&((*lst)->next), new);
 }
 
-void	init_args(t_data **data, char *arg)
-{
 
-	int i;
-	char **tmp;
-	
-	*data = NULL;
-	i = 0;
-	tmp = ft_split(arg, ' ');
-	while (tmp[i])
-	{
-		lstadd_back_args(data ,lstnew_args(tmp[i]));
-		i++;
-	}
-	free_array(tmp);
-}
