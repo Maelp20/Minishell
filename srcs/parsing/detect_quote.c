@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/04 23:40:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/05 01:00:03 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	split_dbq(char *input, int i, t_tok **lst)
 	char	*tmp;
 	
 	j = i;
-	while (is_sep(input[j]) != 3 && input[j + 1])
+	while (input[j + 1] && is_sep(input[j]) != 3)
 		j++;
 	if (input[j] != '\"' && input [j + 1] =='\0')
 		return (-2);
@@ -84,5 +84,5 @@ int	split_space(char *input, int i, t_tok **lst)
 		tmp[++j] = input[i];
 	tmp[++j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), i);
+	return (free(tmp), --i);
 }

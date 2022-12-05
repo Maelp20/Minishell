@@ -41,14 +41,14 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	{
 		if (input[i] == '\"')
 			i = split_dbq(input, ++i, &tok_lst);
-		printf("i dbq %d\n", i);
 		if (i >= 0 && input[i] && input[i] == '\'' )
 			i = split_sq(input, ++i, &tok_lst);
 		if (i >= 0 && input[i] && !is_sep(input[i]))
 		 	i = split_space(input, i, &tok_lst);
-		printf("i end %d\n", i);
 		i++;
 	}
+	if (i < 0)
+		printf("fonction free blahblah\n");
 	while(tok_lst)
 	{
 	 	printf("%s\n", tok_lst->token);
