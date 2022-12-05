@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/11/14 18:28:31 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/05 21:14:25 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,41 @@ t_envp	*lstnew_env(char **content)
 	return (dest);
 }
 
-void	lstadd_back_env(t_envp **lst, t_envp *new)
-{
-	if (*lst == ((void *)0))
-		*lst = new;
-	else
-		lstadd_back_env(&((*lst)->next), new);
-}
+// void	lstadd_back_env(t_envp **lst, t_envp *new)
+// {
+// 	if (*lst == ((void *)0))
+// 		*lst = new;
+// 	else
+// 		lstadd_back_env(&((*lst)->next), new);
+// }
 
-void	get_env(char **envi, t_data *data)
-{
-	int i;
+// void	get_env(char **envi, t_data *data)
+// {
+// 	int i;
 
-	data->envp = NULL;
-	i = -1;
-	while (envi[++i])
-		lstadd_back_env(&data->envp ,lstnew_env(ft_split(envi[i], '=')));
+// 	data->envp = NULL;
+// 	i = -1;
+// 	while (envi[++i])
+// 		lstadd_back_env(&data->envp ,lstnew_env(ft_split(envi[i], '=')));
+// }
+
+
+void get_env(char **envi, t_data *data)
+{
+    int i;
+    t_envp *node;
+    t_envp **tail;
+
+    data->envp = NULL;
+    tail = &data->envp;
+
+    for (i = 0; envi[i]; i++)
+    {
+        node = lstnew_env(ft_split(envi[i], '='));
+        if (!node)
+            continue;
+
+        *tail = node;
+        tail = &node->next;
+    }
 }
