@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 13:56:07 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/04 17:47:56 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,22 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-			/*---------------------PARSING----------------------*/
+/*---------------------PARSING----------------------*/
+t_tok	*lstnew_token(char *content);
+void	lstadd_back_token(t_tok **lst, t_tok *new);
+t_tok	*ft_lstlast_tok(t_tok *lst);
+t_tok	*init_token_lst(char *input, t_data	**lst);
+int	is_sep(char c);
+int	split_dbq(char *input, int i, t_tok **lst);
+int	split_sq(char *input, int i, t_tok **lst);
+int	split_space(char *input, int i, t_tok **lst);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);
 void	init_args(t_data **data, char *arg);
+t_data	*ft_lstlast_arg(t_data *lst);
+t_data	*lstnew_args(char *content);
+void	lstadd_back_args(t_data **lst, t_data *new);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
@@ -89,10 +100,10 @@ char	*get_path(t_data *data);
 
 /*---------------------------------------LEX---------------------------------*/
 int is_quote(char c);
-int	is_in_quote(char *arg, int i);
 
 
-			/*---------------------EXEC----------------------*/
+
+		/*---------------------EXEC----------------------*/
 
 int ft_exec(t_data *data);
 
