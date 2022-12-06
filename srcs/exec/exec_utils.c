@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 13:58:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:08:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_data_size(t_data *data)
 		nb++;
 		data = data->next;
 	}
-	ft_printf("size = %d\n", nb);
 	return (nb);
 }
 
