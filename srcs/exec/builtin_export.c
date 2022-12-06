@@ -6,11 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/06 17:16:45 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/06 18:56:31 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	ft_envp_size(t_envp *envp);
 
 t_envp	*sort_envp(t_envp *envp)
 {
@@ -39,12 +41,30 @@ t_envp	*sort_envp(t_envp *envp)
 	return (envp);
 }
 
+t_envp *copy_envp(t_envp *src)
+{
+	t_envp *dst = NULL;
+	t_envp *tmp;
+
+	while (src)
+	{
+		tmp = malloc(sizeof(t_envp));
+		tmp->var = malloc (sizeof(char *) * 3);
+		tmp->var[0] = strdup(src->var[0]);
+		tmp->var[1]= strdup(src->var[1]);
+		tmp->next = dst;
+		dst = tmp;
+		src = src->next;
+	}
+	return (dst);
+}
+
 void	ft_show_export(t_envp *envp)
 {
 	printf("show_export\n");
 	t_envp	*tmp;
 
-	tmp = envp;
+	tmp = copy_envp(envp);
 	sort_envp(tmp);
 	while (tmp->next)
 	{
@@ -52,7 +72,7 @@ void	ft_show_export(t_envp *envp)
 		printf("%s", tmp->var[0]);
 		printf("\"%s\"\n", tmp->var[1]);
 		tmp = tmp->next;
-	}	
+	}
 }
 
 void	ft_export(t_data *data)
@@ -68,6 +88,7 @@ void	ft_export(t_data *data)
 	if (!data->args[1])
 	{
 		ft_show_export(data->envp);
+		return;
 		exit(EXIT_SUCCESS);
 	}
 	while (data->args[++i])
