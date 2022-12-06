@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/05 21:13:39 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:17:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int ac, char **av, char **env)
 	t_data *data;
 
 	(void)av;
-	//env;
+	(void)env;
 	while (ac > 0)
 	{
 
@@ -36,14 +36,12 @@ int main(int ac, char **av, char **env)
 			 get_env(env, data);
 			// get_path(data);
 		}
-			while(data->envp)
-			{
-			printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
-			data->envp = data->envp->next;
-		
-			}
+		while(data->envp)
+		{
+		printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
+		data->envp = data->envp->next;
+		}
 		free(input);
-		destroy_struct(data);
 		i++;
 	}
 }
