@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/06 16:08:19 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:22:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	update_old_pwd_env(t_envp *envp)
 	if (oldpwd)
 		envp->var[1] = curr_pwd;
 	else
-		ft_envpadd_back(&envp, ft_envpnew("OLDPWD=", curr_pwd));
+		ft_envpadd_front(&envp, ft_envpnew("OLDPWD=", curr_pwd));
 }
 
 void	update_pwd_env(t_envp *envp)

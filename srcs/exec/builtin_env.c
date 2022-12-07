@@ -6,11 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/06 15:53:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:20:59 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+/* Displaying env : var[0] contains "VarName=" and var[1] its value. */
 
 void	ft_env(t_data *data)
 {

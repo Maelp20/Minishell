@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/04 17:47:56 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:20:13 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ t_envp	*ft_envpnew(char *var, char *value);
 t_envp	*ft_envplast(t_envp *envp);
 void	ft_envpadd_front(t_envp **envp, t_envp *new);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
-t_envp	*seek_var_in_env(t_envp *envp, char *var);
 char 	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
