@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 14:20:13 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 17:04:31 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
 
 t_envp	*lstnew_env(char **content);
-void	lstadd_back_env(t_envp **lst, t_envp *new);
-void	get_env(char **envi, t_data *data);
+ void	lstadd_back_env(t_envp **lst, t_envp *new);
+ void	get_env(char **envi, t_data *data);
 
 /*--------------------------------------PATH---------------------------------*/
 char	*get_path(t_data *data);
