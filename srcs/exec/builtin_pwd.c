@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/06 15:37:44 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:20:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_pwd(t_data *data)
 	path = seek_pwd_in_env(data->envp);
 	if (!path)
 	{
-		// path = getcwd(NULL, 0);
+		path = getcwd(NULL, 0);
 		if (!path)
 			return (perror("getcwd"), 1);
 	}

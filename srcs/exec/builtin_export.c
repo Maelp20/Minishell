@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 14:49:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 16:13:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* We sort env in ASCII order. */
 
-int	find_var_in_env(t_envp *envp, t_envp *new)
+int	replace_var_in_env(t_envp *envp, t_envp *new)
 {
 	if (!new || !envp)
 		return (1);
@@ -30,9 +30,8 @@ int	find_var_in_env(t_envp *envp, t_envp *new)
 	return (0);
 }
 
-t_envp	*sort_envp(t_envp *envp)
+void	sort_envp(t_envp *envp)
 {
-	printf("sort_env\n");
 	char	*buff1;
 	char	*buff2;
 	t_envp	*first_node;
@@ -53,8 +52,6 @@ t_envp	*sort_envp(t_envp *envp)
 		else
 			envp = envp->next;
 	}
-	envp = first_node;
-	return (envp);
 }
 
 /* We copy env in dst without the last line ("_=...") because we don't want it in export */
@@ -82,7 +79,6 @@ t_envp *copy_envp(t_envp *envp)
 
 void	ft_show_export(t_envp *envp)
 {
-	printf("show_export\n");
 	t_envp	*dst;
 
 	dst = copy_envp(envp);
@@ -94,6 +90,7 @@ void	ft_show_export(t_envp *envp)
 		printf("\"%s\"\n", dst->var[1]);
 		dst = dst->next;
 	}
+	free(dst);
 }
 
 /* Export builtin : 
@@ -119,13 +116,7 @@ void	ft_export(t_data *data)
 			exit(EXIT_FAILURE);
 		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
-		if (!find_var_in_env(data->envp, new))
+		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_front(&(data->envp), new);
 	}
-	// while (data->envp)
-	// {
-	// 	printf("%s", data->envp->var[0]);
-	// 	printf("%s\n", data->envp->var[1]);
-	// 	data->envp = data->envp->next;
-	// }
 }

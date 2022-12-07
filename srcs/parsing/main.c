@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 14:55:53 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 16:54:57 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int main(int ac, char **av, char **env)
 	data->is_builtin = 1;
 	data->next = NULL;
 	ft_exec(data);
+	free(data);
 	return (0);
 } */
