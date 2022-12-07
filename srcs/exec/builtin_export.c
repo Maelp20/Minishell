@@ -6,48 +6,97 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 14:02:28 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 16:13:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-t_envp	*sort_envp(t_envp *envp)
+/* We sort env in ASCII order. */
+
+int	replace_var_in_env(t_envp *envp, t_envp *new)
 {
-	char	*buff;
+	if (!new || !envp)
+		return (1);
+	while (envp)
+	{
+		if(ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
+		{
+			envp->var[1] = ft_strdup(new->var[1]);
+			return (1);
+		}
+		envp = envp->next;
+	}
+	return (0);
+}
+
+void	sort_envp(t_envp *envp)
+{
+	char	*buff1;
+	char	*buff2;
 	t_envp	*first_node;
 
 	first_node = envp;
-	while (envp->next->next)
+	while (envp->next)
 	{
-		if ((ft_strcmp(envp->var[0], envp->next->var[0])))
+		if ((ft_strcmp(envp->var[0], envp->next->var[0]) > 0))
 		{
-			buff = envp->var[0];
+			buff1 = envp->var[0];
+			buff2 = envp->var[1];
 			envp->var[0] = envp->next->var[0];
-			envp->next->var[0] = buff;
+			envp->var[1] = envp->next->var[1];
+			envp->next->var[0] = buff1;
+			envp->next->var[1] = buff2;
 			envp = first_node;
 		}
 		else
 			envp = envp->next;
 	}
-	envp = first_node;
-	return (envp);
 }
+
+/* We copy env in dst without the last line ("_=...") because we don't want it in export */
+
+t_envp *copy_envp(t_envp *envp)
+{
+	t_envp *dst = NULL;
+	t_envp *tmp;
+
+	while (envp->next)
+	{
+		tmp = malloc(sizeof(t_envp));
+		tmp->var = malloc(sizeof(char *) * 3);
+		tmp->var[0] = ft_strdup(envp->var[0]);
+		tmp->var[1]= ft_strdup(envp->var[1]);
+		tmp->var[2] = NULL;
+		tmp->next = dst;
+		dst = tmp;
+		envp = envp->next;
+	}
+	return (dst);
+}
+
+/* Show export : sorting env in ASCII order and adding "declare -x" each line. */
 
 void	ft_show_export(t_envp *envp)
 {
-	t_envp	*tmp;
+	t_envp	*dst;
 
-	tmp = envp;
-	sort_envp(tmp);
-	while (tmp)
+	dst = copy_envp(envp);
+	sort_envp(dst);
+	while (dst)
 	{
 		printf("declare -x ");
-		printf("%s", tmp->var[0]);
-		printf("\"%s\"\n", tmp->var[1]);
-		tmp = tmp->next;
-	}	
+		printf("%s", dst->var[0]);
+		printf("\"%s\"\n", dst->var[1]);
+		dst = dst->next;
+	}
+	free(dst);
 }
+
+/* Export builtin : 
+- Without args : we show export.
+- With args : we add the named variable to env, or if it already exists, we replace it's value
+with our newly defined value. */
 
 void	ft_export(t_data *data)
 {
@@ -55,21 +104,19 @@ void	ft_export(t_data *data)
 	t_envp	*new;
 	
 	i = 0;
-	new = malloc (sizeof(t_envp));
-	if (!new)
-		exit(EXIT_FAILURE);
 	if (!data->args[1])
-	{		
+	{
 		ft_show_export(data->envp);
 		exit(EXIT_SUCCESS);
 	}
 	while (data->args[++i])
 	{
+		new = malloc (sizeof(t_envp));
+		if (!new)
+			exit(EXIT_FAILURE);
 		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
-		if (seek_var_in_env(data->envp, data->args[1]))
-			data->envp->var[1] = ft_strjoin(NULL, data->args[1]);
-		else
+		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_front(&(data->envp), new);
 	}
 }

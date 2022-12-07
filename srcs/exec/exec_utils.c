@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 13:58:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:59:03 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_data_size(t_data *data)
 		nb++;
 		data = data->next;
 	}
-	ft_printf("size = %d\n", nb);
 	return (nb);
 }
 
@@ -82,22 +81,6 @@ void	ft_envpadd_back(t_envp **envp, t_envp *new)
 		tmp = ft_envplast(*envp);
 		tmp->next = new;
 	}
-}
-
-t_envp	*seek_var_in_env(t_envp *envp, char *var)
-{
-	char	*needle;
-
-	needle = ft_strjoin(var, "=");
-	if (!needle || !envp)
-		return (NULL);
-	while (envp)
-	{
-		if(ft_strnstr(envp->var[0], needle, ft_strlen(needle)))
-			break ;
-		envp = envp->next;
-	}
-	return (envp);
 }
 
 char *seek_pwd_in_env(t_envp *envp)

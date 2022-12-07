@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 11:54:24 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:58:57 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 int	ft_unset(t_data *data)
 {
-	int		found;
-	
-	found = 0;
-	if (!data->envp)
+	char	*var;
+	t_envp	*first_node;
+
+	if (!data->envp || !data->args[1])
 		return (1);
-	while (data->envp->var)
+	var = ft_strjoin(data->args[1], "=");
+	first_node = data->envp;
+	while (data->envp->next->var)
 	{
-		if (ft_strnstr(data->envp->var[0], data->args[1], ft_strlen(data->args[1])))
+		printf("data var : %s\n", data->envp->next->var[0]);
+		if (ft_strnstr(data->envp->next->var[0], var, ft_strlen(var)))
 		{
-			found = 1;
+			free(data->envp->next->var[0]);
+			free(data->envp->next->var[1]);
+			data->envp->next = data->envp->next->next;
 			break ;
 		}
 		data->envp = data->envp->next;
 	}
-	if (found)
-	{		
-		free(data->envp->var[0]);
-		free(data->envp->var[1]);
-	}
+	data->envp = first_node;
 	return (0);
 }
