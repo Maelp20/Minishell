@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/06 18:24:25 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/07 22:42:36 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ t_envp	*lstnew_env(char **content)
 void copy_split_first_equal(size_t len, char **dest, char *input)
 {
   *dest = malloc(len + 1);
-  strncpy(*dest, input, len);
+  ft_strlcpy(*dest, input, len);
   (*dest)[len] = '\0';
 }
 
+
+//protect the malloc otherwise it's a fail
 char **split_at_first_equal(char *input)
 {
   char **output;
@@ -61,12 +63,12 @@ char **split_at_first_equal(char *input)
   size_t second_len;
 
   output = malloc(sizeof(char *) * 3);
-  equal_pos = strchr(input, '=');
+  equal_pos = ft_strchr(input, '=');
   if (equal_pos)
   {
     first_len = equal_pos - input;
     copy_split_first_equal(first_len, &output[0], input);
-    second_len = strlen(input) - first_len - 1;
+    second_len = ft_strlen(input) - first_len - 1;
     copy_split_first_equal(second_len, &output[1], equal_pos + 1);
     output[2] = NULL;
     return (output);

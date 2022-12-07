@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/05 21:01:59 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/07 22:40:34 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	is_sep(char c);
 int	split_dbq(char *input, int i, t_tok **lst);
 int	split_sq(char *input, int i, t_tok **lst);
 int	split_space(char *input, int i, t_tok **lst);
+void	split_operator(t_tok **tok_lst, t_data **lst);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);

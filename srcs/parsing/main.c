@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/06 17:17:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/07 23:28:10 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int main(int ac, char **av, char **env)
 	char *input;
 	int i = 0;
 	t_data *data;
+	t_tok	**lst;
 
 	(void)av;
 	(void)env;
@@ -28,19 +29,20 @@ int main(int ac, char **av, char **env)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
 				return(free(input),destroy_struct(data), exit(0), 0);
-			data = malloc(sizeof(t_data));
-			//data = NULL;
+			//data = malloc(sizeof(t_data));
+			data = NULL;
 			add_history(input);
-			init_token_lst(input, &data);
+			lst = init_token_lst(input, &data);
+			split_operator(lst, &data);
 			// init_args(&data, input);
 			 get_env(env, data);
 			// get_path(data);
 		}
-		while(data->envp)
-		{
-		printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
-		data->envp = data->envp->next;
-		}
+		// while(data->envp)
+		// {
+		// printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
+		// data->envp = data->envp->next;
+		// }
 		free(input);
 		i++;
 	}
