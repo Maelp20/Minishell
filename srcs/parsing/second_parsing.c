@@ -10,21 +10,21 @@ int	is_to_split(char c)
 void	replace_node(t_tok **lst, t_tok **tmp)
 {
 	//find the node to replace
-	while (ft_strcmp((*lst)->token, lst->token))
+	while (ft_strcmp((*lst)->token, (*lst)->token))
 		(*lst) = (*lst)->next;
 	//set the node to the first of tmp
 	(*lst) = (*tmp);
 	//go to the last node of tmp
-	while ((*tmp) && (*tmp->next))
+	while ((*tmp) && (*tmp)->next)
 		(*tmp) = (*tmp)->next;
-	set the end of tmp to the next
+	//set the end of tmp to the next
 	if (*tmp)
 		*tmp = (*lst)->next;
 	//free the node to replace
 	free(*lst);
 }
 
-void	split_pipe_and_chev(char *token, int i, t_tok **lst)
+int	split_pipe_and_chev(char *token, int i, t_tok **lst)
 {
 	int	j;
 	char *tmp;
@@ -39,10 +39,10 @@ void	split_pipe_and_chev(char *token, int i, t_tok **lst)
 	i--;
 	while(!is_to_split(token[++i]))
 		tmp[++j] = token[++i];
-	
+	return(i);
 }
 
-t_tok	*clean_token_lst(t_tok **lst)
+void	clean_token_lst(t_tok **lst)
 {
 	int			i;
 	t_tok	**tmp;
@@ -50,16 +50,15 @@ t_tok	*clean_token_lst(t_tok **lst)
 	while ((*lst))
 	{
 		i = 0;
-		while(token[i])
+		while((*lst)->token[i])
 		{
-			if (is_to_split(token[i]))
+			if (is_to_split((*lst)->token[i]))
 			{
-				i = split_pipe_and_chev(token, i, tmp);
+				i = split_pipe_and_chev((*lst)->token, i, tmp);
 				replace_node(lst, tmp);
 			}
 			i++;
 		}
 		(*lst) = (*lst)->next;
 	}
-
 }
