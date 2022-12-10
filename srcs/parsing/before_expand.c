@@ -1,11 +1,13 @@
 #include "exec.h"
 
 
-int	is_separator(char *str)
+int	is_separator_or_redirect(char *str)
 {
 	int i;
 
 	i = 0;
+	if (str == NULL)
+        return (-1);
 	if (str[i] == '|')
 		return (1);
 	else 
@@ -23,6 +25,13 @@ int count_non_separators(t_tok *lst)
 	}
 	return count;
 }
+void check_infile_outfile(t_tok *lst, t_data *data)
+{
+	if (lst->token == '>')
+		data->infile = lst->next->token;
+	else if (lst->token == '<')
+		data->outfile = lst->next->token;
+}
 
 char **extract_args(t_tok *lst, int pos)
 {
@@ -30,7 +39,7 @@ char **extract_args(t_tok *lst, int pos)
 	char **dest;
 
 	i = 0;
-	dest = malloc(sizeof(char *) * pos);
+	dest = malloc(sizeof(char *) * (pos + 1));
 	while (lst && i < pos)
 	{
 		printf("extract token %s\n", lst->token);
@@ -38,7 +47,7 @@ char **extract_args(t_tok *lst, int pos)
 		lst = lst->next;
 		i++;
 	}
-	dest[pos]= '\0';
+	dest[pos]=  NULL;
 	return (dest);
 }
 
@@ -51,6 +60,8 @@ void	split_lst_operator(t_tok **lst, t_data **data)
 	//  	printf("%s\n", (*lst)->token);
 	//  	(*lst) = (*lst)->next;
 	// }
+	if (lst == NULL || data == NULL)
+        return;
 	while((*lst))
 	{
 		pos = count_non_separators((*lst));

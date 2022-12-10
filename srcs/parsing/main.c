@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/09 00:01:03 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/10 15:55:57 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **env)
 			if (ft_strncmp(input,"exit",4)  == 0)
 				return(free(input),destroy_struct(data), exit(0), 0);
 			data = malloc(sizeof(t_data));
-			//data = NULL;
+			data = NULL;
 			add_history(input);
 			lst = init_token_lst(input, &data);
 			split_lst_operator(&lst, &data);
