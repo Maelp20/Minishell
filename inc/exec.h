@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/08 23:55:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:57:14 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef	struct s_tok
 	char* token;
 	struct s_tok *next;
 }	t_tok;
+
+# define DELIMITERS "|><<>>"
 
 typedef struct s_pipes
 {	
@@ -72,15 +74,22 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-/*---------------------PARSING----------------------*/
+		/*---------------------PARSING----------------------*/
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
 t_tok	*init_token_lst(char *input, t_data	**lst);
-int	is_sep(char c);
-int	split_dbq(char *input, int i, t_tok **lst);
-int	split_sq(char *input, int i, t_tok **lst);
-int	split_space(char *input, int i, t_tok **lst);
+
+int		is_sep(char c);
+int		split_dbq(char *input, int i, t_tok **lst);
+int		split_sq(char *input, int i, t_tok **lst);
+int		split_space(char *input, int i, t_tok **lst);
+
+int		is_to_split(char c);
+void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
+int		split_pipe_and_chev(char *token, t_tok **lst);
+void	clean_token_lst(t_tok **lst);
+
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
 /*---------------------------------------INIT---------------------------------*/

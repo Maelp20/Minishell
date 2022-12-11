@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/10 15:55:57 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/11 13:02:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int main(int ac, char **av, char **env)
 			data = NULL;
 			add_history(input);
 			lst = init_token_lst(input, &data);
-			split_lst_operator(&lst, &data);
+			clean_token_lst(&lst);
+			//split_lst_operator(&lst, &data);
 			// init_args(&data, input);
-			 get_env(env, data);
+			//get_env(env, data);
 			// get_path(data);
 		}
 		// while(data->envp)
