@@ -269,19 +269,17 @@ else
 }
 
 // Add the last token to the list
-buf[buf_pos] = '\0';
-t_tok *token = malloc(sizeof(t_tok));
-token->token = strdup(buf);
-token->next = NULL;
-if (current)
-{
-current->next = token;
+if (buf_pos > 0) { // <-- Add this check
+    buf[buf_pos] = '\0';
+    t_tok *token = malloc(sizeof(t_tok));
+    token->token = strdup(buf);
+    token->next = NULL;
+    if (current) {
+        current->next = token;
+    } else {
+        list = token;
+    }
 }
-else
-{
-list = token;
-}
-
 return list;
 }
 
@@ -291,7 +289,7 @@ void	clean_token_lst(t_tok **lst)
 	(void)lst;
 	
     // Split the string "|J>>e>jesuis<<lol>" into tokens
-    t_tok *list = split_string("|J>>e>jesuis<<lol>");
+    t_tok *list = split_string("|J>>e>jesuis<<||lol>");
 
     // Allocate memory for the current token in the list
     t_tok *current = malloc(sizeof(t_tok));
