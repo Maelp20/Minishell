@@ -99,57 +99,99 @@ int	is_to_split(char c)
 
 t_tok *split_string(const char *str)
 {
-t_tok *head = NULL;
-t_tok *current = NULL;
+    t_tok *head = NULL;
+    t_tok *current = NULL;
+    int i = 0;
+    int token_start = 0;
+    int token_length = 0;
+    int prev_was_delimiter = 0;
 
-// Initialize the current token to an empty string
-current = malloc(sizeof(t_tok));
-current->token = malloc(1);
-current->token[0] = '\0';
-current->next = NULL;
-head = current;
+    while (str[i])
+    {
+        // Check if the current character is one of the delimiters
+        if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+        {
+            // If the current token is not empty and the previous token was not a delimiter, add it to the list
+			printf("str[%d] = %c\n",i, str[i]);
+            if (token_length > 0 && !prev_was_delimiter)
+            {
+                if (head)
+                {
+                    current->next = malloc(sizeof(t_tok));
+                    current = current->next;
+                }
+                else
+                {
+                    head = current = malloc(sizeof(t_tok));
+                }
 
-int i = 0;
-while (str[i])
-{
-    // Check if the current character is one of the delimiters
-    if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-    {
-        // If the current token is an empty string (indicating that the input string consists only of delimiter characters), create a new token for the first delimiter character
-        if (current->token[0] == '\0')
-        {
-            current->token[0] = str[i];
-            current->token[1] = '\0';
-            i++;
-            continue;
+                // Copy the current token to the new t_tok structure
+                current->token = malloc(token_length + 1);
+                memcpy(current->token, str + token_start, token_length);
+                current->token[token_length] = '\0';
+                current->next = NULL;
+
+                // Reset the token start and length for the next token
+                token_start = i + 1;
+                token_length = 0;
+            }
+            // Create a new token for the delimiter
+         else
+			{
+				// Check if the current token is not empty
+				if (token_length > 0)
+				{
+					if (head)
+					{
+						current->next = malloc(sizeof(t_tok));
+						current = current->next;
+					}
+					else
+					{
+						head = current = malloc(sizeof(t_tok));
+					}
+					current->token = malloc(2);
+					current->token[0] = str[i];
+					current->token[1] = '\0';
+					current->next = NULL;
+				}
+				prev_was_delimiter = 1;
+			}
         }
-        // If the current token is an empty string (indicating that the previous character was also a delimiter),
-		// skip the current character
-        if (current->token[0] == '\0')
+        else
         {
-            i++;
-            continue;
+            // If the current character is not a delimiter, increment the length of the current token
+            token_length++;
+            prev_was_delimiter = 0;
         }
-        // Create a new token for the delimiter
-        current->next = malloc(sizeof(t_tok));
-        current = current->next;
-        current->token = malloc(2);
-        current->token[0] = str[i];
-        current->token[1] = '\0';
-        current->next = NULL;
+        i++;
     }
-    else
+    // Add the final token to the list if it is not empty and the previous token was not a delimiter
+    if (token_length > 0 && !prev_was_delimiter)
     {
-        // If the current character is not a delimiter, add it to the current token
-        int len = strlen(current->token);
-        current->token = realloc(current->token, len + 2);
-        current->token[len] = str[i];
-        current->token[len + 1] = '\0';
-    }
-    i++;
+        if (head)
+        {
+            current->next = malloc(sizeof(t_tok));
+            current = current->next;
+        }
+        else
+        {
+            head = current = malloc(sizeof(t_tok));
+        }
+        current->token = malloc(token_length + 1);
+		memcpy(current->token, str + token_start, token_length);
+		current->token[token_length] = '\0';
+		current->next = NULL;
+	}
+	return head;
 }
-return head;
-}
+
+
+
+
+
+
+
 
 void	clean_token_lst(t_tok **lst)
 {
