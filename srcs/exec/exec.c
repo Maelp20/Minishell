@@ -119,11 +119,11 @@ int ft_exec(t_data *data)
 		// ft_free_close(data);
 		// ft_wait(data);
 	}
-	// while (data->envp)
-	// {
-	// 	printf("%s", data->envp->var[0]);
-	// 	printf("%s\n", data->envp->var[1]);
-	// 	data->envp = data->envp->next;
-	// }
+	while (data->envp)
+	{
+		printf("%s", data->envp->var[0]);
+		printf("%s\n", data->envp->var[1]);
+		data->envp = data->envp->next;
+	}
 	return (0);
 }
