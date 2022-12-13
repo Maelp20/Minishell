@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/11 16:57:14 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:41:05 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ typedef	struct s_tok
 	char* token;
 	struct s_tok *next;
 }	t_tok;
-
-# define DELIMITERS "|><<>>"
 
 typedef struct s_pipes
 {	

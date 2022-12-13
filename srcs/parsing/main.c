@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/11 13:02:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:55:51 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int main(int ac, char **av, char **env)
 			if (ft_strncmp(input,"exit",4)  == 0)
 				return(free(input),destroy_struct(data), exit(0), 0);
 			data = malloc(sizeof(t_data));
-			data = NULL;
+			//data = NULL;
 			add_history(input);
-			lst = init_token_lst(input, &data);
-			clean_token_lst(&lst);
+			//lst = init_token_lst(input, &data);
+			//clean_token_lst(&lst);
 			//split_lst_operator(&lst, &data);
 			// init_args(&data, input);
 			//get_env(env, data);
@@ -41,11 +41,11 @@ int main(int ac, char **av, char **env)
 		}
 		// while(data->envp)
 		// {
-		// printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
+		// printf("%s%s\n", data->envp->var[0],data->envp->var[1] );
 		// data->envp = data->envp->next;
 		// }
-		free(input);
-		i++;
+		// free(input);
+		// i++;
 	}
 }
 

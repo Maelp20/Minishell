@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/07 22:42:36 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:55:16 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char **split_at_first_equal(char *input)
   equal_pos = ft_strchr(input, '=');
   if (equal_pos)
   {
-    first_len = equal_pos - input;
+    first_len = equal_pos - input + 1;
     copy_split_first_equal(first_len, &output[0], input);
-    second_len = ft_strlen(input) - first_len - 1;
+    second_len = ft_strlen(input) - first_len + 1;
     copy_split_first_equal(second_len, &output[1], equal_pos + 1);
     output[2] = NULL;
     return (output);
