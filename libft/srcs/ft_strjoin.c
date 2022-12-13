@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:13:46 by mpignet           #+#    #+#             */
-/*   Updated: 2022/10/26 12:05:27 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/06 17:59:12 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*dest;
 	int		len;
 
+	if (!s2)
+		s2 = malloc(sizeof(char));
 	len = ft_strlen(s1) + ft_strlen(s2);
 	dest = malloc(sizeof(char) * (len + 1));
 	if (!dest)
