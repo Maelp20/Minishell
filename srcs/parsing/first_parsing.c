@@ -49,10 +49,17 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	}
 	if (i < 0)
 		printf("fonction free blahblah\n");
-	while(tok_lst)
-	{
-	 	printf("%s\n", tok_lst->token);
-	 	tok_lst = tok_lst->next;
-	}
+	// while(tok_lst)
+	// {
+	//   	int j = 0;
+	// 	//printf("init - %s\n", tok_lst->token);
+	// 	while (tok_lst->token[j])
+	// 	{
+	// 		printf("%c", tok_lst->token[j]);
+	// 		j++;
+	// 	}
+	// 	printf("\n");
+	//   	tok_lst = tok_lst->next;
+	// }
 	return (tok_lst);
 }

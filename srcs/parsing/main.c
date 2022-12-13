@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 17:04:06 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/13 15:55:51 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int main(int ac, char **av, char **env)
 	char *input;
 	int i = 0;
 	t_data *data;
+	t_tok	*lst;
 
 	(void)av;
 	(void)env;
@@ -31,18 +32,20 @@ int main(int ac, char **av, char **env)
 			data = malloc(sizeof(t_data));
 			//data = NULL;
 			add_history(input);
-			init_token_lst(input, &data);
+			//lst = init_token_lst(input, &data);
+			//clean_token_lst(&lst);
+			//split_lst_operator(&lst, &data);
 			// init_args(&data, input);
-			 get_env(env, data);
+			//get_env(env, data);
 			// get_path(data);
 		}
-		while(data->envp)
-		{
-		printf("%s\n %s\n", data->envp->var[0],data->envp->var[1] );
-		data->envp = data->envp->next;
-		}
-		free(input);
-		i++;
+		// while(data->envp)
+		// {
+		// printf("%s%s\n", data->envp->var[0],data->envp->var[1] );
+		// data->envp = data->envp->next;
+		// }
+		// free(input);
+		// i++;
 	}
 }
 

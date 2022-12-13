@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 17:04:31 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/13 15:41:05 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,27 @@ typedef struct s_data
 	int				out_fd;
 	int				in_pipe;
 	int				out_pipe;
+	int				size;
 	struct s_data	*next;
 }	t_data;
 
-/*---------------------PARSING----------------------*/
+		/*---------------------PARSING----------------------*/
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
 t_tok	*init_token_lst(char *input, t_data	**lst);
-int	is_sep(char c);
-int	split_dbq(char *input, int i, t_tok **lst);
-int	split_sq(char *input, int i, t_tok **lst);
-int	split_space(char *input, int i, t_tok **lst);
+
+int		is_sep(char c);
+int		split_dbq(char *input, int i, t_tok **lst);
+int		split_sq(char *input, int i, t_tok **lst);
+int		split_space(char *input, int i, t_tok **lst);
+
+int		is_to_split(char c);
+void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
+int		split_pipe_and_chev(char *token, t_tok **lst);
+void	clean_token_lst(t_tok **lst);
+
+void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data);
