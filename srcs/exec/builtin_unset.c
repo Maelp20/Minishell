@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 15:58:57 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/13 14:45:27 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int	ft_unset(t_data *data)
 		return (1);
 	var = ft_strjoin(data->args[1], "=");
 	first_node = data->envp;
-	while (data->envp->next->var)
+	while (data->envp->next)
 	{
-		printf("data var : %s\n", data->envp->next->var[0]);
 		if (ft_strnstr(data->envp->next->var[0], var, ft_strlen(var)))
 		{
 			free(data->envp->next->var[0]);
