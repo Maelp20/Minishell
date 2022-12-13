@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/06 16:31:59 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/09 00:02:43 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_sep(char c)
 {
-	if (c == '\"')
+	if (c == '\"') 
 		return (3);
 	else if ( c == '\'')
 		return (2);
@@ -51,13 +51,6 @@ int	split_with_sq_dollar(char *input, int i, t_tok **lst)
 	char *tmp;
 
 	j = i;
-	while (input[j] != '\'')
-	{
-		printf("split dollar %c\n", input[j]);
-		j++;
-	}
-	printf("split dollar %c\n", input[j]);
-	printf("j = %d\n", j - i + 2);
 	tmp = malloc(sizeof(char) * (j - i + 3));
 	if (!tmp)
 		return(-2);
@@ -68,7 +61,6 @@ int	split_with_sq_dollar(char *input, int i, t_tok **lst)
 		tmp[++j] = input[i];
 	tmp[++j] = '\'';
 	tmp[++j] = '\0';
-	printf("%s\n", tmp);
 	lstadd_back_token(lst, lstnew_token(tmp));
 	return (free(tmp), ++i);
 }
@@ -81,7 +73,7 @@ int	split_sq(char *input, int i, t_tok **lst)
 	if (input[i] == '$')
 		return (split_with_sq_dollar(input, i, lst));
 	j = i;
-	while (is_sep(input[j]) != 2 && input[j + 1])
+	while (is_sep(input[j]) != 2 && input[j + 1]) 
 		j++;
 	if (input[j] != '\'' && input [j + 1] =='\0')
 		return (-2);
