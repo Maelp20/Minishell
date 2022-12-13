@@ -1,5 +1,20 @@
 #include "exec.h"
 
+
+int is_separator(char *token)
+{
+	int i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '|' || token[i] == '<' || token[i] == '>')
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
 void add_to_list(t_tok **list, t_tok **current, t_tok *token)
 {
 	if (*current)
@@ -63,9 +78,12 @@ t_tok *split_string(const char *str, t_tok *list, t_tok *current )
   t_tok	*token;
   // Create a temporary buffer to hold the current token
   char buf[strlen(str) + 1];
-  int buf_pos = 0;
+  int buf_pos;
+  size_t	i;
+  
+  buf_pos = 0;
+  i = 0;
   // Loop through the input string
-  size_t i = 0;
   while ( i < strlen(str))
   {
       // Check if the current character is a separator
@@ -101,16 +119,18 @@ void	clean_token_lst(t_tok **lst)
 	(void)lst;
 	t_tok *list = NULL;
   	t_tok *current = NULL;
+	t_tok *tmp;
     // Split the string "|J>>e>jesuis<<lol>" into tokens
-    t_tok *bis = split_string("|<<J>>e>jesuis<<>>d>>lol>",list,current  );
-
-    // Allocate memory for the current token in the list
-    t_tok *truc = malloc(sizeof(t_tok));
-
-    // Print the tokens in the list
-    for (truc = bis; truc; truc = truc->next)
-    {
+    while (lst)
+	{
+		if (is_separator((*lst)->token))
+			tmp = split_string((*lst)->token,list,current);
+	
+	t_tok *truc = malloc(sizeof(t_tok));
+	for (truc = tmp; truc; truc = truc->next)
         printf("%s\n", truc->token);
-    }
+	*lst = (*lst)->next;
+	}
+	
 
 }
