@@ -112,7 +112,17 @@ t_tok *split_string(const char *str, t_tok *list, t_tok *current )
 	return list;
 }
 
-
+void	add_node_tolist(t_tok **lst, t_tok	*tmp, char *find)
+{
+	t_tok *tmp;
+	while(*lst)
+	{
+		
+		if(strcmp((*lst)->next->token, find))
+		
+		*lst = (*lst)->next;
+	}
+}
 
 void	clean_token_lst(t_tok **lst)
 {
@@ -120,17 +130,24 @@ void	clean_token_lst(t_tok **lst)
 	t_tok *list = NULL;
   	t_tok *current = NULL;
 	t_tok *tmp;
+	char *find;
     // Split the string "|J>>e>jesuis<<lol>" into tokens
-    while (lst)
+    while (*lst)
 	{
 		if (is_separator((*lst)->token))
+		{	
+			find = ft_strdup((*lst)->token);
 			tmp = split_string((*lst)->token,list,current);
-	
-	t_tok *truc = malloc(sizeof(t_tok));
-	for (truc = tmp; truc; truc = truc->next)
-        printf("%s\n", truc->token);
+			add_nodes_tolist(lst, tmp, find);
+			free(find);
+		}
 	*lst = (*lst)->next;
 	}
-	
+
+	while(*lst)
+	{
+		printf("%s", (*lst)->token);
+	  	*lst =  (*lst)->next;
+	}
 
 }
