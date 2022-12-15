@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 16:24:33 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:20:49 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int ac, char **av, char **env)
 			add_history(input);
 			lst = init_token_lst(input, &data);
 			clean_token_lst(&lst);
-			//split_lst_operator(&lst, &data);
+
 			// init_args(&data, input);
 			//get_env(env, data);
 			// get_path(data);
