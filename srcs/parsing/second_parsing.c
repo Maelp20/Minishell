@@ -11,15 +11,27 @@ void print_tok_list(t_tok *list)
     }
 }
 
-// int	is_separator(char c1, char c2)
-// {
-// 	if(c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
-// 		return (2);
-// 	if (c1 == '>' || c1 == '<' || c1 == '|')
-// 		return (1);
-// 	return (0);
-// }
+int	is_separator(char c1, char c2)
+{
+	if(c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
+		return (2);
+	else if (c1 == '>' || c1 == '<' || c1 == '|')
+		return (1);
+	return (0);
+}
+int has_a_sep(char *token)
+{
+	int i;
 
+	i = 0;
+	while(token[i])
+	{
+		if (token[i] == '>' || token[i] == '<' || token [i] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 // char *split_char(char *token)
 // {
 //     char *splitted;
@@ -104,15 +116,17 @@ char *split_char(char *token)
 	int i;
 
 	i = 0;
+	printf("token = %c\n", *token);
 	if (is_separator(*token, *token + 1) == 2)
 		i = 2;
 	else if (is_separator(*token, *token + 1) == 1)
 		i = 1;
 	else
 	{
-		while (*token + i && !is_separator(*token + i, *token + i + 1))
+		while (token[i] && !is_separator(*token + i, *token + i + 1))
 			i++;
 	}
+	printf("i = %d\n", i);
 	splitted = malloc(sizeof(char) * (i + 1));
 	if (is_separator(*token, *token + 1) == 2)
 	{
@@ -151,10 +165,13 @@ void	clean_token(t_tok **lst)
 {
 	while (*lst)
 	{
-		while(*((*lst)->token))
+		if (has_a_sep ((*lst)->token))
 		{
-			(*lst)->next = lstnew_token(split_char((*lst)->token));
-			printf("clean token - token = %s\n", (*lst)->token);
+			while(*((*lst)->token))
+			{
+				(*lst)->next = lstnew_token(split_char((*lst)->token));
+				printf("clean token - token = %s\n", (*lst)->token);
+			}
 		}
 		*lst = (*lst)->next;
 	}
