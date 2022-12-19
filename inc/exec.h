@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 15:41:05 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:04:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		split_space(char *input, int i, t_tok **lst);
 int		is_to_split(char c);
 void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
 int		split_pipe_and_chev(char *token, t_tok **lst);
-void	clean_token_lst(t_tok **lst);
+void	clean_token(t_tok **lst);
 
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
