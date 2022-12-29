@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/28 19:03:35 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:06:51 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	countword(char *token)
 }
 
 
-char *fill_word(char *token)
+char *fill_word(char *token, int len)
 {
 	int	i;
 	char *split;
@@ -136,7 +136,7 @@ char **extract(char *token)
 	{
 		len = len_word(token);
 		extracted[i] = malloc(sizeof(char) * (len + 1));
-		fill_word(extracted[i]);
+		fill_word(extracted[i], len);
 		token += len;
 	}
 	extracted[i] = '\0';
