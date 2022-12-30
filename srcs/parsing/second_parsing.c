@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/30 15:56:40 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:09:05 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,29 +141,22 @@ char **extract(char *token)
 
 t_tok	*split_sep(t_tok *lst)
 {
-	int 	i;
 	char 	**splitted;
 	t_tok	*insert;
 	t_tok	*temp;
 
-	i = 0;
 	splitted = extract(lst->token);
 	free(lst->token);
 	lst->token = ft_strdup(splitted[0]);
-	while (splitted[++i])
+	while (*(++splitted))
 	{
-		insert = lstnew_token(ft_strdup(splitted[i]));
+		insert = lstnew_token(ft_strdup(*splitted));
 		temp = lst->next;
 		lst->next = insert;
 		insert->next = temp;
 		lst = lst->next;
 	}
 	return (lst);
-	// while (splitted[i])
-	// {
-	// 	printf("splitted[%d] %s\n", i, splitted[i]);
-	// 	i++;
-	// }
 }
 
 void	clean_token(t_tok **lst)
@@ -178,7 +171,6 @@ void	clean_token(t_tok **lst)
 		if (has_a_sep ((tmp)->token))
 		{
 			tmp = split_sep(tmp);
-			printf("tmp = %s\n", tmp->token);
 			tmp = tmp->next;
 		}
 		else
