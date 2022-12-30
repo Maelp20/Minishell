@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/29 17:02:01 by yanthoma         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:56:40 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,12 @@ char **extract(char *token)
 	return (extracted);
 }
 
-void	split_sep(t_tok *lst)
+t_tok	*split_sep(t_tok *lst)
 {
-	int i;
-	char **splitted;
+	int 	i;
+	char 	**splitted;
+	t_tok	*insert;
+	t_tok	*temp;
 
 	i = 0;
 	splitted = extract(lst->token);
@@ -150,14 +152,18 @@ void	split_sep(t_tok *lst)
 	lst->token = ft_strdup(splitted[0]);
 	while (splitted[++i])
 	{
-		lstnew_token(splitted[i]);
+		insert = lstnew_token(ft_strdup(splitted[i]));
+		temp = lst->next;
+		lst->next = insert;
+		insert->next = temp;
+		lst = lst->next;
 	}
-	
-	while (splitted[i])
-	{
-		printf("splitted[%d] %s\n", i, splitted[i]);
-		i++;
-	}
+	return (lst);
+	// while (splitted[i])
+	// {
+	// 	printf("splitted[%d] %s\n", i, splitted[i]);
+	// 	i++;
+	// }
 }
 
 void	clean_token(t_tok **lst)
@@ -171,8 +177,9 @@ void	clean_token(t_tok **lst)
 	{
 		if (has_a_sep ((tmp)->token))
 		{
-			split_sep(tmp );
-			break;
+			tmp = split_sep(tmp);
+			printf("tmp = %s\n", tmp->token);
+			tmp = tmp->next;
 		}
 		else
 			tmp = (tmp)->next;
