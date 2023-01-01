@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/01 14:40:27 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/01 16:22:42 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS	= \
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
 			parsing/first_parsing.c parsing/second_parsing.c parsing/before_expand.c parsing/get_env.c\
-			parsing/split_quotes_space.c\
+			parsing/split_quotes_space.c parsing/clean_quotes_space.c\
 			parsing/init.c parsing/main.c\
 
 SRCDIR		= srcs/

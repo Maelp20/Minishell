@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/01 15:30:48 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/01 15:32:41 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,4 @@ void	clean_token(t_tok **lst)
 		else
 			tmp = (tmp)->next;
 	}
-	print_tok_list(*lst);
 }
