@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/30 16:09:05 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/01 15:30:48 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,21 @@ void print_tok_list(t_tok *list)
     }
 }
 
-int	is_separator(char c)
+int	check_separator(char c)
 {
 	if (c == '>' || c == '<' || c == '|')
 		return (1);
 	return (0);
+}
+
+
+int	is_separator(char c1, char c2)
+{
+    if(c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
+        return (2);
+    else if (c1 == '>' || c1 == '<' || c1 == '|')
+        return (1);
+    return (0);
 }
 
 int has_a_sep(char *token)
@@ -54,17 +64,19 @@ int	countword(char *token)
 	
 	while (token[i])
 	{
-		if (!is_separator(token[i]))
+		if (!check_separator(token[i]))
 		{
 			j++;
-			while (token[i] && !is_separator(token[i]))
+			while (token[i] && !check_separator(token[i]))
 				i++;
 		}
 		else
 		{
 			j++;
-			while (token[i] && is_separator(token[i]))
-				i++;
+    		if (is_separator(token[i], token[i + 1]) == 2)
+				i += 2;
+   			else if (is_separator(token[i], token[i + 1]) == 1)
+				i += 1;
 		}
 	}
 	return (j);
@@ -97,16 +109,18 @@ int	len_word(char *token)
 	i = 0;
 	while (token[i])
 	{
-		if (!is_separator(token[i]))
+		if (!check_separator(token[i]))
 		{
-			while (token[i] && !is_separator(token[i]))
+			while (token[i] && !check_separator(token[i]))
 				i++;
 			return (i);
 		}
 		else
 		{
-			while (token[i] && is_separator(token[i]))
-				i++;
+    		if (is_separator(token[i], token[i + 1]) == 2)
+				i += 2;
+   			else if (is_separator(token[i], token[i + 1]) == 1)
+				i += 1;
 			return (i);
 		}
 	}
@@ -168,7 +182,7 @@ void	clean_token(t_tok **lst)
 	tmp = *lst;
 	while (tmp)
 	{
-		if (has_a_sep ((tmp)->token))
+		if (!is_sep((tmp)->token[0]) && has_a_sep ((tmp)->token))
 		{
 			tmp = split_sep(tmp);
 			tmp = tmp->next;
