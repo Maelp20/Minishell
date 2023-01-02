@@ -6,11 +6,24 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/13 15:55:16 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:06:27 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+
+
+void print_env(t_envp *list)
+{
+    t_envp *current = list;
+    while (current)
+    {
+        printf("%s%s\n", current->var[0],current->var[1]);
+        current = current->next;
+    }
+}
+
 
 t_envp	*lstnew_env(char **content)
 {
@@ -24,25 +37,6 @@ t_envp	*lstnew_env(char **content)
 	dest->next = NULL;
 	return (dest);
 }
-
-// void	lstadd_back_env(t_envp **lst, t_envp *new)
-// {
-// 	if (*lst == ((void *)0))
-// 		*lst = new;
-// 	else
-// 		lstadd_back_env(&((*lst)->next), new);
-// }
-
-// void	get_env(char **envi, t_data *data)
-// {
-// 	int i;
-
-// 	data->envp = NULL;
-// 	i = -1;
-// 	while (envi[++i])
-// 		lstadd_back_env(&data->envp ,lstnew_env(ft_split(envi[i], '=')));
-// }
-
 
 
 
@@ -77,23 +71,26 @@ char **split_at_first_equal(char *input)
     return (NULL);
 }
 
-void get_env(char **envi, t_data *data)
+t_envp *get_env(char **envi)
 {
     int i;
+    t_envp *head;
     t_envp *node;
     t_envp **tail;
 
     i = 0;
-    data->envp = NULL;
-    tail = &data->envp;
+    head = NULL;
+    tail = &head;
 
     while (envi[i])
     {
         node = lstnew_env(split_at_first_equal(envi[i]));
         if (!node)
-            continue;
+            return NULL;
         *tail = node;
         tail = &node->next;
         i++;
     }
+    printf("%s%s\n", head->var[0],head->var[1]);
+    return head;
 }

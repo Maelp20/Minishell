@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/01 15:43:09 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:07:56 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int main(int ac, char **av, char **env)
 	t_tok	*lst;
 
 	(void)av;
-	(void)env;
+	(void)lst;
+	t_envp *envir = get_env(env);
+	print_env(envir);
 	while (ac > 0)
 	{
 
@@ -29,22 +31,13 @@ int main(int ac, char **av, char **env)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
 				return(free(input),destroy_struct(data), exit(0), 0);
-			data = malloc(sizeof(t_data));
-			data = NULL;
 			add_history(input);
 			lst = init_token_lst(input, &data);
 			clean_token(&lst);
 			clean_quotes(&lst);
+			//expand(&lst);
 			print_tok_list(lst);
-			// init_args(&data, input);
-			//get_env(env, data);
-			// get_path(data);
 		}
-		// while(data->envp)
-		// {
-		// printf("%s%s\n", data->envp->var[0],data->envp->var[1] );
-		// data->envp = data->envp->next;
-		// }
 		free(input);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/01 15:43:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:55:18 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,28 +94,24 @@ void clean_quotes(t_tok **lst);
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
 /*---------------------------------------INIT---------------------------------*/
-void	init_struct(t_data *data);
-void	init_args(t_data **data, char *arg);
+void	init_struct(t_data *data, char **env);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args(char *content);
 void	lstadd_back_args(t_data **lst, t_data *new);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
-
+void print_env(t_envp *list);
 t_envp	*lstnew_env(char **content);
  void	lstadd_back_env(t_envp **lst, t_envp *new);
- void	get_env(char **envi, t_data *data);
+t_envp	*get_env(char **envi);
 
 /*--------------------------------------PATH---------------------------------*/
-char	*get_path(t_data *data);
 
 /*---------------------------------------LEX---------------------------------*/
 int is_quote(char c);
 
-
-
-		/*---------------------EXEC----------------------*/
+/*---------------------EXEC----------------------*/
 
 int ft_exec(t_data *data);
 
