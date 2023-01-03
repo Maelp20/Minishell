@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/02 16:06:27 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/03 01:32:44 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,5 @@ t_envp *get_env(char **envi)
         tail = &node->next;
         i++;
     }
-    printf("%s%s\n", head->var[0],head->var[1]);
     return head;
 }

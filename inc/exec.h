@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/02 15:55:18 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:00:27 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		is_to_split(char c);
 void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
 int		split_pipe_and_chev(char *token, t_tok **lst);
 void	clean_token(t_tok **lst);
-void clean_quotes(t_tok **lst);
+void 	clean_quotes(t_tok **lst);
 
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
