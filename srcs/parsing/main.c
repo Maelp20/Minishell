@@ -6,20 +6,20 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/03 01:45:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:22:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	init_data(t_data **data, t_envp *envp)
+void	init_data(t_data **data, t_envp *envi)
 {
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		printf("free blahblah\n");
-	ft_bzero(data, sizeof(t_data));
-	(*data)->envp = envp;
-	print_env((*data)->envp);
+	ft_bzero(*data, sizeof(t_data));
+	(*data)->envp = envi;
+	//print_env((*data)->envp);
 }
 
 int main(int ac, char **av, char **env)

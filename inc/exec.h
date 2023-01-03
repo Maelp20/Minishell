@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/02 23:00:27 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:20:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void 	clean_quotes(t_tok **lst);
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
 /*---------------------------------------INIT---------------------------------*/
-void	init_struct(t_data *data, char **env);
+void	init_struct(t_data *data, char **envi);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args(char *content);
 void	lstadd_back_args(t_data **lst, t_data *new);
