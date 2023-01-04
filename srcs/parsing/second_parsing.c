@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/01 15:32:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/04 02:42:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 void print_tok_list(t_tok *list)
 {
     t_tok *current = list;
+	int i;
+	i = 0;
+	printf("tok list : \n");
     while (current)
     {
-        printf("%s\n", current->token);
+		i++;
+        printf("%d %s\n",i, current->token);
         current = current->next;
     }
 }
