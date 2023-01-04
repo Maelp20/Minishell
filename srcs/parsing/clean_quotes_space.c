@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/03 19:09:35 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:23:56 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	clean_sq(t_tok *lst)
 }
 
 
-void clean_quotes(t_tok **lst)
+void clean_dquotes(t_tok **lst)
 {
 	t_tok *temp;
 	
@@ -68,6 +68,21 @@ void clean_quotes(t_tok **lst)
 			clean_dbq(temp);
 		// if (temp->token[0] == '\'' )
 		// 	clean_sq(temp);
+		temp = temp->next;
+	}
+}
+
+void clean_squotes(t_tok **lst)
+{
+	t_tok *temp;
+	
+	temp = *lst;
+	while(temp)
+	{
+		// if (temp->token[0] == '\"')
+		// 	clean_dbq(temp);
+		if (temp->token[0] == '\'' )
+			clean_sq(temp);
 		temp = temp->next;
 	}
 }

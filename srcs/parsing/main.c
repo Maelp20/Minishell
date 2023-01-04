@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/03 19:11:01 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:31:55 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	init_data(t_data **data, t_envp *envi)
 		printf("free blahblah\n");
 	ft_bzero(*data, sizeof(t_data));
 	(*data)->envp = envi;
+	(*data)->fds.pipe1[0] = 0;
+	(*data)->fds.pipe1[1] = 0;
+	(*data)->fds.pipe2[0] = 0;
+	(*data)->fds.pipe2[1] = 0;
 	//print_env((*data)->envp);
 }
 
@@ -37,7 +41,7 @@ int main(int ac, char **av, char **env)
 	while (ac > 0)
 	{
 		init_data(&data,envir);
-		input = readline("Minishell>");
+		input = readline("Minidasdasdasdshell>");
 		if (input && *input)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
@@ -45,8 +49,9 @@ int main(int ac, char **av, char **env)
 			add_history(input);
 			lst = init_token_lst(input, &data);
 			clean_token(&lst);
-			clean_quotes(&lst);
+			clean_dquotes(&lst);
 			expand(&lst, &data);
+			clean_squotes(&lst);
 			print_tok_list(lst);
 		}
 		free(input);

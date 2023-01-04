@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/03 19:10:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:31:04 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef	struct s_tok
 {
-	char* token;
+	char *token;
 	struct s_tok *next;
 }	t_tok;
 
@@ -59,7 +59,7 @@ typedef struct s_data
 	char			*outfile;
 	
 	t_envp			*envp;
-	t_pipes			*fds;
+	t_pipes			fds;
 	pid_t			pid;
 	
 	int				is_builtin;
@@ -89,7 +89,8 @@ int		is_to_split(char c);
 void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
 int		split_pipe_and_chev(char *token, t_tok **lst);
 void	clean_token(t_tok **lst);
-void 	clean_quotes(t_tok **lst);
+void 	clean_dquotes(t_tok **lst);
+void 	clean_squotes(t_tok **lst);
 
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
