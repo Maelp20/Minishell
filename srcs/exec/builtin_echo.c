@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 16:04:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:31:27 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	is_valid_flag(char *str)
 
 int	ft_echo(t_data *data)
 {
+	printf("echo bultin\n");
 	int	i;
 	int	flag;
 
