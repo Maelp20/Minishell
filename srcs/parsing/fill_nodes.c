@@ -17,8 +17,10 @@ int	count_nodes(t_tok **lst)
 
 void	fill_node_with_tok(t_tok **lst, t_data **data)
 {
-	int		nb_nodes;	
+	int		nb_nodes;
+	int		i;
 
 	nb_nodes= count_nodes(lst);
+	while (i < nb_nodes)
 	
 }
