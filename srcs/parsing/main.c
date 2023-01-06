@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/06 02:11:14 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/06 02:31:31 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(int ac, char **av, char **env)
 	while (ac > 0)
 	{
 		init_data(&data,envir);
-		input = readline("Minidasdasdasdshell>");
+		input = readline("Minishell>");
 		if (input && *input)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
@@ -49,6 +49,7 @@ int main(int ac, char **av, char **env)
 			clean_dquotes(&lst);
 			expand(&lst, &data);
 			clean_squotes(&lst);
+			fill_node_with_tok(&lst, &data);
 			print_tok_list(lst);
 		}
 		free(input);
