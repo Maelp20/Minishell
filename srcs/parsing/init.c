@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:55 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/18 17:20:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:51:04 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,17 @@ t_data	*ft_lstlast_arg(t_data *lst)
 // 	dest->next = NULL;
 // 	return (dest);
 // }
+
+t_data	*lstnew_args()
+{
+	t_data  *dest;
+
+	dest = malloc(sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	dest->next = NULL;
+	return (dest);
+}
 
 void	lstadd_back_args(t_data **lst, t_data *new)
 {

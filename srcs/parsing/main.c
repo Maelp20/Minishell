@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/04 16:31:55 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/06 02:11:14 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	init_data(t_data **data, t_envp *envi)
 		printf("free blahblah\n");
 	ft_bzero(*data, sizeof(t_data));
 	(*data)->envp = envi;
-	(*data)->fds.pipe1[0] = 0;
-	(*data)->fds.pipe1[1] = 0;
-	(*data)->fds.pipe2[0] = 0;
-	(*data)->fds.pipe2[1] = 0;
+	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 	//print_env((*data)->envp);
 }
 

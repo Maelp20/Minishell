@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/04 16:31:04 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/06 02:15:16 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_data
 	char			*outfile;
 	
 	t_envp			*envp;
-	t_pipes			fds;
+	t_pipes			*fds;
 	pid_t			pid;
 	
 	int				is_builtin;
@@ -99,8 +99,9 @@ void	expand(t_tok **lst, t_data **data);
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data, char **envi);
 t_data	*ft_lstlast_arg(t_data *lst);
-t_data	*lstnew_args(char *content);
+t_data	*lstnew_args();
 void	lstadd_back_args(t_data **lst, t_data *new);
+void	create_data_args(t_tok **lst, t_data **data);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
