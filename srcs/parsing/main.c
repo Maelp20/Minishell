@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/07 13:54:30 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/07 14:19:48 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_data(t_data **data, t_envp *envi)
 
 
 
-/* int main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
@@ -48,25 +48,21 @@ void	init_data(t_data **data, t_envp *envi)
 			if (ft_strncmp(input,"exit",4)  == 0)
 				return(free(input),destroy_struct(data), exit(0), 0);
 			add_history(input);
-			// lst = init_token_lst(input, &data);
-			// clean_token(&lst);
-			// clean_dquotes(&lst);
-			// expand(&lst, &data);
-			// clean_squotes(&lst);
-			// fill_node_with_tok(&lst, &data);
-			// print_tok_list(lst);
-			char **result = ft_split(input, " ");
-			t_data data = data ;
-			data.cmd = result;
-			//ft_exec(data);
+			lst = init_token_lst(input, &data);
+			clean_token(&lst);
+			clean_dquotes(&lst);
+			expand(&lst, &data);
+			clean_squotes(&lst);
+			fill_node_with_tok(&lst, &data);
+			print_tok_list(lst);
 		}
 		free(input);
 		i++;
 	}
 }
- */
 
-int main(int ac, char **av, char **env)
+
+i/* nt main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
@@ -97,7 +93,7 @@ int main(int ac, char **av, char **env)
 		free(input);
 		i++;
 	}
-}
+} */
 
 // MAIN DE TEST MAEL
 

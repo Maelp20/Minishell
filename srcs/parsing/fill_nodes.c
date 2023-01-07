@@ -60,6 +60,26 @@ void	create_data_args(t_tok **lst, t_data **data)
 		data_tmp = data_tmp->next;
 	}
 }
+
+
+void process_redir(t_tok **lst, t_data **data)
+{
+	t_tok *temp_tok;
+	t_data *temp_data;
+
+	temp_tok = *lst;
+	temp_data = data;
+	while (temp_data)
+	{
+		while(temp_tok)
+		{
+			
+			temp_tok = temp_tok->next;
+		}
+		temp_data = temp_data->next;
+	}
+}
+
 void	fill_node_with_tok(t_tok **lst, t_data **data)
 {
 	int		nb_nodes;
