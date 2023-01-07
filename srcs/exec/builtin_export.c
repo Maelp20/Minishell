@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 16:13:08 by mpignet          ###   ########.fr       */
+/*   Updated: 2022/12/13 14:50:59 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ t_envp *copy_envp(t_envp *envp)
 		tmp = malloc(sizeof(t_envp));
 		tmp->var = malloc(sizeof(char *) * 3);
 		tmp->var[0] = ft_strdup(envp->var[0]);
-		tmp->var[1]= ft_strdup(envp->var[1]);
+		if (envp->var [1])
+			tmp->var[1]= ft_strdup(envp->var[1]);
 		tmp->var[2] = NULL;
 		tmp->next = dst;
 		dst = tmp;
@@ -85,9 +86,18 @@ void	ft_show_export(t_envp *envp)
 	sort_envp(dst);
 	while (dst)
 	{
-		printf("declare -x ");
-		printf("%s", dst->var[0]);
-		printf("\"%s\"\n", dst->var[1]);
+		printf("export ");
+		if (!dst->var[1])
+		{
+			dst->var[0] = ft_strtrim(dst->var[0], "=");
+			printf("%s", dst->var[0]);
+		}
+		else
+		{
+			printf("%s", dst->var[0]);
+			printf("\"%s\"", dst->var[1]);
+		}
+		printf("\n");
 		dst = dst->next;
 	}
 	free(dst);
@@ -107,6 +117,7 @@ void	ft_export(t_data *data)
 	if (!data->args[1])
 	{
 		ft_show_export(data->envp);
+		return;
 		exit(EXIT_SUCCESS);
 	}
 	while (data->args[++i])
@@ -119,4 +130,5 @@ void	ft_export(t_data *data)
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_front(&(data->envp), new);
 	}
+	ft_show_export(data->envp);
 }

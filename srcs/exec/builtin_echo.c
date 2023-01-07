@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/16 16:04:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/06 16:19:25 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	ft_echo(t_data *data)
 	int	i;
 	int	flag;
 
+	if (!data->args[1])
+		return (ft_printf("\n"), 1);
 	i = 1;
 	flag = 0;
 	while (data->args[i] && is_valid_flag(data->args[i]))
@@ -49,7 +51,8 @@ int	ft_echo(t_data *data)
 	}
 	while (data->args[i + 1])
 		printf("%s ", data->args[i++]);
-	printf("%s", data->args[i]);
+	if (data->args[i])
+		printf("%s", data->args[i]);
 	if (flag == 0)
 		printf("\n");
 	return (0);
