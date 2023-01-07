@@ -67,7 +67,7 @@ void	fill_node_with_tok(t_tok **lst, t_data **data)
 
 	nb_nodes= count_nodes(lst);
 	create_data_nodes(nb_nodes, data);
-	process_redir(lst, data);
+	//process_redir(lst, data);
 	create_data_args(lst, data);
 	printf_data_args(*data);
 		
