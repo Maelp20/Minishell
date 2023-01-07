@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2022/12/11 12:57:50 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/06 02:32:38 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ SRCS	= \
 			exec/builtin_exit.c\
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
-			parsing/first_parsing.c parsing/second_parsing.c parsing/before_expand.c parsing/get_env.c\
-			parsing/detect_quote.c\
-			parsing/init.c parsing/main.c\
+			parsing/first_parsing.c parsing/second_parsing.c parsing/get_env.c\
+			parsing/split_quotes_space.c parsing/clean_quotes_space.c\
+			parsing/init.c parsing/main.c parsing/expand.c parsing/fill_nodes.c\
 
 SRCDIR		= srcs/
 OBJDIR 		= objs

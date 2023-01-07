@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   detect_quote.c                                     :+:      :+:    :+:   */
+/*   split_quotes_space.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2022/12/09 00:02:43 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/01 14:41:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,57 +33,39 @@ int	split_dbq(char *input, int i, t_tok **lst)
 		j++;
 	if (input[j] != '\"' && input [j + 1] =='\0')
 		return (-2);
-	tmp = malloc(sizeof(char) * (j - i + 1));
+	tmp = malloc(sizeof(char) * (j - i + 3));
 	if (!tmp)
 		return (-2);
-	j = -1;
+	j = 0;
 	i--;
+	tmp[j] = '\"';
 	while(is_sep(input[++i]) != 3)
 		tmp[++j] = input[i];
+	tmp[++j] = '\"';
 	tmp[++j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
 	return (free(tmp), ++i);
 } 
 
-int	split_with_sq_dollar(char *input, int i, t_tok **lst)
-{
-	int j;
-	char *tmp;
-
-	j = i;
-	tmp = malloc(sizeof(char) * (j - i + 3));
-	if (!tmp)
-		return(-2);
-	j = 0;
-	i--;
-	tmp[j] = '\'';
-	while (input[++i] && input[i] != '\'')
-		tmp[++j] = input[i];
-	tmp[++j] = '\'';
-	tmp[++j] = '\0';
-	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), ++i);
-}
-
 int	split_sq(char *input, int i, t_tok **lst)
 {
 	int		j;
 	char	*tmp;
-	
-	if (input[i] == '$')
-		return (split_with_sq_dollar(input, i, lst));
+
 	j = i;
 	while (is_sep(input[j]) != 2 && input[j + 1]) 
 		j++;
 	if (input[j] != '\'' && input [j + 1] =='\0')
 		return (-2);
-	tmp = malloc(sizeof(char) * (j - i + 1));
+	tmp = malloc(sizeof(char) * (j - i + 3));
 	if (!tmp)
 		return (-2);
-	j = -1;
+	j = 0;
 	i--;
+	tmp[j] = '\'';
 	while(is_sep(input[++i]) != 2)
 		tmp[++j] = input[i];
+	tmp[++j] = '\'';
 	tmp[++j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
 	return (free(tmp), ++i);

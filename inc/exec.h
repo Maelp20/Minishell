@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 15:41:05 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/06 02:31:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef	struct s_tok
 {
-	char* token;
+	char *token;
 	struct s_tok *next;
 }	t_tok;
 
@@ -73,6 +73,8 @@ typedef struct s_data
 }	t_data;
 
 		/*---------------------PARSING----------------------*/
+void print_tok_list(t_tok *list);
+
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
@@ -86,33 +88,35 @@ int		split_space(char *input, int i, t_tok **lst);
 int		is_to_split(char c);
 void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
 int		split_pipe_and_chev(char *token, t_tok **lst);
-void	clean_token_lst(t_tok **lst);
+void	clean_token(t_tok **lst);
+void 	clean_dquotes(t_tok **lst);
+void 	clean_squotes(t_tok **lst);
 
 void	split_lst_operator(t_tok **tok_lst, t_data **lst);
 
+void	expand(t_tok **lst, t_data **data);
+
 /*---------------------------------------INIT---------------------------------*/
-void	init_struct(t_data *data);
-void	init_args(t_data **data, char *arg);
+void	init_struct(t_data *data, char **envi);
 t_data	*ft_lstlast_arg(t_data *lst);
-t_data	*lstnew_args(char *content);
+t_data	*lstnew_args();
 void	lstadd_back_args(t_data **lst, t_data *new);
+void	create_data_args(t_tok **lst, t_data **data);
+void	fill_node_with_tok(t_tok **lst, t_data **data);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
-
+void print_env(t_envp *list);
 t_envp	*lstnew_env(char **content);
  void	lstadd_back_env(t_envp **lst, t_envp *new);
- void	get_env(char **envi, t_data *data);
+t_envp	*get_env(char **envi);
 
 /*--------------------------------------PATH---------------------------------*/
-char	*get_path(t_data *data);
 
 /*---------------------------------------LEX---------------------------------*/
 int is_quote(char c);
 
-
-
-		/*---------------------EXEC----------------------*/
+/*---------------------EXEC----------------------*/
 
 int ft_exec(t_data *data);
 
