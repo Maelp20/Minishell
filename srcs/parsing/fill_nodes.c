@@ -62,56 +62,52 @@ void	create_data_args(t_tok **lst, t_data **data)
 	}
 }
 
-void	at_heredoc(t_tok *lst, t_data *data)
+void	at_heredoc(t_tok **lst, t_data *data)
 {
 		(void)lst;
 		(void)data;
 }
 
-void	app_dir(t_tok *lst, t_data *data)
+void	app_dir(t_tok **lst, t_data *data)
 {
 		(void)lst;
 		(void)data;
 }
 
-void	in_redir(t_tok **lst, t_tok *lst_node, t_data ** data, t_data *data_node)
+void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-	t_tok *temp;
-	(void)lst;
-	(void)data;
-	printf("test\n");
-	if (!lst_node->next)
-		printf("blahblah\n");
-	data_node->infile = lst_node->next->token;
-	temp = lst_node;
-	lst_node->prev->next = lst_node->next;
-	lst_node = lst_node->next;
-	printf("free %s\n", lst_node->token);
-	printf("free1 %s\n", temp->token);
-	free(temp->token);
-	free(temp);
+    t_tok *temp;
+    (void)lst;
+    (void)data;
+    printf("test\n");
+    if (!(*lst_node)->next)
+        printf("blahblah\n");
+    data_node->infile = (*lst_node)->next->token;
+    temp = (*lst_node);
+    (*lst_node)->prev->next = (*lst_node)->next;
+    (*lst_node) = (*lst_node)->next;
+    printf("free %s\n", (*lst_node)->token);
+    printf("free1 %s\n", temp->token);
+    free(temp->token);
+    free(temp);
 
-	// temp = lst_node;
-	// lst_node->prev->next = lst_node->next;
-	// free(temp->token);
-	// free(temp);
 }
 
-void	out_redir(t_tok *lst, t_data *data)
+void	out_redir(t_tok **lst, t_data *data)
 {
 		(void)lst;
 		(void)data;
 }
 
-int	check_redir(t_tok **lst, t_tok *lst_node, t_data **data, t_data *data_node)
+int	check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *data_node)
 {
-	if (!ft_strcmp(lst_node->token, "<<"))
+	if (!ft_strcmp((*lst_node)->token, "<<"))
 		return (at_heredoc(lst_node, data_node), 1);
-	else if (!ft_strcmp(lst_node->token , ">>"))
+	else if (!ft_strcmp((*lst_node)->token , ">>"))
 		return (app_dir(lst_node, data_node), 1);
-	else if (!ft_strcmp(lst_node->token, "<"))
+	else if (!ft_strcmp((*lst_node)->token, "<"))
 		return (in_redir(lst, lst_node, data, data_node),  1);
-	else if (!ft_strcmp(lst_node->token, ">"))
+	else if (!ft_strcmp((*lst_node)->token, ">"))
 		return (out_redir(lst_node, data_node), 1);
 	else
 		return (0);
@@ -119,23 +115,23 @@ int	check_redir(t_tok **lst, t_tok *lst_node, t_data **data, t_data *data_node)
 
 void process_redir(t_tok **lst, t_data **data)
 {
-	t_tok *temp_tok;
-	t_data *temp_data;
+    t_tok *temp_tok;
+    t_data *temp_data;
 
-	temp_tok = *lst;
-	temp_data = *data;
-	printf("try\n");
-	while (temp_data)
-	{
-		printf("try2\n");
-		while(temp_tok && ft_strcmp(temp_tok->token, "|") != 0)
-		{
-			printf("process_redir\n");
-			check_redir(lst, temp_tok ,data , temp_data);
-			temp_tok = temp_tok->next;
-		}
-		temp_data = temp_data->next;z
-	}
+    temp_tok = *lst;
+    temp_data = *data;
+    printf("try\n");
+    while (temp_data)
+    {
+        printf("try2\n");
+        while(temp_tok && ft_strcmp(temp_tok->token, "|") != 0)
+        {
+            printf("process_redir\n");
+            check_redir(lst, &temp_tok ,data , temp_data);
+            temp_tok = temp_tok->next;
+        }
+        temp_data = temp_data->next;
+    }
 }
 
 void	fill_node_with_tok(t_tok **lst, t_data **data)
