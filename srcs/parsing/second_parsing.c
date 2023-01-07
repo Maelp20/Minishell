@@ -1,116 +1,197 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   second_parsing.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
+/*   Updated: 2023/01/04 02:42:45 by yanthoma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 
-void add_to_list(t_tok **list, t_tok **current, t_tok *token)
+
+void print_tok_list(t_tok *list)
 {
-	if (*current)
-	{
-		(*current)->next = token;
-		*current = (*current)->next;
-	}
-	else
-	{
-		*list = token;
-		*current = token;
-	}
+    t_tok *current = list;
+	int i;
+	i = 0;
+	printf("tok list : \n");
+    while (current)
+    {
+		i++;
+        printf("%d %s\n",i, current->token);
+        current = current->next;
+    }
 }
 
-size_t add_separator(const char *str, size_t i, t_tok **list, t_tok **current)
+int	check_separator(char c)
 {
-	t_tok *separator;
+	if (c == '>' || c == '<' || c == '|')
+		return (1);
+	return (0);
+}
 
-	separator = malloc(sizeof(t_tok));
-	separator->token = malloc(3);
-	if (i < strlen(str) - 1 && str[i] == str[i + 1])
+
+int	is_separator(char c1, char c2)
+{
+    if(c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
+        return (2);
+    else if (c1 == '>' || c1 == '<' || c1 == '|')
+        return (1);
+    return (0);
+}
+
+int has_a_sep(char *token)
+{
+	int i;
+
+	i = 0;
+	while(token[i])
 	{
-		// Handle double separators
-		separator->token[0] = str[i];
-		separator->token[1] = str[i];
-		separator->token[2] = '\0';
-		i++; // Skip the next character
+		if (token[i] == '>' || token[i] == '<' || token [i] == '|')
+			return (1);
+		i++;
 	}
-	else
+	return (0);
+}
+
+int	countword(char *token)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	
+	while (token[i])
 	{
-		// Handle single separators
-		separator->token[0] = str[i];
-		separator->token[1] = '\0';
+		if (!check_separator(token[i]))
+		{
+			j++;
+			while (token[i] && !check_separator(token[i]))
+				i++;
+		}
+		else
+		{
+			j++;
+    		if (is_separator(token[i], token[i + 1]) == 2)
+				i += 2;
+   			else if (is_separator(token[i], token[i + 1]) == 1)
+				i += 1;
+		}
 	}
-	separator->next = NULL;
-	// Add the separator to the list
-	add_to_list(list, current, separator);
+	return (j);
+}
+
+
+char *fill_word(char *token, int len)
+{
+	int	i;
+	char *split;
+
+	i = 0;
+	// printf("token[i] = %s len = %d\n", token, len);
+	// printf("token fill word[%c]\n",token[i]);
+	split = malloc(sizeof(char) * (len + 1));
+	while (i < len)
+	{
+		split[i] =token[i]; 
+		//printf("token[i] = %c split[i] = %c\n", token[i], split[i]);
+		i++;
+	}
+	split[i] = '\0';
+	return (split);
+}
+
+int	len_word(char *token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (!check_separator(token[i]))
+		{
+			while (token[i] && !check_separator(token[i]))
+				i++;
+			return (i);
+		}
+		else
+		{
+    		if (is_separator(token[i], token[i + 1]) == 2)
+				i += 2;
+   			else if (is_separator(token[i], token[i + 1]) == 1)
+				i += 1;
+			return (i);
+		}
+	}
 	return (i);
 }
 
-void create_token(t_tok **list, t_tok *current, char *buf, int buf_pos)
+char **extract(char *token)
 {
-	t_tok *token;
+	int		nb_word;
+	char	**extracted;
+	int 	i;
+	int		len;
 
-	token = malloc(sizeof(t_tok));
-	if (buf_pos > 0) 
+	i = 0;
+	nb_word = countword(token);
+	//printf("nb_word %d\n", nb_word);
+	extracted = malloc(sizeof(char *) * (nb_word + 1));
+	while (i < nb_word)
 	{
-		buf[buf_pos] = '\0';
-		token->token = strdup(buf);
-		token->next = NULL;
-		if (current)
-			current->next = token;
+		len = len_word(token);
+		// printf("len %d\n", len);
+		// printf("token %s\n", token);
+		// printf("token[%c]\n",token[0]);
+		// printf("i = %d\n", i);
+		extracted[i] = fill_word(token, len);
+		token += len;
+		i++;
+	}
+	extracted[i] = '\0';
+	return (extracted);
+}
+
+t_tok	*split_sep(t_tok *lst)
+{
+	char 	**splitted;
+	t_tok	*insert;
+	t_tok	*temp;
+
+	splitted = extract(lst->token);
+	free(lst->token);
+	lst->token = ft_strdup(splitted[0]);
+	while (*(++splitted))
+	{
+		insert = lstnew_token(ft_strdup(*splitted));
+		temp = lst->next;
+		lst->next = insert;
+		insert->next = temp;
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+void	clean_token(t_tok **lst)
+{
+	int i;
+	int j;
+	t_tok *tmp;
+	
+	tmp = *lst;
+	while (tmp)
+	{
+		if (!is_sep((tmp)->token[0]) && has_a_sep ((tmp)->token))
+		{
+			tmp = split_sep(tmp);
+			tmp = tmp->next;
+		}
 		else
-		*list = token;
+			tmp = (tmp)->next;
 	}
-}
-
-t_tok *split_string(const char *str, t_tok *list, t_tok *current )
-{
-  // Create a linked list to store the tokens
-  t_tok	*token;
-  // Create a temporary buffer to hold the current token
-  char buf[strlen(str) + 1];
-  int buf_pos = 0;
-  // Loop through the input string
-  size_t i = 0;
-  while ( i < strlen(str))
-  {
-      // Check if the current character is a separator
-    if (str[i] == '>' || str[i] == '<' || str[i] == '|' || (i < strlen(str) - 1 && str[i] == str[i + 1]))
-    {
-		// Add the separator as a token
-		// Add the current token to the list
-		buf[buf_pos] = '\0';
-		token = lstnew_token(buf);
-		add_to_list(&list, &current, token);
-		//Clear the buffer
-		buf_pos = 0;
-		// Create a new token for the separator
-		i = add_separator(str,i, &list, &current);
-	}
-	else
-	{
-		// Add the character to the current token buffer
-		buf[buf_pos] = str[i];
-		buf_pos++;
-	}
- 	i++;
-	}
-	// Add the last token to the list
-	create_token(&list, current, buf, buf_pos);
-	return list;
-}
-
-
-
-void	clean_token_lst(t_tok **lst)
-{
-	(void)lst;
-	t_tok *list = NULL;
-  	t_tok *current = NULL;
-    // Split the string "|J>>e>jesuis<<lol>" into tokens
-    t_tok *bis = split_string("|<<J>>e>jesuis<<>>d>>lol>",list,current  );
-
-    // Allocate memory for the current token in the list
-    t_tok *truc = malloc(sizeof(t_tok));
-
-    // Print the tokens in the list
-    for (truc = bis; truc; truc = truc->next)
-    {
-        printf("%s\n", truc->token);
-    }
-
 }
