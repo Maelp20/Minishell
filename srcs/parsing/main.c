@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/07 17:23:48 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:53:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_data(t_data **data, t_envp *envi)
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		printf("free blahblah\n");
-	ft_bzero(*data, sizeof(t_data));
 	(*data)->envp = envi;
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 	//print_env((*data)->envp);
@@ -31,29 +30,32 @@ int main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
-	t_data *data;
+	t_data data;
+	t_data *data_ptr;
 	t_tok	*lst;
 
 	(void)av;
 	(void)lst;
+	memset(&data, 0, sizeof(data));
+	data_ptr = &data;
 	t_envp *envir = get_env(env);
-	data = NULL;
 	//print_env(envir);
 	while (ac > 0)
 	{
-		init_data(&data,envir);
+		init_data(&data_ptr,envir);
+
 		input = readline("Minishell>");
 		if (input && *input)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
-				return(free(input),destroy_struct(data), exit(0), 0);
+				return(free(input),destroy_struct(data_ptr), exit(0), 0);
 			add_history(input);
-			lst = init_token_lst(input, &data);
+			lst = init_token_lst(input, &data_ptr);
 			clean_token(&lst);
 			clean_dquotes(&lst);
-			expand(&lst, &data);
+			expand(&lst, &data_ptr);
 			clean_squotes(&lst);
-			//fill_node_with_tok(&lst, &data);
+			fill_node_with_tok(&lst, &data_ptr);
 			print_tok_list(lst);
 		}
 		free(input);

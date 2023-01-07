@@ -64,18 +64,22 @@ void	create_data_args(t_tok **lst, t_data **data)
 
 void	at_heredoc(t_tok *lst, t_data *data)
 {
-		
+		(void)lst;
+		(void)data;
 }
 
 void	app_dir(t_tok *lst, t_data *data)
 {
-
+		(void)lst;
+		(void)data;
 }
 
 void	in_redir(t_tok **lst, t_tok *lst_node, t_data ** data, t_data *data_node)
 {
 	t_tok *temp;
-	
+	(void)lst;
+	(void)data;
+	printf("test\n");
 	if (!lst_node->next)
 		printf("blahblah\n");
 	data_node->infile = lst_node->next->token;
@@ -92,19 +96,20 @@ void	in_redir(t_tok **lst, t_tok *lst_node, t_data ** data, t_data *data_node)
 
 void	out_redir(t_tok *lst, t_data *data)
 {
-
+		(void)lst;
+		(void)data;
 }
 
-int	check_redir(t_tok *lst, t_data *data)
+int	check_redir(t_tok **lst, t_tok *lst_node, t_data **data, t_data *data_node)
 {
-	if (!ft_strcmp(lst->token, "<<"))
-		return (at_heredoc(lst, data), 1);
-	else if (!ft_strcmp(lst->token , ">>"))
-		return (app_dir(lst, data), 1);
-	else if (!ft_strcmp(lst->token, "<"))
-		return (int_redir(lst, data),  1);
-	else if (!ft_strcmp(lst->token, ">"))
-		return (out_redir(lst, data), 1);
+	if (!ft_strcmp(lst_node->token, "<<"))
+		return (at_heredoc(lst_node, data_node), 1);
+	else if (!ft_strcmp(lst_node->token , ">>"))
+		return (app_dir(lst_node, data_node), 1);
+	else if (!ft_strcmp(lst_node->token, "<"))
+		return (in_redir(lst, lst_node, data, data_node),  1);
+	else if (!ft_strcmp(lst_node->token, ">"))
+		return (out_redir(lst_node, data_node), 1);
 	else
 		return (0);
 }
@@ -116,11 +121,14 @@ void process_redir(t_tok **lst, t_data **data)
 
 	temp_tok = *lst;
 	temp_data = *data;
+	printf("try\n");
 	while (temp_data)
 	{
-		while(temp_tok && !ft_strcmp(temp_tok->token, "|"))
+		printf("try2\n");
+		while(temp_tok && ft_strcmp(temp_tok->token, "|") != 0)
 		{
-			check_redir(temp_tok, temp_data);
+			printf("process_redir\n");
+			check_redir(lst, temp_tok,data , temp_data);
 			temp_tok = temp_tok->next;
 		}
 		temp_data = temp_data->next;
@@ -133,8 +141,8 @@ void	fill_node_with_tok(t_tok **lst, t_data **data)
 
 	nb_nodes = count_nodes(lst);
 	create_data_nodes(nb_nodes, data);
-	//process_redir(lst, data);
-	create_data_args(lst, data);
-	printf_data_args(*data);
+	process_redir(lst, data);
+	//create_data_args(lst, data);
+	//printf_data_args(*data);
 		
 }
