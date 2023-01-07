@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/04 02:42:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:25:16 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void print_tok_list(t_tok *list)
     {
 		i++;
         printf("%d %s\n",i, current->token);
+		if (current->prev)
+			printf("previous %s\n", current->prev->token);
         current = current->next;
     }
 }
@@ -153,7 +155,7 @@ char **extract(char *token)
 		token += len;
 		i++;
 	}
-	extracted[i] = '\0';
+	extracted[i] = NULL;
 	return (extracted);
 }
 
@@ -179,8 +181,8 @@ t_tok	*split_sep(t_tok *lst)
 
 void	clean_token(t_tok **lst)
 {
-	int i;
-	int j;
+	// int i;
+	// int j;
 	t_tok *tmp;
 	
 	tmp = *lst;
