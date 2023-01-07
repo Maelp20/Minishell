@@ -85,13 +85,16 @@ void	in_redir(t_tok **lst, t_tok *lst_node, t_data ** data, t_data *data_node)
 	data_node->infile = lst_node->next->token;
 	temp = lst_node;
 	lst_node->prev->next = lst_node->next;
+	lst_node = lst_node->next;
+	printf("free %s\n", lst_node->token);
+	printf("free1 %s\n", temp->token);
 	free(temp->token);
 	free(temp);
 
-	temp = lst_node;
-	lst_node->prev->next = lst_node->next;
-	free(temp->token);
-	free(temp);
+	// temp = lst_node;
+	// lst_node->prev->next = lst_node->next;
+	// free(temp->token);
+	// free(temp);
 }
 
 void	out_redir(t_tok *lst, t_data *data)
@@ -128,10 +131,10 @@ void process_redir(t_tok **lst, t_data **data)
 		while(temp_tok && ft_strcmp(temp_tok->token, "|") != 0)
 		{
 			printf("process_redir\n");
-			check_redir(lst, temp_tok,data , temp_data);
+			check_redir(lst, temp_tok ,data , temp_data);
 			temp_tok = temp_tok->next;
 		}
-		temp_data = temp_data->next;
+		temp_data = temp_data->next;z
 	}
 }
 
