@@ -73,9 +73,21 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
     data_node->is_heredoc = ft_strdup((*lst_node)->next->token);
     temp = (*lst_node);
 	temp2 = (*lst_node)->next;
-    (*lst_node)->prev->next = (*lst_node)->next->next;
-	if (temp->prev->next)
-		temp->prev->next->prev = temp->prev;
+	if ((*lst_node)->prev == NULL && (*lst_node)->next->next == NULL)
+	{
+		(*lst_node)->next = NULL;
+	}
+	else if ((*lst_node)->prev == NULL)
+	{
+		(*lst_node)->next->next->prev = NULL;
+		*lst = (*lst_node)->next->next;
+	}
+	else
+	{
+    	(*lst_node)->prev->next = (*lst_node)->next->next;
+		if (temp->prev->next)
+			temp->prev->next->prev = temp->prev;
+	}
     tok_del_one(temp);
 	tok_del_one(temp2);
 }
@@ -92,9 +104,17 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 	data_node->is_append = 1;
     temp = (*lst_node);
 	temp2 = (*lst_node)->next;
-    (*lst_node)->prev->next = (*lst_node)->next->next;
-	if (temp->prev->next)
-		temp->prev->next->prev = temp->prev;
+	if ((*lst_node)->prev == NULL)
+	{
+		(*lst_node)->next->next->prev = NULL;
+		*lst = (*lst_node)->next->next;
+	}
+	else
+	{
+    	(*lst_node)->prev->next = (*lst_node)->next->next;
+		if (temp->prev->next)
+			temp->prev->next->prev = temp->prev;
+	}
     tok_del_one(temp);
 	tok_del_one(temp2);
 }
@@ -114,16 +134,12 @@ void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_nod
 	{
 		(*lst_node)->next->next->prev = NULL;
 		*lst = (*lst_node)->next->next;
-		printf("ah oue\n");
 	}
 	else
 	{
     	(*lst_node)->prev->next = (*lst_node)->next->next;
 		if (temp->prev->next)
-		{
 			temp->prev->next->prev = temp->prev;
-			printf("if\n");
-		}	
 	}
     tok_del_one(temp);
 	tok_del_one(temp2);
@@ -140,9 +156,17 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
     data_node->outfile = ft_strdup((*lst_node)->next->token);
     temp = (*lst_node);
 	temp2 = (*lst_node)->next;
-    (*lst_node)->prev->next = (*lst_node)->next->next;
-	if (temp->prev->next)
-		temp->prev->next->prev = temp->prev;
+	if ((*lst_node)->prev == NULL)
+	{
+		(*lst_node)->next->next->prev = NULL;
+		*lst = (*lst_node)->next->next;
+	}
+	else
+	{
+    	(*lst_node)->prev->next = (*lst_node)->next->next;
+		if (temp->prev->next)
+			temp->prev->next->prev = temp->prev;
+	}
     tok_del_one(temp);
 	tok_del_one(temp2);
 }
