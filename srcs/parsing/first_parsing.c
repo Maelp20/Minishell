@@ -1,5 +1,14 @@
 #include "exec.h"
 
+void	tok_del_one(t_tok *lst)
+{
+	if (lst->token)
+		free(lst->token);
+	if (lst)
+		free(lst);
+}
+
+
 t_tok	*lstnew_token(char *content)
 {
 	t_tok  *dest;

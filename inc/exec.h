@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/07 17:16:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/08 14:01:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void print_tok_list(t_tok *list);
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
+void	tok_del_one(t_tok *lst);
 t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		is_sep(char c);
