@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 14:55:15 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:01:28 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_data(t_data **data, t_envp *envi)
 
 
 
-int main(int ac, char **av, char **env)
+/* int main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
@@ -62,9 +62,9 @@ int main(int ac, char **av, char **env)
 		i++;
 	}
 }
+ */
 
-
-/* int main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
@@ -84,15 +84,15 @@ int main(int ac, char **av, char **env)
 			add_history(input);
 			char **result = ft_split(input, ' ');
 			data->args = result;
-			int i = 0;
+/* 			int i = 0;
 			while (data->args[i])
 			{
 				printf("%s\n", data->args[i]);
 				i++;
-			}
-			//ft_exec(data);
+			} */
+			ft_exec(data);
 		}
 		free(input);
 		i++;
 	}
-} */
+}
