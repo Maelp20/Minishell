@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 14:59:32 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:40:54 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	exec_builtin(t_data *data)
 	int	len;
 
 	len = ft_strlen(data->args[0]);
-	redirect_fds(data);
+	if (ft_data_size(data) > 1)
+		redirect_fds(data);
 	if (!ft_strncmp(data->args[0], "cd", len))
 		ft_cd(data);
 	else if (!ft_strncmp(data->args[0], "echo", len))
@@ -100,6 +101,7 @@ static void	child(t_data *data)
 				perror("execve");
 			exit_error("execve", data);
 		}
+		data->cmd_path = ft_get_path(data);
 		if (execve(data->cmd_path, data->args, data->envp->var) == -1)
 			perror("execve");
 		exit_error("execve", data);

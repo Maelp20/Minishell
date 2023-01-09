@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 14:58:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:16:14 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	ft_envpadd_back(t_envp **envp, t_envp *new);
 char 	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
+char	*ft_get_path(t_data *data);
 
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
