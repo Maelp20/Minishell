@@ -2,7 +2,7 @@
 
 int	is_char_var(char c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || '_')
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||  c == '_')
 		return (1);
 	else if (c >= '0' && c <= '9')
 		return (1);
@@ -34,6 +34,7 @@ char *expand_from(char *token, t_data *data)
 
 	i = 0;
 	len = 0;
+	len_env = 0;
 	while (token[i] && token[i] != '$')
 		len = ++i;
 	while (token[++i] && is_char_var(token[i]))
