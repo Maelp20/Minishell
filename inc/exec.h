@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/08 14:01:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:58:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ typedef	struct s_tok
 
 typedef struct s_pipes
 {	
-	int	pipe1[2];
-	int	pipe2[2];
+	int	pipe[2];
 }		t_pipes;
 
 typedef struct s_envp 

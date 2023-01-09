@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/06 16:57:28 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/09 14:59:32 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int ft_exec(t_data *data)
 	return (0);
 }
 
-int main (int ac, char **av, char **envp)
+/* int main (int ac, char **av, char **envp)
 {
 	t_data	*data;
 	t_data	*first_node;
@@ -200,7 +200,7 @@ int main (int ac, char **av, char **envp)
 	ft_exec(data);
 	// free(data);
 	return (0);
-}
+} */
 
 
 
