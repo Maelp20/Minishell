@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/07 18:53:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:55:15 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,4 @@ int main(int ac, char **av, char **env)
 		free(input);
 		i++;
 	}
-} */
-
-// MAIN DE TEST MAEL
-
-/* int main(int ac, char **av, char **envp)
-{
-	int		i = -1;
-	t_data	*data;
-
-	data = malloc (sizeof(t_data));
-	get_env(envp, data);
-	data->args = malloc (sizeof(char **) * ac - 1);
-	while (++i < (ac - 1))
-		data->args[i] = ft_strjoin_spec(data->args[i], av[i + 1]);
-	data->is_builtin = 1;
-	data->next = NULL;
-	ft_exec(data);
-	free(data);
-	return (0);
 } */
