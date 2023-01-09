@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/04 11:52:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/08 15:18:15 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,24 @@ int	ft_data_size(t_data *data)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
+	int	i;
+	int	ls1;
+	int	ls2;
 
+	if (!s1 || !s2)
+		return (0);
+	ls1 = ft_strlen(s1);
+	ls2 = ft_strlen(s2);
+	if (ls1 != ls2)
+		return (0);
 	i = 0;
-
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (1);
 }
 
 t_envp	*ft_envpnew(char *var, char *value)

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/07 13:54:30 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:01:28 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_data(t_data **data, t_envp *envi)
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		printf("free blahblah\n");
-	ft_bzero(*data, sizeof(t_data));
 	(*data)->envp = envi;
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 	//print_env((*data)->envp);
@@ -31,34 +30,33 @@ void	init_data(t_data **data, t_envp *envi)
 {
 	char *input;
 	int i = 0;
-	t_data *data;
+	t_data data;
+	t_data *data_ptr;
 	t_tok	*lst;
 
 	(void)av;
 	(void)lst;
+	memset(&data, 0, sizeof(data));
+	data_ptr = &data;
 	t_envp *envir = get_env(env);
-	data = NULL;
 	//print_env(envir);
 	while (ac > 0)
 	{
-		init_data(&data,envir);
+		init_data(&data_ptr,envir);
+
 		input = readline("Minishell>");
 		if (input && *input)
 		{
 			if (ft_strncmp(input,"exit",4)  == 0)
-				return(free(input),destroy_struct(data), exit(0), 0);
+				return(free(input),destroy_struct(data_ptr), exit(0), 0);
 			add_history(input);
-			// lst = init_token_lst(input, &data);
-			// clean_token(&lst);
-			// clean_dquotes(&lst);
-			// expand(&lst, &data);
-			// clean_squotes(&lst);
-			// fill_node_with_tok(&lst, &data);
-			// print_tok_list(lst);
-			char **result = ft_split(input, " ");
-			t_data data = data ;
-			data.cmd = result;
-			//ft_exec(data);
+			lst = init_token_lst(input, &data_ptr);
+			clean_token(&lst);
+			clean_dquotes(&lst);
+			expand(&lst, &data_ptr);
+			clean_squotes(&lst);
+			fill_node_with_tok(&lst, &data_ptr);
+			print_tok_list(lst);
 		}
 		free(input);
 		i++;
@@ -86,34 +84,15 @@ int main(int ac, char **av, char **env)
 			add_history(input);
 			char **result = ft_split(input, ' ');
 			data->args = result;
-			int i = 0;
+/* 			int i = 0;
 			while (data->args[i])
 			{
 				printf("%s\n", data->args[i]);
 				i++;
-			}
-			//ft_exec(data);
+			} */
+			ft_exec(data);
 		}
 		free(input);
 		i++;
 	}
 }
-
-// MAIN DE TEST MAEL
-
-/* int main(int ac, char **av, char **envp)
-{
-	int		i = -1;
-	t_data	*data;
-
-	data = malloc (sizeof(t_data));
-	get_env(envp, data);
-	data->args = malloc (sizeof(char **) * ac - 1);
-	while (++i < (ac - 1))
-		data->args[i] = ft_strjoin_spec(data->args[i], av[i + 1]);
-	data->is_builtin = 1;
-	data->next = NULL;
-	ft_exec(data);
-	free(data);
-	return (0);
-} */

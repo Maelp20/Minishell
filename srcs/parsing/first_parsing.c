@@ -1,5 +1,14 @@
 #include "exec.h"
 
+void	tok_del_one(t_tok *lst)
+{
+	if (lst->token)
+		free(lst->token);
+	if (lst)
+		free(lst);
+}
+
+
 t_tok	*lstnew_token(char *content)
 {
 	t_tok  *dest;
@@ -9,6 +18,7 @@ t_tok	*lstnew_token(char *content)
 		return (NULL);
 	dest->token = ft_strdup(content);
 	dest->next = NULL;
+	dest->prev = NULL;
 	return (dest);
 }
 
@@ -17,7 +27,11 @@ void	lstadd_back_token(t_tok **lst, t_tok *new)
 	if (!(*lst))
 		*lst = new;
 	else
-		lstadd_back_token(&((*lst)->next), new);
+	{
+		if ((*lst)->next == NULL)
+				new->prev = *lst;
+			lstadd_back_token(&((*lst)->next), new);
+	}
 }
 
 t_tok	*ft_lstlast_tok(t_tok *lst)

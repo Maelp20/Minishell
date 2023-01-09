@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/06 02:31:58 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:58:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ typedef	struct s_tok
 {
 	char *token;
 	struct s_tok *next;
+	struct s_tok *prev;
 }	t_tok;
 
 typedef struct s_pipes
 {	
-	int	pipe1[2];
-	int	pipe2[2];
+	int	pipe[2];
 }		t_pipes;
 
 typedef struct s_envp 
@@ -78,6 +78,7 @@ void print_tok_list(t_tok *list);
 t_tok	*lstnew_token(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
+void	tok_del_one(t_tok *lst);
 t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		is_sep(char c);
@@ -119,6 +120,7 @@ int is_quote(char c);
 /*---------------------EXEC----------------------*/
 
 int ft_exec(t_data *data);
+int	truc(void);
 
 /*-------------------------------------BUILTINS-------------------------------*/
 

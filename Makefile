@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/06 02:32:38 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/07 15:36:34 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ LIBFT = ${LIBFT_DIR}/libft.a
 
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
-CC		= gcc
-CFLAGS	= -g -Wall -Wextra
+CC		= cc
+CFLAGS	= -g -Wall -Wextra -Werror -MMD
 LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG	= -lreadline
 NAME	= minishell
@@ -73,5 +73,7 @@ re:			fclean
 			make all
 
 .PHONY: 	all clean fclean re
+-include ./exec/*.d
+-include ./parsing/*.d
 
 .SILENT:
