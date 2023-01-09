@@ -2,13 +2,12 @@
 
 void	printf_data_args(t_data *data)
 {
-	t_data *temp;
+	int i = 0;
 
-	temp = data;
-	while (temp)
+	while (data->args[i])
 	{
-		printf("%s\n", temp->args[0]);
-		temp = temp->next;
+		printf("data->args[%d] %s\n",i, data->args[i]);
+		i++;
 	}
 }
 
@@ -40,11 +39,23 @@ void	create_data_nodes(int nb_nodes,t_data **data)
 		i++;
 	}
 }
+
+void process_pipe(t_tok **node,t_data *data)
+{
+	t_tok *temp;
+
+	temp = (*node)->next;
+	tok_del_one(*node);
+	*node = temp;
+	data->
+}
+
 void	create_data_args(t_tok **lst, t_data **data)
 {
 	t_tok *temp;
 	t_data	*data_tmp;
 	int	i;
+	int j;
 
 	temp = *lst;
 	data_tmp = (*data)->next;
@@ -56,8 +67,23 @@ void	create_data_args(t_tok **lst, t_data **data)
 			i++;
 			temp = temp->next;
 		}
-		data_tmp->args = ft_calloc(sizeof(char*), i);
-		data_tmp->args[0][0] = i + '0';
+		printf("i = %d\n", i);
+		data_tmp->args = ft_calloc(sizeof(char*), i + 1);
+		temp = *lst;
+		j = 0;
+		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
+		{
+			data_tmp->args[i] = ft_strdup(temp->token);
+			j++;
+			i--;
+			temp = temp->next;
+		}
+		if (temp && ft_strcmp(temp->token, "|"))
+		{
+			process_pipe(&temp, data_tmp);
+			printf("next token %s\n",temp->next->token);
+		}
+		//printf_data_args(data_tmp);
 		data_tmp = data_tmp->next;
 	}
 }
@@ -201,7 +227,7 @@ void	fill_node_with_tok(t_tok **lst, t_data **data)
 	nb_nodes = count_nodes(lst);
 	create_data_nodes(nb_nodes, data);
 	process_redir(lst, data);
-	//create_data_args(lst, data);
+	create_data_args(lst, data);
 	//printf_data_args(*data);
 		
 }
