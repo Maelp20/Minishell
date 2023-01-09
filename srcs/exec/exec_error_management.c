@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/23 12:47:08 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:54:12 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,19 @@ void	ft_free_dble_array(void **tab)
 }
 
 void	ft_close_pipes(t_data *data)
-{
-	while (data)
-	{	
-		// if (data->pipefd[i][0] > -1)
-		// 	close(data->pipefd[i][0]);
-		// if (data->pipefd[i][1] > -1)
-		// 	close(data->pipefd[i][1]);
-		data = data->next;
-	}
+{	
+	if (data->fds->pipe[0] > -1)
+		close(data->fds->pipe[0]);
+	if (data->fds->pipe[1] > -1)
+		close(data->fds->pipe[1]);
+	// while (data)
+	// {	
+	// 	if (data->fds->pipe[0] > -1)
+	// 		close(data->fds->pipe[0]);
+	// 	if (data->fds->pipe[1] > -1)
+	// 		close(data->fds->pipe[1]);
+	// 	data = data->next;
+	// }
 }
 
 void	ft_free_close(t_data *data)
@@ -64,10 +68,10 @@ void	ft_free_close(t_data *data)
 
 void	ft_close_fds(t_data *data)
 {
-	if (data->in_fd != -1)
-		close (data->in_fd);
-	if (data->out_fd != -1)
-		close (data->out_fd);
+	// if (data->in_fd != -1)
+	// 	close (data->in_fd);
+	// if (data->out_fd != -1)
+	// 	close (data->out_fd);
 	ft_close_pipes(data);
 }
 
