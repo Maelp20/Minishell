@@ -74,8 +74,13 @@ void	one_node(t_tok **lst)
 	*lst = temp;
 }
 
-void	multi_node(t_tok **lst_node, t_tok **lst, t_tok *temp)
+void	multi_node(t_tok **lst_node, t_tok **lst)
 {
+	t_tok *temp;
+	t_tok *temp2;
+
+    temp = (*lst_node);
+	temp2 = (*lst_node)->next;
 	if ((*lst_node)->prev == NULL)
 	{
 		(*lst_node)->next->next->prev = NULL;
@@ -87,111 +92,72 @@ void	multi_node(t_tok **lst_node, t_tok **lst, t_tok *temp)
 		if (temp->prev->next)
 			temp->prev->next->prev = temp->prev;
 	}
-}
-void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
-{
-    t_tok *temp;
-	t_tok *temp2;
-    (void)lst;
-    (void)data;
-    if (!(*lst_node)->next)
-        printf("blahblah\n");
-    data_node->is_heredoc = ft_strdup((*lst_node)->next->token);
-    temp = (*lst_node);
-	temp2 = (*lst_node)->next;
-	if ((*lst_node)->prev == NULL && (*lst_node)->next->next == NULL)
-	{
-		(*lst_node)->next = NULL;
-	}
-	else if ((*lst_node)->prev == NULL)
-	{
-		(*lst_node)->next->next->prev = NULL;
-		*lst = (*lst_node)->next->next;
-	}
-	else
-	{
-    	(*lst_node)->prev->next = (*lst_node)->next->next;
-		if (temp->prev->next)
-			temp->prev->next->prev = temp->prev;
-	}
-    tok_del_one(temp);
+	tok_del_one(temp);
 	tok_del_one(temp2);
 }
 
-void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
+void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    t_tok *temp;
-	t_tok *temp2;
-    (void)lst;
     (void)data;
+	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	{
+		data_node->is_heredoc = ft_strdup((*lst_node)->next->token);
+		data_node->is_append = 1;
+		one_node(lst);
+		return;
+	}	
     if (!(*lst_node)->next)
         printf("blahblah\n");
     data_node->outfile = ft_strdup((*lst_node)->next->token);
 	data_node->is_append = 1;
-    temp = (*lst_node);
-	temp2 = (*lst_node)->next;
-	if ((*lst_node)->prev == NULL)
-	{
-		(*lst_node)->next->next->prev = NULL;
-		*lst = (*lst_node)->next->next;
-	}
-	else
-	{
-    	(*lst_node)->prev->next = (*lst_node)->next->next;
-		if (temp->prev->next)
-			temp->prev->next->prev = temp->prev;
-	}
-    tok_del_one(temp);
-	tok_del_one(temp2);
+	multi_node(lst_node, lst);
 }
 
-void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
+void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    t_tok *temp;
-	t_tok *temp2;
-    (void)lst;
     (void)data;
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
+		data_node->outfile = ft_strdup((*lst_node)->next->token);
+		data_node->is_append = 1;
+		one_node(lst);
+		return;
+	}	
+    if (!(*lst_node)->next)
+        printf("blahblah\n");
+    data_node->outfile = ft_strdup((*lst_node)->next->token);
+	data_node->is_append = 1;
+	multi_node(lst_node, lst);
+}
+
+void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
+{
+    (void)data;
+	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	{
+		data_node->infile = ft_strdup((*lst_node)->next->token);
 		one_node(lst);
 		return;
 	}	
     if (!(*lst_node)->next)
         printf("blahblah\n");
     data_node->infile = ft_strdup((*lst_node)->next->token);
-    temp = (*lst_node);
-	temp2 = (*lst_node)->next;
-	multi_node(lst_node, lst, temp);
-    tok_del_one(temp);
-	tok_del_one(temp2);
+	multi_node(lst_node, lst);
 }
 
-void	out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
+void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    t_tok *temp;
-	t_tok *temp2;
-    (void)lst;
     (void)data;
-	if (!lst)
+	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	{
+		data_node->outfile = ft_strdup((*lst_node)->next->token);
+		one_node(lst);
 		return;
+	}	
     if (!(*lst_node)->next)
         printf("blahblah\n");
     data_node->outfile = ft_strdup((*lst_node)->next->token);
-    temp = (*lst_node);
-	temp2 = (*lst_node)->next;
-	if ((*lst_node)->prev == NULL)
-	{
-		(*lst_node)->next->next->prev = NULL;
-		*lst = (*lst_node)->next->next;
-	}
-	else
-	{
-    	(*lst_node)->prev->next = (*lst_node)->next->next;
-		if (temp->prev->next)
-			temp->prev->next->prev = temp->prev;
-	}
-    tok_del_one(temp);
-	tok_del_one(temp2);
+	multi_node(lst_node, lst);
 }
 
 int	check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *data_node)
