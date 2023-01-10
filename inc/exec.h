@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 15:16:14 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:17:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 typedef	struct s_tok
 {
@@ -140,6 +141,7 @@ void	ft_envpadd_front(t_envp **envp, t_envp *new);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
 char 	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp_spec(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
 char	*ft_get_path(t_data *data);
 
