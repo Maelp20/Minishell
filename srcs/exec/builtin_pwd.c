@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 15:20:08 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:47:30 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	ft_pwd(t_data *data)
 			return (perror("getcwd"), 1);
 	}
 	printf("%s\n", path);
-	return (free(path), 0);
+	return (0);
 }

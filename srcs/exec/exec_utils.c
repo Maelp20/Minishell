@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/08 15:18:15 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:57:24 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ int	ft_data_size(t_data *data)
 		data = data->next;
 	}
 	return (nb);
+}
+
+int	ft_strcmp_spec(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -96,18 +106,13 @@ void	ft_envpadd_back(t_envp **envp, t_envp *new)
 
 char *seek_pwd_in_env(t_envp *envp)
 {
-	char	*pwd_line;
-
 	if (!envp)
 		return (NULL);
-	while (envp->var)
+	while (envp)
 	{
-		pwd_line = ft_strnstr(envp->var[0], "PWD=", 4);
-		if (pwd_line)
-			break ;
-		envp=envp->next;
+		if(ft_strcmp(envp->var[0], "PWD="))
+			return (envp->var[1]);
+		envp = envp->next;
 	}
-	if (!pwd_line)
-		return (NULL);
-	return (envp->var[1]);
+	return (NULL);
 }

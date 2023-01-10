@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/06 16:19:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:39:44 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_echo(t_data *data)
 		flag = 1;
 		i++;
 	}
-	while (data->args[i + 1])
+	while (data->args[i] && data->args[i + 1])
 		printf("%s ", data->args[i++]);
 	if (data->args[i])
 		printf("%s", data->args[i]);
