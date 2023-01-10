@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 15:21:08 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:07:08 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(int ac, char **av, char **env)
 			expand(&lst, &data_ptr);
 			clean_squotes(&lst);
 			fill_node_with_tok(&lst, &data_ptr);
-			print_tok_list(lst);
+			//print_tok_list(lst);
 		}
 		free(input);
 		i++;

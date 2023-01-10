@@ -40,14 +40,14 @@ void	create_data_nodes(int nb_nodes,t_data **data)
 	}
 }
 
-void process_pipe(t_tok **node,t_data *data)
+void process_node(t_tok **node, t_tok **lst)
 {
 	t_tok *temp;
 
 	temp = (*node)->next;
 	tok_del_one(*node);
 	*node = temp;
-	data->
+	*lst = temp;
 }
 
 void	create_data_args(t_tok **lst, t_data **data)
@@ -73,17 +73,19 @@ void	create_data_args(t_tok **lst, t_data **data)
 		j = 0;
 		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
 		{
-			data_tmp->args[i] = ft_strdup(temp->token);
+			data_tmp->args[j] = ft_strdup(temp->token);
+			process_node(&temp, &(*lst));
 			j++;
 			i--;
-			temp = temp->next;
+			//temp = temp->next;
 		}
 		if (temp && ft_strcmp(temp->token, "|"))
 		{
-			process_pipe(&temp, data_tmp);
-			printf("next token %s\n",temp->next->token);
+			process_node(&temp, &(*lst));
+			data_tmp->out_pipe = 1;
+			printf("next token %s\n",temp->token);
 		}
-		//printf_data_args(data_tmp);
+		printf_data_args(data_tmp);
 		data_tmp = data_tmp->next;
 	}
 }
@@ -227,7 +229,11 @@ void	fill_node_with_tok(t_tok **lst, t_data **data)
 	nb_nodes = count_nodes(lst);
 	create_data_nodes(nb_nodes, data);
 	process_redir(lst, data);
+	//printf("test1\n");
+	//print_tok_list(*lst);
 	create_data_args(lst, data);
+	//printf("test2\n");
+	//print_tok_list(*lst);
 	//printf_data_args(*data);
 		
 }
