@@ -246,13 +246,13 @@ void process_redir(t_tok **lst, t_data **data)
 			else
 				temp_tok = *lst;
         }
-		if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
-			temp_tok = temp_tok->next;
-		else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
-		{
-			temp_tok = temp_tok->next;
+		// if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
+		// 	temp_tok = temp_tok->next;
+		// else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
+		// {
+		// 	temp_tok = temp_tok->next;
         	temp_data = temp_data->next;	
-		}
+		// }
     }
 }
 
