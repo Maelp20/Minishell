@@ -51,6 +51,27 @@ void process_node(t_tok **node, t_tok **lst)
 	*lst = temp;
 }
 
+int	is_builtin(char *token)
+{
+
+	if (ft_strcmp(token, "cd"))
+		return(1);
+	else if (ft_strcmp(token, "echo"))
+		return(1);
+	else if (ft_strcmp(token, "env"))
+		return(1);
+	else if (ft_strcmp(token, "exit"))
+		return(1);
+	else if (ft_strcmp(token, "export"))
+		return(1);
+	else if (ft_strcmp(token, "pwd"))
+		return(1);
+	else if (ft_strcmp(token, "unset"))
+		return(1);
+	return (0);
+}
+
+
 void	create_data_args(t_tok **lst, t_data **data)
 {
 	t_tok *temp;
@@ -68,12 +89,13 @@ void	create_data_args(t_tok **lst, t_data **data)
 			i++;
 			temp = temp->next;
 		}
-		printf("i = %d\n", i);
 		data_tmp->args = ft_calloc(sizeof(char*), i + 1);
 		temp = *lst;
 		j = 0;
 		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
 		{
+			if (j == 0 && is_builtin(temp->token))
+			 	data_tmp->is_builtin = 0;
 			data_tmp->args[j] = ft_strdup(temp->token);
 			process_node(&temp, &(*lst));
 			j++;
