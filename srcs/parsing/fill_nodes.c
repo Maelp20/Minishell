@@ -27,7 +27,7 @@ int	count_nodes(t_tok **lst)
 	return (nb_nodes);
 }
 
-void	create_data_nodes(int nb_nodes,t_data **data)
+void	create_data_nodes(int nb_nodes,t_data **data, t_envp *envir)
 {
 	int i;
 	t_data *temp;
@@ -35,10 +35,10 @@ void	create_data_nodes(int nb_nodes,t_data **data)
 	temp = *data;
 	while (i < nb_nodes)
 	{
-		lstadd_back_args(&temp,lstnew_args());
+		lstadd_back_args(&temp,lstnew_args(envir));
 		i++;
 	}
-	printf("nb_node = %d i = %d\n", nb_nodes, i);
+	//printf("nb_node = %d i = %d\n", nb_nodes, i);
 }
 
 void process_node(t_tok **node, t_tok **lst)
@@ -95,7 +95,7 @@ void	create_data_args(t_tok **lst, t_data **data)
 		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
 		{
 			if (j == 0 && is_builtin(temp->token))
-			 	data_tmp->is_builtin = 0;
+			 	data_tmp->is_builtin = 1;
 			data_tmp->args[j] = ft_strdup(temp->token);
 			process_node(&temp, &(*lst));
 			j++;
@@ -109,7 +109,8 @@ void	create_data_args(t_tok **lst, t_data **data)
 			data_tmp->next->in_pipe = 1;
 			//printf("next token %s\n",temp->token);
 		}
-		printf_data_args(data_tmp);
+		//printf_data_args(data_tmp);
+		//print_env((*data)->envp);
 		data_tmp = data_tmp->next;
 	}
 }
@@ -256,12 +257,12 @@ void process_redir(t_tok **lst, t_data **data)
     }
 }
 
-void	fill_node_with_tok(t_tok **lst, t_data **data)
+void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
 {
 	int		nb_nodes;
 
 	nb_nodes = count_nodes(lst);
-	create_data_nodes(nb_nodes, data);
+	create_data_nodes(nb_nodes, data, envir);
 	process_redir(lst, data);
 	//printf("test1\n");
 	//print_tok_list(*lst);
