@@ -2,13 +2,12 @@
 
 void	printf_data_args(t_data *data)
 {
-	t_data *temp;
+	int i = 0;
 
-	temp = data;
-	while (temp)
+	while (data->args[i])
 	{
-		printf("%s\n", temp->args[0]);
-		temp = temp->next;
+		printf("data->args[%d] %s\n",i, data->args[i]);
+		i++;
 	}
 }
 
@@ -21,7 +20,7 @@ int	count_nodes(t_tok **lst)
 	temp = *lst;
 	while (temp)
 	{
-		if(!ft_strcmp(temp->token, "|"))
+		if(ft_strcmp(temp->token, "|"))
 			nb_nodes++;
 		temp = temp->next;
 	}
@@ -39,15 +38,28 @@ void	create_data_nodes(int nb_nodes,t_data **data)
 		lstadd_back_args(&temp,lstnew_args());
 		i++;
 	}
+	printf("nb_node = %d i = %d\n", nb_nodes, i);
 }
+
+void process_node(t_tok **node, t_tok **lst)
+{
+	t_tok *temp;
+
+	temp = (*node)->next;
+	tok_del_one(*node);
+	*node = temp;
+	*lst = temp;
+}
+
 void	create_data_args(t_tok **lst, t_data **data)
 {
 	t_tok *temp;
 	t_data	*data_tmp;
 	int	i;
+	int j;
 
 	temp = *lst;
-	data_tmp = (*data)->next;
+	data_tmp = (*data);
 	while (data_tmp)
 	{
 		i = 0;
@@ -56,8 +68,26 @@ void	create_data_args(t_tok **lst, t_data **data)
 			i++;
 			temp = temp->next;
 		}
-		data_tmp->args = ft_calloc(sizeof(char*), i);
-		data_tmp->args[0][0] = i + '0';
+		printf("i = %d\n", i);
+		data_tmp->args = ft_calloc(sizeof(char*), i + 1);
+		temp = *lst;
+		j = 0;
+		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
+		{
+			data_tmp->args[j] = ft_strdup(temp->token);
+			process_node(&temp, &(*lst));
+			j++;
+			i--;
+			//temp = temp->next;
+		}
+		if (temp && ft_strcmp(temp->token, "|"))
+		{
+			process_node(&temp, &(*lst));
+			data_tmp->out_pipe = 1;
+			data_tmp->next->in_pipe = 1;
+			//printf("next token %s\n",temp->token);
+		}
+		printf_data_args(data_tmp);
 		data_tmp = data_tmp->next;
 	}
 }
@@ -89,8 +119,12 @@ void	multi_node(t_tok **lst_node, t_tok **lst)
 	else
 	{
     	(*lst_node)->prev->next = (*lst_node)->next->next;
+		//(*lst_node) = (*lst_node)->next;
 		if (temp->prev->next)
+		{	
 			temp->prev->next->prev = temp->prev;
+			//temp->next = temp->next;
+		}
 	}
 	tok_del_one(temp);
 	tok_del_one(temp2);
@@ -190,7 +224,13 @@ void process_redir(t_tok **lst, t_data **data)
 			else
 				temp_tok = *lst;
         }
-        temp_data = temp_data->next;
+		// if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
+		// 	temp_tok = temp_tok->next;
+		// else
+		// {
+		// 	temp_tok = temp_tok->next;
+        temp_data = temp_data->next;	
+		// }
     }
 }
 
@@ -201,7 +241,11 @@ void	fill_node_with_tok(t_tok **lst, t_data **data)
 	nb_nodes = count_nodes(lst);
 	create_data_nodes(nb_nodes, data);
 	process_redir(lst, data);
-	//create_data_args(lst, data);
+	//printf("test1\n");
+	//print_tok_list(*lst);
+	create_data_args(lst, data);
+	//printf("test2\n");
+	//print_tok_list(*lst);
 	//printf_data_args(*data);
 		
 }
