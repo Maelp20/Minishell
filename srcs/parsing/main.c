@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/10 19:07:08 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/11 01:00:11 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,29 @@ int main(int ac, char **av, char **env)
 {
 	char *input;
 	int i = 0;
-	t_data data;
-	t_data *data_ptr;
+	t_data *data;
 	t_tok	*lst;
 
 	(void)av;
-	(void)lst;
-	memset(&data, 0, sizeof(data));
-	data_ptr = &data;
+	data = NULL;
 	t_envp *envir = get_env(env);
 	//print_env(envir);
 	while (ac > 0)
 	{
-		init_data(&data_ptr,envir);
+		init_data(&data,envir);
 
 		input = readline("Minishell>");
 		if (input && *input)
 		{
-			if (ft_strncmp(input,"exit",4)  == 0)
-				return(free(input),destroy_struct(data_ptr), exit(0), 0);
+			// if (ft_strncmp(input,"exit",4)  == 0)
+			// 	return(free(input),destroy_struct(data_ptr), exit(0), 0);
 			add_history(input);
-			lst = init_token_lst(input, &data_ptr);
+			lst = init_token_lst(input, &data);
 			clean_token(&lst);
 			clean_dquotes(&lst);
-			expand(&lst, &data_ptr);
+			expand(&lst, &data);
 			clean_squotes(&lst);
-			fill_node_with_tok(&lst, &data_ptr);
+			fill_node_with_tok(&lst, &data);
 			//print_tok_list(lst);
 		}
 		free(input);

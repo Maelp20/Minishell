@@ -20,7 +20,7 @@ int	count_nodes(t_tok **lst)
 	temp = *lst;
 	while (temp)
 	{
-		if(!ft_strcmp(temp->token, "|"))
+		if(ft_strcmp(temp->token, "|"))
 			nb_nodes++;
 		temp = temp->next;
 	}
@@ -38,6 +38,7 @@ void	create_data_nodes(int nb_nodes,t_data **data)
 		lstadd_back_args(&temp,lstnew_args());
 		i++;
 	}
+	printf("nb_node = %d i = %d\n", nb_nodes, i);
 }
 
 void process_node(t_tok **node, t_tok **lst)
@@ -58,7 +59,7 @@ void	create_data_args(t_tok **lst, t_data **data)
 	int j;
 
 	temp = *lst;
-	data_tmp = (*data)->next;
+	data_tmp = (*data);
 	while (data_tmp)
 	{
 		i = 0;
@@ -83,7 +84,8 @@ void	create_data_args(t_tok **lst, t_data **data)
 		{
 			process_node(&temp, &(*lst));
 			data_tmp->out_pipe = 1;
-			printf("next token %s\n",temp->token);
+			data_tmp->next->in_pipe = 1;
+			//printf("next token %s\n",temp->token);
 		}
 		printf_data_args(data_tmp);
 		data_tmp = data_tmp->next;
@@ -117,8 +119,12 @@ void	multi_node(t_tok **lst_node, t_tok **lst)
 	else
 	{
     	(*lst_node)->prev->next = (*lst_node)->next->next;
+		//(*lst_node) = (*lst_node)->next;
 		if (temp->prev->next)
+		{	
 			temp->prev->next->prev = temp->prev;
+			//temp->next = temp->next;
+		}
 	}
 	tok_del_one(temp);
 	tok_del_one(temp2);
@@ -218,7 +224,13 @@ void process_redir(t_tok **lst, t_data **data)
 			else
 				temp_tok = *lst;
         }
-        temp_data = temp_data->next;
+		if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
+			temp_tok = temp_tok->next;
+		else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
+		{
+			temp_tok = temp_tok->next;
+        	temp_data = temp_data->next;	
+		}
     }
 }
 
