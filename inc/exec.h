@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/11 16:34:33 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:05:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Data struct changes :
 typedef struct s_data
 {
 	char			**args;
+	char			**env;
 	char			*cmd_path;
 	char			*is_heredoc;
 	char			*infile;

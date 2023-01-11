@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/11 16:33:55 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:11:06 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_data(t_data **data, t_envp *envi)
 	if (!data)
 		printf("free blahblah\n");
 	(*data)->envp = envi;
+	dest->env = parse(dataenvi;
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 	//print_env((*data)->envp);
 }
@@ -40,7 +41,6 @@ int main(int ac, char **av, char **env)
 	while (ac > 0)
 	{
 		init_data(&data,envir);
-
 		input = readline("Minishell>");
 		if (input && *input)
 		{
