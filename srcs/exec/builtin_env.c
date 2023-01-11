@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 15:20:08 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/10 18:11:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_env(t_data *data)
 	t_envp	*first_node;
 
 	if (!data->envp)
-		exit(EXIT_FAILURE);
+		return ;
 	if (data->args[1])
 	{
 		ft_putstr_fd("env: no options or arguments allowed\n", 2);
-		exit(EXIT_FAILURE);
+		return ;
 	}
 	first_node = data->envp;
 	while (data->envp)

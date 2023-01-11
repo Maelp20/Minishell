@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 14:50:59 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:22:01 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sort_envp(t_envp *envp)
 	first_node = envp;
 	while (envp->next)
 	{
-		if ((ft_strcmp(envp->var[0], envp->next->var[0]) > 0))
+		if ((ft_strcmp_spec(envp->var[0], envp->next->var[0]) > 0))
 		{
 			buff1 = envp->var[0];
 			buff2 = envp->var[1];
