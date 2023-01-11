@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/11 18:05:38 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:52:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	expand(t_tok **lst, t_data **data);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data, char **envi);
+char **parse_env(t_envp *envir);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args();
 void	lstadd_back_args(t_data **lst, t_data *new);
