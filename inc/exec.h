@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/10 15:17:22 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/11 16:34:33 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args();
 void	lstadd_back_args(t_data **lst, t_data *new);
 void	create_data_args(t_tok **lst, t_data **data);
-void	fill_node_with_tok(t_tok **lst, t_data **data);
+void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 void	destroy_struct(t_data *data);
 void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
