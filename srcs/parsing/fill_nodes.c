@@ -81,8 +81,6 @@ void	create_data_args(t_tok **lst, t_data **data)
 
 	temp = *lst;
 	data_tmp = (*data);
-	while (data_tmp)
-	{
 		i = 0;
 		while(temp && !ft_strcmp(temp->token, "|"))
 		{
@@ -111,8 +109,6 @@ void	create_data_args(t_tok **lst, t_data **data)
 		}
 		//printf_data_args(data_tmp);
 		//print_env((*data)->envp);
-		data_tmp = data_tmp->next;
-	}
 }
 
 void	one_node(t_tok **lst)
@@ -238,8 +234,6 @@ void process_redir(t_tok **lst, t_data **data)
 
     temp_tok = *lst;
     temp_data = *data;
-    while (temp_data)
-    {
         while(lst && temp_tok && !ft_strcmp(temp_tok->token, "|"))
         {
             if(lst && !check_redir(lst, &temp_tok ,data , temp_data))
@@ -252,23 +246,21 @@ void process_redir(t_tok **lst, t_data **data)
 		// else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
 		// {
 		// 	temp_tok = temp_tok->next;
-        	temp_data = temp_data->next;	
-		// }
-    }
 }
 
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
 {
 	int		nb_nodes;
-
+	t_data *data_temp;
+	
+	data_temp = *data;
 	nb_nodes = count_nodes(lst);
 	create_data_nodes(nb_nodes, data, envir);
-	process_redir(lst, data);
-	//printf("test1\n");
-	//print_tok_list(*lst);
-	create_data_args(lst, data);
-	//printf("test2\n");
-	//print_tok_list(*lst);
-	//printf_data_args(*data);
+	while(data_temp)
+	{
+		process_redir(lst, &data_temp);
+		create_data_args(lst, &data_temp);
+		data_temp = data_temp->next;
+	}
 		
 }
