@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/11 23:57:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/12 01:25:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void print_tout_huehue(t_data **data)
 		while (temp->args[++i])
 			printf("data->args[%d] %s\n",i, temp->args[i]);
 		i = -1;
-		while (temp->env[++i])
-			printf("data->env[%d] %s\n",i, temp->env[i]);
+		//while (temp->env[++i])
+		//printf("data->env[%d] %s\n",i, temp->env[i]);
 		printf("data->cmd_path %s\n", temp->cmd_path);
 		printf("data->is_heredoc %s\n", temp->is_heredoc);
 		printf("data->infile %s\n", temp->infile);
 		printf("data->outfile %s\n", temp->outfile);
-		print_env(temp->envp);
+		//print_env(temp->envp);
 		printf("is_builtin %d\n", temp->is_builtin);
 		printf("is_append %d\n", temp->is_append);
 		printf("in_fd %d\n", temp->in_fd);
