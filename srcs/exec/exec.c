@@ -34,7 +34,7 @@ static void	do_dups(t_data *data)
 		close(data->next->fds->pipe[0]);
 		close(data->out_fd);
 	}
-	//ft_close_fds(data);
+	ft_close_fds(data);
 }
 
 static void	redirect_fds(t_data *data)
@@ -91,12 +91,12 @@ static void	child(t_data *data)
 		{
 			if (access(data->args[0], F_OK | X_OK) != 0)
 				exit_error("access", data);
-			if(execve(data->args[0], data->args, data->envp->var) == -1)
+			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
 			exit_error("execve", data);
 		}
 		data->cmd_path = ft_get_path(data);
-		if (execve(data->cmd_path, data->args, data->envp->var) == -1)
+		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
 		exit_error("execve", data);
 	}
@@ -143,7 +143,7 @@ int ft_exec(t_data *data)
 
 
 
-/* int main (int ac, char **av, char **envp)
+int main (int ac, char **av, char **envp)
 {
 	t_data	*data;
 	t_data	*first_node;
@@ -153,20 +153,20 @@ int ft_exec(t_data *data)
 	(void)av;
 	envi = get_env(envp);
 	data = malloc (sizeof(t_data));
+	first_node = data;
 	data->envp = envi;
 	data->fds = malloc (sizeof(t_pipes));
 	if (pipe(data->fds->pipe) == -1)
 		perror("pipe");
-	first_node = data;
 	data->args = malloc (sizeof(char **) * 3);
-	data->args[0] = "ls";
-	data->args[1] = "-la";
+	data->args[0] = "echo";
+	data->args[1] = "lol";
 	data->args[2] = NULL;
 	data->in_fd = 0;
 	data->out_fd = 0;
-	data->is_builtin = 0;
-	data->infile = 0;
-	data->outfile = 0;
+	data->is_builtin = 1;
+	data->infile = NULL;
+	data->outfile = NULL;
 	data->in_pipe = 0;
 	data->out_pipe = 1;
 	data->next = malloc (sizeof(t_data));
@@ -176,20 +176,20 @@ int ft_exec(t_data *data)
 	data->fds = malloc (sizeof(t_pipes));
 	if (pipe(data->fds->pipe) == -1)
 		perror("pipe");
-	data->args[0] = "pwd";
+	data->args[0] = "wc";
 	data->args[1] = NULL;
 	data->args[2] = NULL;
 	data->in_fd = 0;
 	data->out_fd = 0;
 	data->is_builtin = 0;
-	data->infile = 0;
-	data->outfile = 0;
+	data->infile = NULL;
+	data->outfile = NULL;
 	data->in_pipe = 1;
 	data->out_pipe = 0;
-	data->cmd_path = "/usr/bin/wc/";
+	data->cmd_path = "/usr/bin/wc";
 	data->is_builtin = 0;
 	data->next = NULL;
 	data = first_node;
 	ft_exec(data);
 	return (0);
-} */
+}

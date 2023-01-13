@@ -130,5 +130,5 @@ void	ft_export(t_data *data)
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_front(&(data->envp), new);
 	}
-	ft_show_export(data->envp);
+	//ft_show_export(data->envp);
 }
