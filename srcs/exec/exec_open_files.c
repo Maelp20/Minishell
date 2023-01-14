@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2022/11/22 19:13:42 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/14 17:42:20 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_create_infile(t_data *data)
 	char	*line;
 
 	tmp_fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	// if (tmp_fd < 0)
-	// 	exit_error("heredoc", data);
+	if (tmp_fd < 0)
+		exit_error("heredoc", data);
 	stdin_fd = dup(STDIN_FILENO);
 	ft_putstr_fd("> ", 1);
 	line = get_next_line(stdin_fd);

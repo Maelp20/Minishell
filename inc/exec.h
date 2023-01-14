@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/13 14:16:10 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/14 17:43:56 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,12 @@ char	*ft_get_path(t_data *data);
 
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
+void	ft_wait(t_data *data);
 void	exit_error(char *err, t_data *data);
 void	ft_close_fds(t_data *data);
-void	ft_free_close(t_data *data);
 void	ft_close_pipes(t_data *data);
+void	ft_free_close(t_data *data);
 void	ft_free_dble_array(void **tab);
-void	ft_wait(t_data *data);
 
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 
