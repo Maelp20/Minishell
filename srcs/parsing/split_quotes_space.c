@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/15 14:39:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:00:08 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	split_space(char *input, int i, t_tok **lst)
 	if (!tmp)
 		return (-2);
 	j = -1;
-	i--;git add -A
+	i--;
 	while (input[++i] && --len >= 0)
 		tmp[++j] = input[i];
 	tmp[++j] = '\0';

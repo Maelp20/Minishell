@@ -78,15 +78,24 @@ char *expand_from(char *token, t_data *data)
 
 void	expand(t_tok **lst, t_data **data)
 {
+	int		dbl;
+	int		sq;
+	int		i;
 	char	*temp;
 	t_tok	*tmp;
 
+	sq = 2;
+	dbl = 2;
 	tmp = *lst;
 	while (tmp)
 	{
-		if(tmp->token[0] != '\'')
+		if (tmp->token[i])
+			dbl++;
+		if (tmp->token[i] && !(dbl % 2))
+			sq++;
+		if(tmp->token[i] != '\'')
 		{
-			if (has_doll(tmp->token))
+			(if (has_doll(tmp->token))
 			{
 				temp = ft_strdup(tmp->token);
 				free (tmp->token);
