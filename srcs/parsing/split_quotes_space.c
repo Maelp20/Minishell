@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/01 14:41:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:39:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,25 @@ int	split_sq(char *input, int i, t_tok **lst)
 int	split_space(char *input, int i, t_tok **lst)
 {
 	int		j;
+	int		len;
 	char	*tmp;
-	
-	j = i;
-	while (input[j] && !is_sep(input[j]))
-		j++;
-	tmp = malloc(sizeof(char) * (j - i + 1));
+
+	len = i;
+	while (input[len] && is_sep(input[len]) != 1)
+	{
+		if (is_sep(input[len++]) >= 2)
+		{
+			while (input[len] && is_sep(input[len]) < 2)
+				len++;
+			len++;
+		}
+	}
+	tmp = malloc(sizeof(char) * ((len -= i) + 1));
 	if (!tmp)
 		return (-2);
 	j = -1;
-	i--;
-	while(input[++i] && !is_sep(input[i]))
+	i--;git add -A
+	while (input[++i] && --len >= 0)
 		tmp[++j] = input[i];
 	tmp[++j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
