@@ -14,6 +14,7 @@ int len_env(char *str, int i)
 {
 	while (is_char_var(str[i]))
 		i++;
+	printf("is char %c\n", str[i]);
 	return(i);
 }
 
@@ -21,7 +22,8 @@ int	len_expanded(char* str, int i, int len_env, t_data *data)
 {
 	t_envp *tmp;
 	int len;
-
+	printf("%c\n", str[i]);
+	printf("i =  %d\n" , i);
 	len = 0;
 	tmp = data->envp;
 	while(tmp)
@@ -47,20 +49,28 @@ int	trigger_expand(char *str, int i, t_data *data)
 	dbl = 2;
 	while (str[i])
 	{
+		printf("str[i]= %c\n", str[i]);
 		if (str[i] == '\"')
 			dbl++;
 		if (str[i] == '\'' && !(dbl % 2))
 			sq++;
-		if(str[i] == '$' && !(sq % 2) && str[i + 1] != '\"')
+		if(str[i] == '$' && !(sq % 2))
 		{
+			printf("$ = %c\n", str[i]);
+			len += len_expanded(str, i + 1, len_env(str, i), data);
 			i = len_env(str, i + 1);
-			len += len_expanded(str, i, len_env(str, i), data);
+			printf(" trig i = %d\n", i);
+			printf(" trig len = %d\n", len);
 		}
-		len++;
-		i++;
+		else
+		{
+			len++;
+			i++;
+		}
 	}
+	printf("len = %d\n", len);
 	return(len);
-	}
+}
 
 char *expand_from(char *token, t_data *data)
 {

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/15 13:18:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:03:19 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int main(int ac, char **av, char **env)
 			//clean_dquotes(&lst);
 			expand(&lst, &data);
 			//clean_squotes(&lst);
-			fill_node_with_tok(&lst, &data, envir);
-			print_tout_huehue(&data);
+			//fill_node_with_tok(&lst, &data, envir);
+			//print_tout_huehue(&data);
 		}
 		free(input);
 		i++;
