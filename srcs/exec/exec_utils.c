@@ -6,11 +6,27 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/10 15:57:24 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/16 17:08:46 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	ft_envpclear(t_envp **envp)
+{
+	t_envp	*tmp;
+
+	if (!envp)
+		return ;
+	while (*envp)
+	{
+		tmp = *envp;
+		if (tmp->var)
+			ft_free_dble_array((void **)tmp->var);
+		free(tmp);
+		*envp = (*envp)->next;
+	}
+}
 
 int	ft_data_size(t_data *data)
 {

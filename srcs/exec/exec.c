@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/14 21:04:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/16 17:07:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	do_dups(t_data *data)
 		if (dup2(data->in_fd, STDIN_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
 		if (data->in_pipe)
 			close(data->fds->pipe[1]);
@@ -32,7 +32,7 @@ static void	do_dups(t_data *data)
 		if (dup2(data->out_fd, STDOUT_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
 		if (data->out_pipe)
 			close (data->next->fds->pipe[0]);
@@ -85,17 +85,17 @@ static void	child(t_data *data, t_data *first_node)
 		if (ft_strchr(data->args[0], '/'))
 		{
 			if (access(data->args[0], F_OK | X_OK) != 0)
-				exit_error("access", data);
+				clean_exit(data, 2);
 			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
-			exit_error("execve", data);
+			clean_exit(data, 2);
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
-			exit_error("access", data);
+			clean_exit(data, 2);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
-		exit_error("execve", data);
+		clean_exit(data, 2);
 	}
 }
 
@@ -152,7 +152,7 @@ int ft_exec(t_data *data)
 			if (data->pid == -1)
 			{
 				ft_close_fds(data);
-				exit_error("Fork", data);
+				clean_exit(data, 2);
 			}
 			else if (data->pid == 0)
 			{

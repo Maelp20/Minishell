@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/14 20:32:27 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/16 17:10:20 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_close_pipes(t_data *data)
 	{
 		close(data->fds->pipe[0]);
 		close(data->fds->pipe[1]);
+		
 		data = data->next;
 	}
 }
@@ -56,45 +57,32 @@ void	ft_free_dble_array(void **tab)
 	free(tab);
 }
 
-void	ft_free_close(t_data *data)
+void	ft_free(t_data *data)
 {
 	if (data->args)
 		ft_free_dble_array((void **)data->args);
 	if (data->env)
 		ft_free_dble_array((void **)data->env);
-	while (data->envp)
-    {
-		ft_free_dble_array((void **)data->envp->var);
-        data->envp = data->envp->next;
-    }
+	ft_envpclear(&(data->envp));
+	if (data->fds)
+		free(data->fds);
 	if (data->cmd_path)
 		free(data->cmd_path);
-	// if (data->in_fd > -1)
-	// 	close(data->in_fd);
-	// if (data->out_fd > -1)
-	// 	close(data->out_fd);
+	if (data->is_heredoc)
+		free(data->is_heredoc);
+	if (data->infile)
+		free(data->infile);
+	if (data->outfile)
+		free(data->outfile);
 }
 
-void	exit_error(char *err, t_data *data)
+void	clean_exit(t_data *data, int err)
 {
     while (data)
     {
-        ft_free_close(data);
+        ft_free(data);
+		//free(data);
         data = data->next;  
     }
-    if (err)
-	{
-        if (!ft_strncmp(err, "dup2", 5))
-            exit(1);
-        else if (!ft_strncmp(err, "malloc", 7))
-            exit(2);
-        else if (!ft_strncmp(err, "access", 7))
-            exit(3);
-        else if (!ft_strncmp(err, "execve", 7))
-            exit(4);
-        else if (!ft_strncmp(err, "heredoc", 9))
-            exit (5);
-    }
-    else
-        perror(err);
+	exit (err);
 }
