@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/16 14:03:19 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:38:12 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ int main(int ac, char **av, char **env)
 			// 	return(free(input),destroy_struct(data_ptr), exit(0), 0);
 			add_history(input);
 			lst = init_token_lst(input, &data);
-;			print_tok_list(lst);
-			//clean_token(&lst);
-			//clean_dquotes(&lst);
+			clean_token(&lst);
 			expand(&lst, &data);
+			clean_quotes(&lst);
+			//print_tok_list(lst);
 			//clean_squotes(&lst);
-			//fill_node_with_tok(&lst, &data, envir);
-			//print_tout_huehue(&data);
+			fill_node_with_tok(&lst, &data, envir);
+			print_tout_huehue(&data);
 		}
 		free(input);
 		i++;
