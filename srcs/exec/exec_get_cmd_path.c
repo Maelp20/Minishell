@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:12:30 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/09 15:36:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:49:01 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static char	*ft_check_access(char *cmd, char **paths)
 		free(cmd_path);
 		i++;
 	}
-	return (perror("access"), NULL);
+	msg_cmd_not_found(cmd);
+	return (NULL);
 }
 
 static int	add_slash(char **paths)
@@ -43,9 +44,8 @@ static int	add_slash(char **paths)
 		paths[i] = ft_strjoin(paths[i], "/");
 		if (!paths[i])
 			return (perror("Malloc"), free(tmp), 1);
-		free(tmp);
 	}
-	return (0);
+	return (free(tmp), 0);
 }
 
 char	*ft_get_path(t_data *data)
@@ -63,11 +63,11 @@ char	*ft_get_path(t_data *data)
 	}
 	paths = ft_split(tmp_env->var[1], ':');
 	if (!paths)
-		return (free(tmp_env), NULL);
+		return (NULL);
 	if (add_slash(paths))
-		return (free(tmp_env), ft_free_dble_array((void **)paths), NULL);
+		return (ft_free_dble_array((void **)paths), NULL);
 	cmd_path = ft_check_access(data->args[0], paths);
 	if (!cmd_path)
-		return (free(tmp_env), ft_free_dble_array((void **)paths), NULL);
-	return (free(tmp_env), ft_free_dble_array((void **)paths), cmd_path);
+		return (ft_free_dble_array((void **)paths), NULL);
+	return (ft_free_dble_array((void **)paths), cmd_path);
 }

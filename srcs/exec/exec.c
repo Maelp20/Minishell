@@ -6,80 +6,38 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/13 17:11:04 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:56:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-/* static void	close_all_pipe(t_data *data)
-{
-	if (data->in_fd)
-		close(data->in_fd);
-	if (data->out_fd)
-		close(data->out_fd);
-	data = data->next;
-	while (data)
-	{
-		close(data->fds->pipe[0]);
-		close(data->fds->pipe[1]);
-		data = data->next;
-	}
-} */
-
-void	ft_close_pipes(t_data *data)
-{
-	data = data->next;
-	while(data)
-	{
-		if (data->fds->pipe[0] != -1)
-			if (close(data->fds->pipe[0]) == -1)
-				perror("close");
-		if (data->fds->pipe[1] != -1)
-			if (close(data->fds->pipe[1]) == -1)
-				perror("close");
-		data = data->next;
-	}
-}
-
-void	ft_close_fds(t_data *data)
-{
-	if (data->in_fd != -1)
-		if (close (data->in_fd) == -1)
-			perror("close");
-	if (data->out_fd != -1)
-		if (close (data->out_fd) == -1)
-			perror("close");
-	data = data->next;
-	ft_close_pipes(data);
-}
-
 static void	do_dups(t_data *data)
 {
 	if (data->in_pipe || data->infile)
 	{
+		//ft_putstr_fd("DUP IN\n", 2);
 		if (dup2(data->in_fd, STDIN_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
-		close (data->fds->pipe[1]);
-		data->fds->pipe[1] = -1;
+		if (data->in_pipe)
+			close(data->fds->pipe[1]);
 		close(data->in_fd);
 	}
 	if (data->out_pipe || data->outfile)
 	{
+		//ft_putstr_fd("DUP OUT\n", 2);
 		if (dup2(data->out_fd, STDOUT_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
-		close (data->next->fds->pipe[0]);
-		data->next->fds->pipe[0] = -1;
+		if (data->out_pipe)
+			close (data->next->fds->pipe[0]);
 		close(data->out_fd);
 	}
-	//close (data->fds->pipe[0]);
-	//close_all_pipe(data);
 }
 
 static void	redirect_fds(t_data *data)
@@ -88,42 +46,12 @@ static void	redirect_fds(t_data *data)
 		ft_open_infile(data);
 	if (data->outfile)
 		ft_open_outfile(data);
-	//printf("cmd : %s, in : %d / out : %d\n", data->args[0], data->in_fd, data->out_fd);
+	//printf("cmd : %s, file : %s, in : %d / out : %d\n", data->args[0], data->infile, data->in_fd, data->out_fd);
 	do_dups(data);
 }
 
-/* static void	redirect_fds(t_data *data)
-{
-	if (data->infile)
-	{
-		ft_open_infile(data);
-		dup2(data->in_fd, STDIN_FILENO);
-		close(data->in_fd);
-	}
-	else if (data->in_pipe)
-	{
-		dup2(data->fds->pipe[0], STDIN_FILENO);
-		close (data->fds->pipe[0]);
-	}
-	if (data->outfile)
-	{
-		ft_open_outfile(data);
-		dup2(data->out_fd, STDOUT_FILENO);
-		close(data->out_fd);
-	}
-	else if (data->out_pipe)
-	{
-		dup2(data->next->fds->pipe[1], STDIN_FILENO);
-		close (data->next->fds->pipe[1]);
-	}
-	printf("cmd : %s, in : %d / out : %d\n", data->args[0], data->in_fd, data->out_fd);
-	//do_dups(data);
-	//close_all_pipe(data);
-} */
-
 void	exec_builtin(t_data *data)
 {
-	ft_putstr_fd("Exec builtin\n", 2);
 	int	len;
 
 	len = ft_strlen(data->args[0]);
@@ -145,7 +73,6 @@ void	exec_builtin(t_data *data)
 
 static void	child(t_data *data, t_data *first_node)
 {
-	printf("pid = %d\n", data->pid);
 	redirect_fds(data);
 	ft_close_pipes(first_node);
 	if (data->is_builtin)
@@ -158,15 +85,20 @@ static void	child(t_data *data, t_data *first_node)
 		if (ft_strchr(data->args[0], '/'))
 		{
 			if (access(data->args[0], F_OK | X_OK) != 0)
-				exit_error("access", data);
+			{
+				msg_no_such_file(data->args[0]);
+				clean_exit(data, 2);
+			}
 			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
-			exit_error("execve", data);
+			clean_exit(data, 2);
 		}
 		data->cmd_path = ft_get_path(data);
+		if (!data->cmd_path)
+			clean_exit(data, 2);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
-		exit_error("execve", data);
+		clean_exit(data, 2);
 	}
 }
 
@@ -198,13 +130,9 @@ int	init_pipes(t_data *data)
 	while (data)
 	{
 		if (data->in_pipe)
-		{
 			data->in_fd = data->fds->pipe[0];
-		}
-		if(data->out_pipe)
-		{			
+		if(data->out_pipe)	
 			data->out_fd = data->next->fds->pipe[1];
-		}
 		data = data->next;
 	}
 	return (0);
@@ -227,21 +155,16 @@ int ft_exec(t_data *data)
 			if (data->pid == -1)
 			{
 				ft_close_fds(data);
-				exit_error("Fork", data);
+				clean_exit(data, 2);
 			}
 			else if (data->pid == 0)
-			{
 				child(data, first_node);
-				ft_close_fds(data);
-				//data = data->next;
-			}
 			if (data->is_heredoc)
 				unlink(".heredoc.tmp");
 			data = data->next;
 		}
 		data = first_node;
 		ft_close_pipes(data);
-		//ft_free_close(data);
 		ft_wait(data);
 	}
 	return (0);

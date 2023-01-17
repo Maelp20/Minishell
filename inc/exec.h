@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/13 14:16:10 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 17:22:18 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+
+extern int	err_status;
 
 typedef	struct s_tok
 {
@@ -141,6 +143,7 @@ t_envp	*ft_envpnew(char *var, char *value);
 t_envp	*ft_envplast(t_envp *envp);
 void	ft_envpadd_front(t_envp **envp, t_envp *new);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
+void	ft_envpclear(t_envp **envp);
 char 	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strcmp_spec(const char *s1, const char *s2);
@@ -149,12 +152,15 @@ char	*ft_get_path(t_data *data);
 
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
-void	exit_error(char *err, t_data *data);
-void	ft_close_fds(t_data *data);
-void	ft_free_close(t_data *data);
-void	ft_close_pipes(t_data *data);
-void	ft_free_dble_array(void **tab);
 void	ft_wait(t_data *data);
+void	ft_close_fds(t_data *data);
+void	ft_close_pipes(t_data *data);
+void	ft_free_close(t_data *data);
+void	ft_free_dble_array(void **tab);
+void	ft_free_data(t_data *data);
+void	clean_exit(t_data *data, int err);
+void	msg_cmd_not_found(char *cmd);
+void	msg_no_such_file(char *str);
 
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 
