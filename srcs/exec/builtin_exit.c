@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/16 17:11:44 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 17:10:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ void	ft_exit(t_data *data)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(data->args[1], 2);
 		ft_putstr_fd(" :numeric argument required\n", 2);
-		exit(2);
+		clean_exit(data, 2);
 	}
 	else if (data->args[1])
 		code = ft_atoi(data->args[1]);
 	if (code > 255)
-		exit (code % 256);
-	exit (code);
+	{
+		code = code % 256;
+		clean_exit(data, code);
+	}
+	clean_exit(data, code);
 }

@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/16 15:30:32 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 16:37:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	ft_export(t_data *data)
 	}
 	while (data->args[++i])
 	{
-		new = malloc (sizeof(t_envp));
+		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
 			exit(EXIT_FAILURE);
 		new->var = ft_split(data->args[i], '=');

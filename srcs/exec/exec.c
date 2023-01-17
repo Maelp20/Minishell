@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/16 17:07:45 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:56:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static void	child(t_data *data, t_data *first_node)
 		if (ft_strchr(data->args[0], '/'))
 		{
 			if (access(data->args[0], F_OK | X_OK) != 0)
+			{
+				msg_no_such_file(data->args[0]);
 				clean_exit(data, 2);
+			}
 			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
 			clean_exit(data, 2);
@@ -155,17 +158,13 @@ int ft_exec(t_data *data)
 				clean_exit(data, 2);
 			}
 			else if (data->pid == 0)
-			{
 				child(data, first_node);
-				ft_close_fds(data);
-			}
 			if (data->is_heredoc)
 				unlink(".heredoc.tmp");
 			data = data->next;
 		}
 		data = first_node;
 		ft_close_pipes(data);
-		//ft_free_close(data);
 		ft_wait(data);
 	}
 	return (0);
