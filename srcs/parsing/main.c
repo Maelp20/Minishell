@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/17 18:38:12 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 01:46:03 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int main(int ac, char **av, char **env)
 			lst = init_token_lst(input, &data);
 			clean_token(&lst);
 			expand(&lst, &data);
+			print_tok_list(lst);
 			clean_quotes(&lst);
-			//print_tok_list(lst);
 			//clean_squotes(&lst);
 			fill_node_with_tok(&lst, &data, envir);
 			print_tout_huehue(&data);
