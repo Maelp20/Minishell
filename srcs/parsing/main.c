@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/12 01:25:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:47:32 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,14 @@ int main(int ac, char **av, char **env)
 		input = readline("Minishell>");
 		if (input && *input)
 		{
-			// if (ft_strncmp(input,"exit",4)  == 0)
-			// 	return(free(input),destroy_struct(data_ptr), exit(0), 0);
 			add_history(input);
 			lst = init_token_lst(input, &data);
 			clean_token(&lst);
-			clean_dquotes(&lst);
 			expand(&lst, &data);
-			clean_squotes(&lst);
+			//print_tok_list(lst);
+			clean_quotes(&lst);
 			fill_node_with_tok(&lst, &data, envir);
 			print_tout_huehue(&data);
-;			//print_tok_list(lst);
 		}
 		free(input);
 		i++;
