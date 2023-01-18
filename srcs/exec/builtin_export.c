@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/10 15:22:01 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 16:37:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,19 @@ t_envp *copy_envp(t_envp *envp)
 	t_envp *dst = NULL;
 	t_envp *tmp;
 
-	while (envp->next)
+	while (envp)
 	{
-		tmp = malloc(sizeof(t_envp));
-		tmp->var = malloc(sizeof(char *) * 3);
-		tmp->var[0] = ft_strdup(envp->var[0]);
-		if (envp->var [1])
-			tmp->var[1]= ft_strdup(envp->var[1]);
-		tmp->var[2] = NULL;
-		tmp->next = dst;
-		dst = tmp;
+		if (!ft_strcmp(envp->var[0], "_="))
+		{			
+			tmp = malloc(sizeof(t_envp));
+			tmp->var = malloc(sizeof(char *) * 3);
+			tmp->var[0] = ft_strdup(envp->var[0]);
+			if (envp->var[1])
+				tmp->var[1]= ft_strdup(envp->var[1]);
+			tmp->var[2] = NULL;
+			tmp->next = dst;
+			dst = tmp;
+		}
 		envp = envp->next;
 	}
 	return (dst);
@@ -122,13 +125,13 @@ void	ft_export(t_data *data)
 	}
 	while (data->args[++i])
 	{
-		new = malloc (sizeof(t_envp));
+		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
 			exit(EXIT_FAILURE);
 		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
 		if (!replace_var_in_env(data->envp, new))
-			ft_envpadd_front(&(data->envp), new);
+			ft_envpadd_back(&(data->envp), new);
 	}
-	ft_show_export(data->envp);
+	//ft_show_export(data->envp);
 }

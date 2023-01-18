@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/10 18:10:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:56:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,38 @@ static void	do_dups(t_data *data)
 {
 	if (data->in_pipe || data->infile)
 	{
+		//ft_putstr_fd("DUP IN\n", 2);
 		if (dup2(data->in_fd, STDIN_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
-		close(data->fds->pipe[1]);
+		if (data->in_pipe)
+			close(data->fds->pipe[1]);
 		close(data->in_fd);
 	}
 	if (data->out_pipe || data->outfile)
 	{
+		//ft_putstr_fd("DUP OUT\n", 2);
 		if (dup2(data->out_fd, STDOUT_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			exit_error("dup2", data);
+			clean_exit(data, 2);
 		}
-		close(data->next->fds->pipe[0]);
+		if (data->out_pipe)
+			close (data->next->fds->pipe[0]);
 		close(data->out_fd);
 	}
-	//ft_close_fds(data);
 }
 
 static void	redirect_fds(t_data *data)
 {
 	if (data->infile)
 		ft_open_infile(data);
-	else if (data->in_pipe)
-	{
-		data->in_fd = data->fds->pipe[0];
-		close(data->fds->pipe[1]);
-	}
 	if (data->outfile)
 		ft_open_outfile(data);
-	else if(data->out_pipe)
-	{
-		data->out_fd = data->next->fds->pipe[1];
-		close(data->next->fds->pipe[0]);
-	}
+	//printf("cmd : %s, file : %s, in : %d / out : %d\n", data->args[0], data->infile, data->in_fd, data->out_fd);
 	do_dups(data);
-	//ft_close_fds(data);
 }
 
 void	exec_builtin(t_data *data)
@@ -62,8 +55,6 @@ void	exec_builtin(t_data *data)
 	int	len;
 
 	len = ft_strlen(data->args[0]);
-	if (ft_data_size(data) > 1)
-		redirect_fds(data);
 	if (!ft_strncmp(data->args[0], "cd", len))
 		ft_cd(data);
 	else if (!ft_strncmp(data->args[0], "echo", len))
@@ -80,25 +71,34 @@ void	exec_builtin(t_data *data)
 		ft_unset(data);
 }
 
-static void	child(t_data *data)
+static void	child(t_data *data, t_data *first_node)
 {
+	redirect_fds(data);
+	ft_close_pipes(first_node);
 	if (data->is_builtin)
+	{
 		exec_builtin(data);
+		exit (EXIT_SUCCESS);
+	}
 	else
 	{
-		redirect_fds(data);
 		if (ft_strchr(data->args[0], '/'))
 		{
 			if (access(data->args[0], F_OK | X_OK) != 0)
-				exit_error("access", data);
-			if(execve(data->args[0], data->args, data->envp->var) == -1)
+			{
+				msg_no_such_file(data->args[0]);
+				clean_exit(data, 2);
+			}
+			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
-			exit_error("execve", data);
+			clean_exit(data, 2);
 		}
 		data->cmd_path = ft_get_path(data);
-		if (execve(data->cmd_path, data->args, data->envp->var) == -1)
+		if (!data->cmd_path)
+			clean_exit(data, 2);
+		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
-		exit_error("execve", data);
+		clean_exit(data, 2);
 	}
 }
 
@@ -109,32 +109,62 @@ The rest of execution is pretty much like pipex except for the in and outs manag
 since at all times it can be a heredoc, a file or a pipe.
  */
 
+int	init_pipes(t_data *data)
+{
+	t_data *first_node;
+
+	first_node = data;
+	while (data)
+	{
+		if (data->in_pipe)
+		{			
+			data->fds = malloc (sizeof(t_pipes));
+			if (!data->fds)
+				return (perror("malloc"), 1);
+			if (pipe(data->fds->pipe) == -1)
+				return (perror("pipe"), 1);
+		}
+		data = data->next;
+	}
+	data = first_node;
+	while (data)
+	{
+		if (data->in_pipe)
+			data->in_fd = data->fds->pipe[0];
+		if(data->out_pipe)	
+			data->out_fd = data->next->fds->pipe[1];
+		data = data->next;
+	}
+	return (0);
+}
+
 int ft_exec(t_data *data)
 {
+	t_data	*first_node;
+
+	first_node = data;
 	if (ft_data_size(data) == 1 && data->is_builtin)
 		exec_builtin(data);
 	else
 	{
+		if (init_pipes(data))
+			return (1);
 		while (data)
 		{
 			data->pid = fork();
 			if (data->pid == -1)
 			{
 				ft_close_fds(data);
-				exit_error("Fork", data);
+				clean_exit(data, 2);
 			}
 			else if (data->pid == 0)
-			{
-				child(data);
-				ft_close_fds(data);
-				data = data->next;
-			}
+				child(data, first_node);
 			if (data->is_heredoc)
 				unlink(".heredoc.tmp");
 			data = data->next;
 		}
-		//ft_close_pipes(data);
-		//ft_free_close(data);
+		data = first_node;
+		ft_close_pipes(data);
 		ft_wait(data);
 	}
 	return (0);
@@ -153,20 +183,20 @@ int ft_exec(t_data *data)
 	(void)av;
 	envi = get_env(envp);
 	data = malloc (sizeof(t_data));
+	first_node = data;
 	data->envp = envi;
 	data->fds = malloc (sizeof(t_pipes));
 	if (pipe(data->fds->pipe) == -1)
 		perror("pipe");
-	first_node = data;
 	data->args = malloc (sizeof(char **) * 3);
-	data->args[0] = "ls";
-	data->args[1] = "-la";
+	data->args[0] = "echo";
+	data->args[1] = "lol";
 	data->args[2] = NULL;
 	data->in_fd = 0;
 	data->out_fd = 0;
-	data->is_builtin = 0;
-	data->infile = 0;
-	data->outfile = 0;
+	data->is_builtin = 1;
+	data->infile = NULL;
+	data->outfile = NULL;
 	data->in_pipe = 0;
 	data->out_pipe = 1;
 	data->next = malloc (sizeof(t_data));
@@ -176,17 +206,17 @@ int ft_exec(t_data *data)
 	data->fds = malloc (sizeof(t_pipes));
 	if (pipe(data->fds->pipe) == -1)
 		perror("pipe");
-	data->args[0] = "pwd";
+	data->args[0] = "wc";
 	data->args[1] = NULL;
 	data->args[2] = NULL;
 	data->in_fd = 0;
 	data->out_fd = 0;
 	data->is_builtin = 0;
-	data->infile = 0;
-	data->outfile = 0;
+	data->infile = NULL;
+	data->outfile = NULL;
 	data->in_pipe = 1;
 	data->out_pipe = 0;
-	data->cmd_path = "/usr/bin/wc/";
+	data->cmd_path = "/usr/bin/wc";
 	data->is_builtin = 0;
 	data->next = NULL;
 	data = first_node;

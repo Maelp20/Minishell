@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/07 16:18:39 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/17 17:10:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,38 @@
 	ATTENTION : la valeur de retour sera entre 0 et 255. exit doit tout nettoyer (free et close).
  */
 
+int	ft_alphanum(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	while (str[++i])
+		if (str[i] < '0' && str[i] > '9')
+			return (1);
+	return (0);
+}
+
 void	ft_exit(t_data *data)
 {
 	int	code;
 	
-	if (!data->args)
-		exit (0);
-	code = ft_atoi(data->args[0]);
+	code = 0;
+	if (data->args[1] && !ft_alphanum(data->args[1]))
+	{
+		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(data->args[1], 2);
+		ft_putstr_fd(" :numeric argument required\n", 2);
+		clean_exit(data, 2);
+	}
+	else if (data->args[1])
+		code = ft_atoi(data->args[1]);
 	if (code > 255)
-		exit (code % 256);
-	exit (code);
+	{
+		code = code % 256;
+		clean_exit(data, code);
+	}
+	clean_exit(data, code);
 }
