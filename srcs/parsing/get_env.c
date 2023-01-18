@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/03 01:32:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:45:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@ void print_env(t_envp *list)
 t_envp	*lstnew_env(char **content)
 {
 	t_envp  *dest;
+	char *temp;
 
 	dest = malloc(sizeof(*dest));
 	if (!dest)
 		return (NULL);
 	dest->var = content;
 	dest->var[0]= ft_strjoin(dest->var[0], "=");
+	if (!ft_strcmp(dest->var[0], "SHLVL"))
+	{
+		temp = ft_strdup(dest->var[1]);
+		free (dest->var[1]);
+		dest->var[1] = ft_itoa(ft_atoi(temp) + 1);
+		free(temp); 
+	}
 	dest->next = NULL;
 	return (dest);
 }

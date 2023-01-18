@@ -188,7 +188,7 @@ void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_no
     (void)data;
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
-		data_node->infile = ft_strdup((*lst_node)->next->token);
+		data_node->outfile = ft_strdup((*lst_node)->next->token);
 		one_node(lst);
 		return;
 	}	
@@ -203,7 +203,7 @@ void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_nod
     (void)data;
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
-		data_node->outfile = ft_strdup((*lst_node)->next->token);
+		data_node->infile = ft_strdup((*lst_node)->next->token);
 		one_node(lst);
 		return;
 	}	

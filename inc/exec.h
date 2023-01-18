@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/17 17:22:18 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/18 03:05:06 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,13 @@ int		split_dbq(char *input, int i, t_tok **lst);
 int		split_sq(char *input, int i, t_tok **lst);
 int		split_space(char *input, int i, t_tok **lst);
 
-int		is_to_split(char c);
-void	replace_node(t_tok **lst, t_tok **tmp, t_tok *node);
-int		split_pipe_and_chev(char *token, t_tok **lst);
 void	clean_token(t_tok **lst);
-void 	clean_dquotes(t_tok **lst);
-void 	clean_squotes(t_tok **lst);
-
-void	split_lst_operator(t_tok **tok_lst, t_data **lst);
+void 	clean_quotes(t_tok **lst);
 
 void	expand(t_tok **lst, t_data **data);
 
 /*---------------------------------------INIT---------------------------------*/
 void	init_struct(t_data *data, char **envi);
-char **parse_env(t_envp *envir);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args();
 void	lstadd_back_args(t_data **lst, t_data *new);
@@ -114,8 +107,8 @@ void	free_array(char** array);
 /*---------------------------------------ENV---------------------------------*/
 void print_env(t_envp *list);
 t_envp	*lstnew_env(char **content);
- void	lstadd_back_env(t_envp **lst, t_envp *new);
 t_envp	*get_env(char **envi);
+char **parse_env(t_envp *envir);
 
 /*--------------------------------------PATH---------------------------------*/
 

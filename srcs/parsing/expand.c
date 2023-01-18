@@ -1,97 +1,179 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
+/*   Updated: 2023/01/18 03:17:41 by yanthoma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 
 int	is_char_var(char c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||  c == '_')
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
 		return (1);
 	else if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
 
-
-int has_doll(char *str)
+int	len_env(char *str, int i)
 {
-	int i;
+	int	len;
 
-	i = 0;
-	while (str[i])
+	len = 0;
+	while (is_char_var(str[i]))
 	{
-		if(str[i] == '$')
-			return (1);
 		i++;
+		len++;
 	}
-	return (0);
+	return (len);
 }
 
-char *expand_from(char *token, t_data *data)
+int	len_expanded(char *str, int len_env, t_data *data)
 {
-	int		len;
-	int		len_env;
-	int		i;
-	char	*expanded;
 	t_envp	*tmp;
+	int		len;
 
-	i = 0;
 	len = 0;
-	len_env = 0;
-	while (token[i] && token[i] != '$')
-		len = ++i;
-	while (token[++i] && is_char_var(token[i]))
-		len_env = i - len;
-	//token = token + len + 1;
 	tmp = data->envp;
-	//printf("%d\n", len_env);
-	while(tmp)
+	while (tmp)
 	{
-		if (!ft_strncmp(token + len + 1, tmp->var[0], len_env))
-			break;
-		//printf("token = %s envp = %s\n", token + len + 1, tmp->var[0]);
+		if (!ft_strncmp(str, tmp->var[0], len_env))
+			break ;
 		tmp = tmp->next;
 	}
-	//printf("var 1 %s\n", tmp->var[1]);
-	//printf("len var %d\n", (int)ft_strlen(tmp->var[1]));
-	//printf("len %d\n", len);
-	expanded = malloc((char)sizeof(char) * (len + (int)ft_strlen(tmp->var[1]) + 1));
-	i = 0;
-	//printf("token = %s envp = %s\n", token + len + 1, tmp->var[1]);
-	while (len != 0 && i < len)
+	if (tmp)
+		len += (int)ft_strlen(tmp->var[1]);
+	return (len);
+}
+
+int	write_expanded(char *str, char *temp, int len_env, t_data *data)
+{
+	t_envp	*tmp;
+	int		len;
+	int		k;
+	int		l;
+
+	k = 0;
+	l = 0;
+	len = 0;
+	tmp = data->envp;
+	while (tmp)
 	{
-		expanded[i] = token[i];
-		i++;
-	}	
-	int j = 0;
-	while (tmp->var[1][j])
-	{
-		expanded[i] = tmp->var[1][j];
-		j++;
-		i++;
-		//printf("%c %c\n", expanded[i], tmp->var[1][j]);
+		if (!ft_strncmp(str, tmp->var[0], len_env))
+			break ;
+		tmp = tmp->next;
 	}
-	//printf("last i = %d\n", i);
-	expanded[i] = '\0';
-	//printf("expanded = %s\n", expanded); 
-	//printf("token + len = %s\n", token);
-	//printf(" expand from %c\n", token[i]);
-	return (expanded);
+	if (tmp)
+	{
+		len += (int)ft_strlen(tmp->var[1]);
+		while (tmp->var[1][k])
+		{
+			temp[l] = tmp->var[1][k];
+			l++;
+			k++;
+		}
+	}
+	return (len);
+}
+
+int	trigger_expand(char *str, int i, t_data *data)
+{
+	int		dbl;
+	int		sq;
+	int		len;
+
+	len = 0;
+	sq = 2;
+	dbl = 2;
+	while (str[i])
+	{
+		if (str[i] == '\"')
+			dbl++;
+		if (str[i] == '\'' && !(dbl % 2))
+			sq++;
+		if (str[i] == '$' && !(sq % 2) && str[i + 1] != '\"')
+		{
+			len += len_expanded(str + i + 1, len_env(str, i + 1), data);
+			i += len_env(str, i + 1) + 1;
+		}
+		len++;
+		i++;
+	}
+	return (len);
+}
+
+void	fill_expand(char *temp, char *token, t_data *data)
+{
+	int		dbl;
+	int		sq;
+	int		i;
+
+	i = 0;
+	sq = 2;
+	dbl = 2;
+	while (token[i])
+	{
+		if (token[i] == '\"')
+			dbl++;
+		if (token[i] == '\'' && !(dbl % 2))
+			sq++;
+		if (token[i] == '$' && !(sq % 2) && token[i + 1] != '\"')
+		{
+			temp += write_expanded(token + i + 1, temp, len_env(token, i + 1), data);
+			i += len_env(token, i + 1) + 1;
+		}
+		*temp = token[i];
+		temp++;
+		i++;
+	}
+	*temp = '\0';
+}
+
+char	*expand_from(char *token, t_data *data)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	i = trigger_expand(token, i, data);
+	temp = ft_calloc(sizeof(char), i + 1);
+	fill_expand(temp, token, data);
+	return (temp);
 }
 
 void	expand(t_tok **lst, t_data **data)
 {
+	int		dbl;
+	int		sq;
+	int		i;
 	char	*temp;
 	t_tok	*tmp;
 
+	sq = 2;
+	dbl = 2;
 	tmp = *lst;
 	while (tmp)
 	{
-		if(tmp->token[0] != '\'')
+		i = -1;
+		while (tmp->token[++i])
 		{
-			if (has_doll(tmp->token))
+			if (tmp->token[i] == '\"')
+				dbl++;
+			if (tmp->token[i] == '\'' && !(dbl % 2))
+				sq++;
+			if (tmp->token[i] == '$' && !(sq % 2))
 			{
 				temp = ft_strdup(tmp->token);
 				free (tmp->token);
 				tmp->token = expand_from(temp, *data);
 				free(temp);
+				break ;
 			}
 		}
 		tmp = tmp->next;

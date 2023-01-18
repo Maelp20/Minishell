@@ -53,11 +53,12 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	tok_lst = NULL;
 	while(i >= 0 && input[i])
 	{
-		if (input[i] == '\"')
-			i = split_dbq(input, ++i, &tok_lst);
-		if (i >= 0 && input[i] && input[i] == '\'' )
-			i = split_sq(input, ++i, &tok_lst);
-		if (i >= 0 && input[i] && !is_sep(input[i]))
+		// if (input[i] == '\"')
+		// 	i = split_dbq(input, ++i, &tok_lst);
+		// if (i >= 0 && input[i] && input[i] == '\'' )
+		// 	i = split_sq(input, ++i, &tok_lst);
+		//printf(" is_sep= %d\n", is_sep(input[i]));
+		if (i >= 0 && input[i] && is_sep(input[i]) != 1)
 		 	i = split_space(input, i, &tok_lst);
 		i++;
 	}
