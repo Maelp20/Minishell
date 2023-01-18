@@ -6,25 +6,26 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 02:16:29 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:28:14 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-
-void print_tok_list(t_tok *list)
+void	print_tok_list(t_tok *list)
 {
-    t_tok *current = list;
-	int i;
+	t_tok	*current;
+	int		i;
+
+	current = list;
 	i = 0;
 	printf("tok list : \n");
-    while (current)
-    {
+	while (current)
+	{
 		i++;
-        printf("%d %s\n",i, current->token);
-        current = current->next;
-    }
+		printf("%d %s\n",i, current->token);
+		current = current->next;
+	}
 }
 
 int	check_separator(char c)
@@ -34,22 +35,21 @@ int	check_separator(char c)
 	return (0);
 }
 
-
 int	is_separator(char c1, char c2)
 {
-    if(c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
-        return (2);
+	if (c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
+		return (2);
     else if (c1 == '>' || c1 == '<' || c1 == '|')
-        return (1);
-    return (0);
+		return (1);	
+	return (0);
 }
 
-int has_a_sep(char *token)
+int	has_a_sep(char *token)
 {
 	int i;
 
 	i = 0;
-	while(token[i])
+	while (token[i])
 	{
 		if (token[i] == '>' || token[i] == '<' || token [i] == '|')
 			return (1);
@@ -65,7 +65,6 @@ int	countword(char *token)
 
 	j = 0;
 	i = 0;
-	
 	while (token[i])
 	{
 		if (!check_separator(token[i]))
@@ -77,29 +76,25 @@ int	countword(char *token)
 		else
 		{
 			j++;
-    		if (is_separator(token[i], token[i + 1]) == 2)
+			if (is_separator(token[i], token[i + 1]) == 2)
 				i += 2;
-   			else if (is_separator(token[i], token[i + 1]) == 1)
+			else if (is_separator(token[i], token[i + 1]) == 1)
 				i += 1;
 		}
 	}
 	return (j);
 }
 
-
-char *fill_word(char *token, int len)
+char	*fill_word(char *token, int len)
 {
-	int	i;
-	char *split;
+	int		i;
+	char	*split;
 
 	i = 0;
-	// printf("token[i] = %s len = %d\n", token, len);
-	// printf("token fill word[%c]\n",token[i]);
 	split = malloc(sizeof(char) * (len + 1));
 	while (i < len)
 	{
-		split[i] =token[i]; 
-		//printf("token[i] = %c split[i] = %c\n", token[i], split[i]);
+		split[i] = token[i];
 		i++;
 	}
 	split[i] = '\0';
@@ -121,9 +116,9 @@ int	len_word(char *token)
 		}
 		else
 		{
-    		if (is_separator(token[i], token[i + 1]) == 2)
+			if (is_separator(token[i], token[i + 1]) == 2)
 				i += 2;
-   			else if (is_separator(token[i], token[i + 1]) == 1)
+			else if (is_separator(token[i], token[i + 1]) == 1)
 				i += 1;
 			return (i);
 		}
@@ -131,24 +126,19 @@ int	len_word(char *token)
 	return (i);
 }
 
-char **extract(char *token)
+char	**extract(char *token)
 {
 	int		nb_word;
 	char	**extracted;
-	int 	i;
+	int		i;
 	int		len;
 
 	i = 0;
 	nb_word = countword(token);
-	//printf("nb_word %d\n", nb_word);
 	extracted = ft_calloc(sizeof(char *), nb_word + 1);
 	while (i < nb_word)
 	{
 		len = len_word(token);
-		// printf("len %d\n", len);
-		// printf("token %s\n", token);
-		// printf("token[%c]\n",token[0]);
-		// printf("i = %d\n", i);
 		extracted[i] = fill_word(token, len);
 		token += len;
 		i++;
@@ -159,7 +149,7 @@ char **extract(char *token)
 
 t_tok	*split_sep(t_tok *lst)
 {
-	char 	**splitted;
+	char	**splitted;
 	t_tok	*insert;
 	t_tok	*temp;
 
@@ -179,10 +169,8 @@ t_tok	*split_sep(t_tok *lst)
 
 void	clean_token(t_tok **lst)
 {
-	// int i;
-	// int j;
-	t_tok *tmp;
-	
+	t_tok	*tmp;
+
 	tmp = *lst;
 	while (tmp)
 	{
