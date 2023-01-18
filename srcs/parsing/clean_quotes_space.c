@@ -6,11 +6,26 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 03:09:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:27:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int del_dollard(t_tok *lst, int i)
+{
+	int	j;
+	
+	j = 0;
+	lst->token[i] = lst->token[i + 1];
+	while (lst->token[j + 1])
+	{
+		lst->token[j - 1] = lst->token [j + 1];
+		j++;
+	}
+	lst->token[j - 1] = 0;
+	return (i - 1);
+}
 
 int	clean_dbq(t_tok *lst, int i)
 {

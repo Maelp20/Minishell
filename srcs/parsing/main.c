@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/18 02:47:32 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:45:21 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	data = NULL;
 	t_envp *envir = get_env(env);
-	//print_env(envir);
+	print_env(envir);
 	while (ac > 0)
 	{
 		init_data(&data,envir);
