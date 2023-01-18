@@ -6,17 +6,16 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 02:00:01 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:09:51 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-
 int	clean_dbq(t_tok *lst, int i)
 {
-	int j;
-	
+	int	j;
+
 	if (i == 0)
 		lst->token[i] = lst->token[i + 1];
 	i++;
@@ -30,18 +29,17 @@ int	clean_dbq(t_tok *lst, int i)
 	lst->token[j] = lst->token[j + 1];
 	while (lst->token[j + 1])
 	{
-		lst->token[j-1] = lst->token [j+1];
+		lst->token[j - 1] = lst->token [j + 1];
 		j++;
 	}
 	lst->token[j - 1] = 0;
 	return (i - 1);
-} 
-
+}
 
 int	clean_sq(t_tok *lst, int i)
 {
-	int j;
-	
+	int	j;
+
 	if (i == 0)
 		lst->token[i] = lst->token[i + 1];
 	i++;
@@ -55,29 +53,27 @@ int	clean_sq(t_tok *lst, int i)
 	lst->token[j] = lst->token[j + 1];
 	while (lst->token[j + 1])
 	{
-		lst->token[j-1] = lst->token [j+1];
+		lst->token[j - 1] = lst->token [j + 1];
 		j++;
 	}
 	lst->token[j -1] = 0;
-	return (i -1);
+	return (i - 1);
 }
 
-
-
-void clean_quotes(t_tok **lst)
+void	clean_quotes(t_tok **lst)
 {
 	t_tok	*temp;
-	int 	i;
-	
+	int		i;
+
 	i = 0;
 	temp = *lst;
-	while(temp)
+	while (temp)
 	{
 		i = 0;
 		while (temp->token[i])
 		{
 			if (temp->token[i] == '\"')
-		 		i = clean_dbq(temp, i);
+				i = clean_dbq(temp, i);
 			if (temp->token[i] == '\'' )
 				i = clean_sq(temp, i);
 			if (temp->token[i] != '\'' && temp->token[i] != '\"' )
