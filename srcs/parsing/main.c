@@ -6,11 +6,13 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/18 17:45:21 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:48:57 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int err_status = 0;
 
 void print_tout_huehue(t_data **data)
 {
@@ -92,7 +94,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	data = NULL;
 	t_envp *envir = get_env(env);
-	print_env(envir);
+	//print_env(envir);
 	while (ac > 0)
 	{
 		init_data(&data,envir);
@@ -105,6 +107,11 @@ int main(int ac, char **av, char **env)
 			expand(&lst, &data);
 			//print_tok_list(lst);
 			clean_quotes(&lst);
+			if(lst)
+			{
+				verif_pipe(&lst, &data);
+				verif_redir(&lst, &data);
+			}
 			fill_node_with_tok(&lst, &data, envir);
 			print_tout_huehue(&data);
 		}

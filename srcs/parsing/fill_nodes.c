@@ -38,7 +38,6 @@ void	create_data_nodes(int nb_nodes,t_data **data, t_envp *envir)
 		lstadd_back_args(&temp,lstnew_args(envir));
 		i++;
 	}
-	//printf("nb_node = %d i = %d\n", nb_nodes, i);
 }
 
 void process_node(t_tok **node, t_tok **lst)
@@ -98,17 +97,13 @@ void	create_data_args(t_tok **lst, t_data **data)
 			process_node(&temp, &(*lst));
 			j++;
 			i--;
-			//temp = temp->next;
 		}
 		if (temp && ft_strcmp(temp->token, "|"))
 		{
 			process_node(&temp, &(*lst));
 			data_tmp->out_pipe = 1;
 			data_tmp->next->in_pipe = 1;
-			//printf("next token %s\n",temp->token);
 		}
-		//printf_data_args(data_tmp);
-		//print_env((*data)->envp);
 }
 
 void	one_node(t_tok **lst)
@@ -241,11 +236,6 @@ void process_redir(t_tok **lst, t_data **data)
 			else
 				temp_tok = *lst;
         }
-		// if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
-		// 	temp_tok = temp_tok->next;
-		// else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
-		// {
-		// 	temp_tok = temp_tok->next;
 }
 
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
