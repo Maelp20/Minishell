@@ -53,28 +53,11 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	tok_lst = NULL;
 	while(i >= 0 && input[i])
 	{
-		// if (input[i] == '\"')
-		// 	i = split_dbq(input, ++i, &tok_lst);
-		// if (i >= 0 && input[i] && input[i] == '\'' )
-		// 	i = split_sq(input, ++i, &tok_lst);
-		//printf(" is_sep= %d\n", is_sep(input[i]));
 		if (i >= 0 && input[i] && is_sep(input[i]) != 1)
 		 	i = split_space(input, i, &tok_lst);
 		i++;
 	}
 	if (i < 0)
-		printf("fonction free blahblah\n");
-	// while(tok_lst)
-	// {
-	//   	int j = 0;
-	// 	//printf("init - %s\n", tok_lst->token);
-	// 	while (tok_lst->token[j])
-	// 	{
-	// 		printf("%c", tok_lst->token[j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	//   	tok_lst = tok_lst->next;
-	// }
+		destroy_struct(&tok_lst, lst);
 	return (tok_lst);
 }
