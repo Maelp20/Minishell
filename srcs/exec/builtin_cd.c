@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/06 16:20:06 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/20 19:02:37 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,23 @@
 	Note : if PWD is unset, we just use chdir and env is not modified.
 */
 
+void	cd_err_msg(char *str)
+{
+	err_status = 1;
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+}
+
 void	update_old_pwd_env(t_envp *envp)
 {
 	int	oldpwd;
 	char *curr_pwd;
 
 	oldpwd = 0;
-	curr_pwd = seek_pwd_in_env(envp);
+	curr_pwd = getcwd(NULL, 0);
+	if (!curr_pwd)
+		curr_pwd = seek_pwd_in_env(envp);
 	if (!curr_pwd)
 		return ;
 	while (envp->var)
@@ -38,16 +48,22 @@ void	update_old_pwd_env(t_envp *envp)
 		envp = envp->next;		
 	}
 	if (oldpwd)
+	{
+		free(envp->var[1]);
 		envp->var[1] = curr_pwd;
+	}
 	else
+	{
 		ft_envpadd_front(&envp, ft_envpnew("OLDPWD=", curr_pwd));
+		free(curr_pwd);
+	}
 }
 
 void	update_pwd_env(t_envp *envp)
 {
 	if (!envp)
 		return ;
-	while (envp->var)
+	while (envp)
 	{
 		if (ft_strnstr(envp->var[0], "PWD=", 4))
 			break ;
@@ -55,23 +71,30 @@ void	update_pwd_env(t_envp *envp)
 	}
 	if (envp == NULL)
 		return ;
+	free(envp->var[1]);
 	envp->var[1] = getcwd(NULL, 0);
 }
 
 int	ft_cd(t_data *data)
 {
-	int	i;
 	char	*tmp;
 	char	*path;
 
+	err_status = 0;
+	if (!data->args[1] || ft_strcmp(data->args[1], ""))
+		return (0);
+	if (data->args[2])
+		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2),
+				set_err_status(1));
 	update_old_pwd_env(data->envp);
 	tmp = ft_strjoin("/", data->args[1]);
+	if (!tmp)
+		return (perror("malloc"), set_err_status(1));
 	path = ft_strjoin_spec(getcwd(NULL, 0), tmp);
-	i = chdir(path);
-	if (i == -1)
-		perror("chdir");
+	if (!path)
+		return (perror("malloc"), set_err_status(1));
+	if (chdir(path) == -1)
+		return(free(tmp), free(path), cd_err_msg(data->args[1]), err_status);
 	update_pwd_env(data->envp);
-	free(tmp);
-	free(path);
-	return (i);
+	return (free(tmp), free(path), err_status);
 }

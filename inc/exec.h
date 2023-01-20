@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 10:17:55 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:46:42 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <errno.h>
 
 extern int	err_status;
 
@@ -133,7 +134,7 @@ int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
 void	ft_env(t_data *data);
 int		ft_unset(t_data *data);
-void	ft_export(t_data *data);
+int		ft_export(t_data *data);
 void	ft_exit(t_data *data);
 
 /*-------------------------------------UTILS----------------------------------*/
@@ -160,6 +161,7 @@ void	ft_free_data(t_data *data);
 void	clean_exit(t_data *data, int err);
 void	msg_cmd_not_found(char *cmd);
 void	msg_no_such_file(char *str);
+int		set_err_status(int nb);
 
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 

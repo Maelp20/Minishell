@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:12:30 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/17 13:49:01 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:11:31 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,21 @@ char	*ft_get_path(t_data *data)
 	char	**paths;
 	char	*cmd_path;
 	t_envp	*tmp_env;
+	int		found;
 
+	found = 0;
 	tmp_env = data->envp;
 	while (tmp_env)
 	{
 		if (ft_strnstr(tmp_env->var[0], "PATH=", 5))
+		{
+			found = 1;
 			break ;
+		}
 		tmp_env = tmp_env->next;
 	}
+	if (!found)
+		return (msg_cmd_not_found(data->args[0]), set_err_status(1), NULL);
 	paths = ft_split(tmp_env->var[1], ':');
 	if (!paths)
 		return (NULL);

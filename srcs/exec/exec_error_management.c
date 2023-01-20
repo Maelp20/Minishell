@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/19 14:54:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:03:53 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 void print_tout_huehue(t_data **data);
+
+int	set_err_status(int nb)
+{
+	err_status = nb;
+	return (err_status);
+}
 
 void	msg_no_such_file(char *str)
 {
@@ -87,7 +93,6 @@ void	ft_free_data(t_data *data)
 			ft_free_dble_array((void **)tmp->args);
 		if (tmp->env)
 			ft_free_dble_array((void **)tmp->env);
-		ft_envpclear(&(tmp->envp));
 		if (tmp->fds)
 			free(tmp->fds);
 		if (tmp->cmd_path)
@@ -105,7 +110,9 @@ void	ft_free_data(t_data *data)
 void	clean_exit(t_data *data, int err)
 {
 	//printf("Clean exit\n");
+	if (data->envp)
+		ft_envpclear(&(data->envp));
     ft_free_data(data);
 	rl_clear_history();
-	exit (err);
+	exit(err);
 }
