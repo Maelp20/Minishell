@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 02:45:22 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:47:20 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_envp	*lstnew_env(char **content)
 		return (NULL);
 	dest->var = content;
 	dest->var[0]= ft_strjoin(dest->var[0], "=");
-	if (!ft_strcmp(dest->var[0], "SHLVL"))
+	if (ft_strcmp(dest->var[0], "SHLVL="))
 	{
 		temp = ft_strdup(dest->var[1]);
 		free (dest->var[1]);

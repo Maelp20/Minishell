@@ -6,11 +6,13 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/18 02:47:32 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 00:21:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int err_status = 0;
 
 void print_tout_huehue(t_data **data)
 {
@@ -55,6 +57,8 @@ char **parse_env(t_envp *envir)
 		temp = temp->next;
 	}
 	envi = ft_calloc(sizeof(char *), i + 1);
+	if (!envi)
+		ft_free_dble_array((void **)envi);
 	temp = envir;
 	i = 0;
 	while (temp)
@@ -67,7 +71,7 @@ char **parse_env(t_envp *envir)
 	return (envi);
 }
 
-void	init_data(t_data **data, t_envp *envi)
+void	 init_data(t_data **data, t_envp *envi)
 {
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -75,7 +79,6 @@ void	init_data(t_data **data, t_envp *envi)
 	(*data)->envp = envi;
 	(*data)->env = parse_env((*data)->envp);
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
-	//print_env((*data)->envp);
 }
 
 
@@ -91,7 +94,12 @@ int main(int ac, char **av, char **env)
 
 	(void)av;
 	data = NULL;
-	t_envp *envir = get_env(env);
+	t_envp *envir;
+	
+	
+	envir = get_env(env);
+	if (!envir)
+		return (ft_envpclear(&envir), 0);
 	//print_env(envir);
 	while (ac > 0)
 	{
@@ -105,6 +113,11 @@ int main(int ac, char **av, char **env)
 			expand(&lst, &data);
 			//print_tok_list(lst);
 			clean_quotes(&lst);
+			if(lst)
+			{
+				verif_pipe(&lst, &data);
+				verif_redir(&lst, &data);
+			}
 			fill_node_with_tok(&lst, &data, envir);
 			print_tout_huehue(&data);
 		}
