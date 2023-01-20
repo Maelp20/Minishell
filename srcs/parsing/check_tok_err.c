@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 02:49:46 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/19 18:47:40 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:04:04 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,23 @@ void	verif_pipe(t_tok **tok_lst, t_data **data)
 		}
 		temp = temp->next;
 	}
+}
+
+int	check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data)
+{
+	if (!node)
+		return (disp_error(tok_lst, data, "\\n"), 1);
+	if (!node->token)
+		return (1);
+	if (node->token[0] == '|')
+		return (disp_error(tok_lst, data, "|"), 1);
+	if (node->token[0] == '<' && node->token[1] != '<')
+		return (disp_error(tok_lst, data, "<"), 1);
+	if (node->token[0] == '<' && node->token[1] == '<')
+		return (disp_error(tok_lst, data, "<<"), 1);
+	if (node->token[0] == '>' && node->token[1] != '>')
+		return (disp_error(tok_lst, data, ">"), 1);
+	if (node->token[0] == '>' && node->token[1] == '>')
+		return (disp_error(tok_lst, data, ">>"), 1);
+	return (0);
 }
