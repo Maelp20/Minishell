@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/20 23:02:31 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:17:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ char **split_at_first_equal(char *input)
     output[0] = ft_substr(input, 0, first_len - 1);
     second_len = ft_strlen(input) - first_len + 1;
     output[1] = ft_substr(input, first_len, second_len);
-    // output[1] = ft_calloc(second_len, sizeof(char));
-    // ft_strlcpy(output[1], equal_pos + 1, second_len);
     output[2] = NULL;
     return (output);
   }
