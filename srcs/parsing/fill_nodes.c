@@ -146,7 +146,7 @@ void	multi_node(t_tok **lst_node, t_tok **lst)
 
 void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-	if(check_next_operator(*lst_node, lst, data))
+	if(check_next_operator((*lst_node)->next, lst, data))
 		return ;
 	if (data_node->is_heredoc)
 		free(data_node->is_heredoc);
@@ -168,7 +168,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
 
 void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-	if(check_next_operator(*lst_node, lst, data))
+	if(check_next_operator((*lst_node)->next, lst, data))
 		return ;
 	if (data_node->outfile)
 		free(data_node->outfile);
@@ -190,9 +190,7 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 
 void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    (void)data;
-
-	if(check_next_operator(*lst_node, lst, data))
+	if(check_next_operator((*lst_node)->next, lst, data))
 		return ;
 	if (data_node->outfile)
 		free(data_node->outfile);
@@ -213,7 +211,7 @@ void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_no
 void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
 	
-	if(check_next_operator(*lst_node, lst, data))
+	if(check_next_operator((*lst_node)->next, lst, data))
 		return ;
 	if (data_node->infile)
 		free(data_node->infile);
