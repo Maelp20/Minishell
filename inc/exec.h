@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 00:19:27 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:17:55 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 
 void	verif_redir(t_tok **tok_lst, t_data **data);
 void	verif_pipe(t_tok **tok_lst, t_data **data);
+int	check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
 
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
 void clean_parsing(t_tok **lst, t_data **data);
