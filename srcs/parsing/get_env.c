@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 17:47:20 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:02:31 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ t_envp	*lstnew_env(char **content)
 	t_envp  *dest;
 	char *temp;
 
-	dest = malloc(sizeof(*dest));
+	dest = ft_calloc(1, sizeof(t_envp));
 	if (!dest)
 		return (NULL);
 	dest->var = content;
+  temp = dest->var[0];
 	dest->var[0]= ft_strjoin(dest->var[0], "=");
+  free(temp);
 	if (ft_strcmp(dest->var[0], "SHLVL="))
 	{
 		temp = ft_strdup(dest->var[1]);
@@ -46,16 +48,6 @@ t_envp	*lstnew_env(char **content)
 	return (dest);
 }
 
-
-
-void copy_split_first_equal(size_t len, char **dest, char *input)
-{
-  *dest = malloc(len + 1);
-  ft_strlcpy(*dest, input, len);
-  (*dest)[len] = '\0';
-}
-
-
 //protect the malloc otherwise it's a fail
 char **split_at_first_equal(char *input)
 {
@@ -64,14 +56,16 @@ char **split_at_first_equal(char *input)
   size_t first_len;
   size_t second_len;
 
-  output = malloc(sizeof(char *) * 3);
+  output = ft_calloc(3, sizeof(char *));
   equal_pos = ft_strchr(input, '=');
   if (equal_pos)
   {
     first_len = equal_pos - input + 1;
-    copy_split_first_equal(first_len, &output[0], input);
+    output[0] = ft_substr(input, 0, first_len - 1);
     second_len = ft_strlen(input) - first_len + 1;
-    copy_split_first_equal(second_len, &output[1], equal_pos + 1);
+    output[1] = ft_substr(input, first_len, second_len);
+    // output[1] = ft_calloc(second_len, sizeof(char));
+    // ft_strlcpy(output[1], equal_pos + 1, second_len);
     output[2] = NULL;
     return (output);
   }

@@ -8,7 +8,6 @@ void	tok_del_one(t_tok *lst)
 		free(lst);
 }
 
-
 t_tok	*lstnew_token(char *content)
 {
 	t_tok  *dest;

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 00:21:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:08:05 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char **parse_env(t_envp *envir)
 		i++;
 		temp = temp->next;
 	}
-	envi = ft_calloc(sizeof(char *), i + 1);
+	envi = ft_calloc((i + 1),sizeof(char *));
 	if (!envi)
 		ft_free_dble_array((void **)envi);
 	temp = envir;
@@ -123,7 +123,10 @@ int main(int ac, char **av, char **env)
 		}
 		free(input);
 		i++;
+		break ;
 	}
+	ft_free_data(data);
+	ft_envpclear(&envir);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/19 18:49:33 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 22:22:30 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_data	*lstnew_args(t_envp *envir)
 {
 	t_data	*dest;
 
-	dest = ft_calloc(sizeof(t_data), 1);
+	dest = ft_calloc(1, sizeof(t_data));
 	dest->envp = envir;
 	dest->env = parse_env(dest->envp);
 	if (!dest)
