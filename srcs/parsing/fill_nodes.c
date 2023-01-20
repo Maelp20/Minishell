@@ -86,7 +86,7 @@ void	create_data_args(t_tok **lst, t_data **data)
 			i++;
 			temp = temp->next;
 		}
-		data_tmp->args = ft_calloc(sizeof(char*), i + 1);
+		data_tmp->args = ft_calloc(i + 1, sizeof(char*));
 		temp = *lst;
 		j = 0;
 		while(i > 0  && temp && !ft_strcmp(temp->token, "|"))
