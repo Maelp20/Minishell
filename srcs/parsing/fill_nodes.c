@@ -147,6 +147,8 @@ void	multi_node(t_tok **lst_node, t_tok **lst)
 void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->is_heredoc)
+		free(data_node->is_heredoc);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->is_heredoc = ft_strdup((*lst_node)->next->token);
@@ -155,8 +157,10 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
+        clean_parsing(lst, data);
     data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	data_node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -164,6 +168,8 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
 void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->outfile)
+		free(data_node->outfile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->outfile = ft_strdup((*lst_node)->next->token);
@@ -172,8 +178,10 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
+        clean_parsing(lst, data);
     data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	data_node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -181,6 +189,8 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->outfile)
+		free(data_node->outfile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->outfile = ft_strdup((*lst_node)->next->token);
@@ -188,23 +198,30 @@ void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_no
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
-    data_node->infile = ft_strdup((*lst_node)->next->token);
+        clean_parsing(lst, data);
+    data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	multi_node(lst_node, lst);
 }
 
 void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    (void)data;
+	if (data_node->infile)
+		free(data_node->infile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->infile = ft_strdup((*lst_node)->next->token);
+		if (!data_node->infile)
+			clean_parsing(lst, data);
 		one_node(lst);
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
-    data_node->outfile = ft_strdup((*lst_node)->next->token);
+        clean_parsing(lst, data);
+    data_node->infile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->infile)
+			clean_parsing(lst, data);
 	multi_node(lst_node, lst);
 }
 

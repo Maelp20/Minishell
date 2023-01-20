@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/19 18:52:19 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 00:23:10 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void clean_parsing(t_tok **lst, t_data **data)
 {
 	perror("malloc :");
 	ft_free_tok(lst);
-	ft_free_data(data);
+	ft_free_data(*data);
 }
 
 void	ft_free_tok(t_tok **lst_tok)
@@ -42,5 +42,3 @@ void	ft_free_tok(t_tok **lst_tok)
 		free (tmp);
 	}
 }
-
-void 

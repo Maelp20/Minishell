@@ -58,6 +58,6 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 		i++;
 	}
 	if (i < 0)
-		destroy_struct(&tok_lst, lst);
+		clean_parsing(&tok_lst, lst);
 	return (tok_lst);
 }

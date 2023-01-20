@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/19 18:53:40 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 00:21:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char **parse_env(t_envp *envir)
 	}
 	envi = ft_calloc(sizeof(char *), i + 1);
 	if (!envi)
-		ft_free_dble_array(envi);
+		ft_free_dble_array((void **)envi);
 	temp = envir;
 	i = 0;
 	while (temp)
@@ -79,7 +79,6 @@ void	 init_data(t_data **data, t_envp *envi)
 	(*data)->envp = envi;
 	(*data)->env = parse_env((*data)->envp);
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
-	//print_env((*data)->envp);
 }
 
 
