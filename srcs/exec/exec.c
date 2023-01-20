@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/17 14:56:00 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/20 17:49:23 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ static void	do_dups(t_data *data)
 {
 	if (data->in_pipe || data->infile)
 	{
-		//ft_putstr_fd("DUP IN\n", 2);
 		if (dup2(data->in_fd, STDIN_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			clean_exit(data, 2);
+			clean_exit(data, set_err_status(errno));
 		}
 		if (data->in_pipe)
 			close(data->fds->pipe[1]);
@@ -28,11 +27,10 @@ static void	do_dups(t_data *data)
 	}
 	if (data->out_pipe || data->outfile)
 	{
-		//ft_putstr_fd("DUP OUT\n", 2);
 		if (dup2(data->out_fd, STDOUT_FILENO) == -1)
 		{
 			ft_close_fds(data);
-			clean_exit(data, 2);
+			clean_exit(data, set_err_status(errno));
 		}
 		if (data->out_pipe)
 			close (data->next->fds->pipe[0]);
@@ -87,18 +85,18 @@ static void	child(t_data *data, t_data *first_node)
 			if (access(data->args[0], F_OK | X_OK) != 0)
 			{
 				msg_no_such_file(data->args[0]);
-				clean_exit(data, 2);
+				clean_exit(data, set_err_status(errno));
 			}
 			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
-			clean_exit(data, 2);
+			clean_exit(data, set_err_status(errno));
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
 			clean_exit(data, 2);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
-		clean_exit(data, 2);
+		clean_exit(data, set_err_status(errno));
 	}
 }
 
@@ -120,9 +118,9 @@ int	init_pipes(t_data *data)
 		{			
 			data->fds = malloc (sizeof(t_pipes));
 			if (!data->fds)
-				return (perror("malloc"), 1);
+				return (perror("malloc"), set_err_status(1));
 			if (pipe(data->fds->pipe) == -1)
-				return (perror("pipe"), 1);
+				return (perror("pipe"), set_err_status(1));
 		}
 		data = data->next;
 	}
@@ -142,20 +140,21 @@ int ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
+	err_status = 0;
 	first_node = data;
 	if (ft_data_size(data) == 1 && data->is_builtin)
 		exec_builtin(data);
 	else
 	{
 		if (init_pipes(data))
-			return (1);
+			return (err_status);
 		while (data)
 		{
 			data->pid = fork();
 			if (data->pid == -1)
 			{
 				ft_close_fds(data);
-				clean_exit(data, 2);
+				clean_exit(data, set_err_status(errno));
 			}
 			else if (data->pid == 0)
 				child(data, first_node);
@@ -167,7 +166,7 @@ int ft_exec(t_data *data)
 		ft_close_pipes(data);
 		ft_wait(data);
 	}
-	return (0);
+	return (err_status);
 }
 
 
