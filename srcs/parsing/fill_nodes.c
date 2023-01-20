@@ -38,7 +38,6 @@ void	create_data_nodes(int nb_nodes,t_data **data, t_envp *envir)
 		lstadd_back_args(&temp,lstnew_args(envir));
 		i++;
 	}
-	//printf("nb_node = %d i = %d\n", nb_nodes, i);
 }
 
 void process_node(t_tok **node, t_tok **lst)
@@ -98,17 +97,13 @@ void	create_data_args(t_tok **lst, t_data **data)
 			process_node(&temp, &(*lst));
 			j++;
 			i--;
-			//temp = temp->next;
 		}
 		if (temp && ft_strcmp(temp->token, "|"))
 		{
 			process_node(&temp, &(*lst));
 			data_tmp->out_pipe = 1;
 			data_tmp->next->in_pipe = 1;
-			//printf("next token %s\n",temp->token);
 		}
-		//printf_data_args(data_tmp);
-		//print_env((*data)->envp);
 }
 
 void	one_node(t_tok **lst)
@@ -152,6 +147,8 @@ void	multi_node(t_tok **lst_node, t_tok **lst)
 void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->is_heredoc)
+		free(data_node->is_heredoc);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->is_heredoc = ft_strdup((*lst_node)->next->token);
@@ -160,8 +157,10 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
+        clean_parsing(lst, data);
     data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	data_node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -169,6 +168,8 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node
 void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->outfile)
+		free(data_node->outfile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->outfile = ft_strdup((*lst_node)->next->token);
@@ -177,8 +178,10 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
+        clean_parsing(lst, data);
     data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	data_node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -186,6 +189,8 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
     (void)data;
+	if (data_node->outfile)
+		free(data_node->outfile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->outfile = ft_strdup((*lst_node)->next->token);
@@ -193,23 +198,30 @@ void    out_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_no
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
-    data_node->infile = ft_strdup((*lst_node)->next->token);
+        clean_parsing(lst, data);
+    data_node->outfile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->outfile)
+			clean_parsing(lst, data);
 	multi_node(lst_node, lst);
 }
 
 void    in_redir(t_tok **lst, t_tok **lst_node, t_data ** data, t_data *data_node)
 {
-    (void)data;
+	if (data_node->infile)
+		free(data_node->infile);
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		data_node->infile = ft_strdup((*lst_node)->next->token);
+		if (!data_node->infile)
+			clean_parsing(lst, data);
 		one_node(lst);
 		return;
 	}	
     if (!(*lst_node)->next)
-        printf("blahblah\n");
-    data_node->outfile = ft_strdup((*lst_node)->next->token);
+        clean_parsing(lst, data);
+    data_node->infile = ft_strdup((*lst_node)->next->token);
+	if (!data_node->infile)
+			clean_parsing(lst, data);
 	multi_node(lst_node, lst);
 }
 
@@ -241,11 +253,6 @@ void process_redir(t_tok **lst, t_data **data)
 			else
 				temp_tok = *lst;
         }
-		// if (temp_tok && temp_tok->next && ft_strcmp(temp_tok->token, "|") && ft_strcmp(temp_tok->next->token, "|"))
-		// 	temp_tok = temp_tok->next;
-		// else if (temp_tok && ft_strcmp(temp_tok->token, "|"))
-		// {
-		// 	temp_tok = temp_tok->next;
 }
 
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)

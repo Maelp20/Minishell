@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/17 14:57:08 by mpignet          ###   ########.fr        #
+#    Updated: 2023/01/20 00:21:51 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SRCS	= \
 			exec/builtin_exit.c\
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
-			parsing/first_parsing.c parsing/second_parsing.c parsing/get_env.c\
-			parsing/split_quotes_space.c parsing/clean_quotes_space.c\
+			parsing/check_tok_err.c parsing/first_parsing.c parsing/second_parsing.c parsing/get_env.c\
+			parsing/split_quotes_space.c parsing/clean_quotes_space.c parsing/clean.c\
 			parsing/init.c parsing/main.c parsing/expand.c parsing/fill_nodes.c\
 
 SRCDIR		= srcs/

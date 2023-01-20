@@ -6,11 +6,28 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 03:09:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:46:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int del_dollard(t_tok *lst, int i)
+{
+	int	j;
+	
+	j = i;
+	lst->token[i] = lst->token[i + 1];
+	i++;
+	printf("%c\n", lst->token[i]);
+	while (lst->token[j + 1])
+	{
+		lst->token[j] = lst->token [j + 1];
+		j++;
+	}
+	lst->token[j] = 0;
+	return (i -1);
+}
 
 int	clean_dbq(t_tok *lst, int i)
 {
@@ -76,8 +93,11 @@ void	clean_quotes(t_tok **lst)
 				i = clean_dbq(temp, i);
 			if (temp->token[i] == '\'' )
 				i = clean_sq(temp, i);
+			if (temp->token[i] == '$' && (temp->token[i + 1] == '\"' || temp->token[i + 1] == '\''))
+				i = del_dollard(temp, i);
 			if (temp->token[i] != '\'' && temp->token[i] != '\"' )
 				i++;
+			
 		}
 		temp->token[i] = '\0';
 		temp = temp->next;
