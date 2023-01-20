@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/17 16:37:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/20 18:42:10 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,12 @@ t_envp *copy_envp(t_envp *envp)
 
 void	ft_show_export(t_envp *envp)
 {
+	t_envp	*first_node;
 	t_envp	*dst;
 
 	dst = copy_envp(envp);
 	sort_envp(dst);
+	first_node = dst;
 	while (dst)
 	{
 		printf("export ");
@@ -103,7 +105,7 @@ void	ft_show_export(t_envp *envp)
 		printf("\n");
 		dst = dst->next;
 	}
-	free(dst);
+	ft_envpclear(&first_node);
 }
 
 /* Export builtin : 
@@ -111,20 +113,55 @@ void	ft_show_export(t_envp *envp)
 - With args : we add the named variable to env, or if it already exists, we replace it's value
 with our newly defined value. */
 
-void	ft_export(t_data *data)
+void	export_err_msg(char *str)
+{
+	err_status = 1;
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\': not a valid identifier\n", 2);
+}
+
+int	check_valid_identifier(char *str)
+{
+	char	*invalid;
+	int		i;
+	int		j;
+
+	invalid = "!@#$%^&*()`~-|[]{};:,./<>?";
+	if (ft_strcmp(str, "="))
+		return (export_err_msg(str), err_status);
+	if (str[0] >= '0' && str[0] <= '9')
+		return (export_err_msg(str), err_status);
+	i = -1;
+	while (str[++i] && str[i] != '=')
+	{
+		j = -1;
+		while(invalid[++j])
+		{
+			if (invalid[j] == str[i])
+				return (export_err_msg(str), err_status);
+			if (str[i] == '+' && str[i + 1] && str[i + 1] != '=')
+				return (export_err_msg(str), err_status);
+		}
+	}
+	if (i == 0)
+		return (export_err_msg(str), err_status);
+	return (0);
+}
+
+int	ft_export(t_data *data)
 {
 	int		i;
 	t_envp	*new;
 	
+	err_status = 0;
 	i = 0;
 	if (!data->args[1])
-	{
-		ft_show_export(data->envp);
-		return;
-		exit(EXIT_SUCCESS);
-	}
+		return(ft_show_export(data->envp), err_status);
 	while (data->args[++i])
 	{
+		if (check_valid_identifier(data->args[i]))
+			return (err_status);
 		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
 			exit(EXIT_FAILURE);
@@ -134,4 +171,5 @@ void	ft_export(t_data *data)
 			ft_envpadd_back(&(data->envp), new);
 	}
 	//ft_show_export(data->envp);
+	return (err_status);
 }

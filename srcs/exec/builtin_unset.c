@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2022/12/13 14:45:27 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:21:48 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int	ft_unset(t_data *data)
 	char	*var;
 	t_envp	*first_node;
 
+	err_status = 0;
 	if (!data->envp || !data->args[1])
 		return (1);
 	var = ft_strjoin(data->args[1], "=");
+	if (!var)
+		return (perror("malloc"), set_err_status(1));
 	first_node = data->envp;
 	while (data->envp->next)
 	{

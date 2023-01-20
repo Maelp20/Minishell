@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/19 18:50:27 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:17:41 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,21 @@ void	ft_envpadd_back(t_envp **envp, t_envp *new)
 
 char *seek_pwd_in_env(t_envp *envp)
 {
+	char	*buff;
+
+	buff = NULL;
 	if (!envp)
 		return (NULL);
 	while (envp)
 	{
 		if(ft_strcmp(envp->var[0], "PWD="))
-			return (envp->var[1]);
+		{
+			buff = ft_strdup(envp->var[1]);
+			if (!buff)
+				return (perror("malloc"), set_err_status(1), NULL);
+			break;
+		}
 		envp = envp->next;
 	}
-	return (NULL);
+	return (buff);
 }
