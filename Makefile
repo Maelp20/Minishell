@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/20 00:21:51 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/21 13:09:34 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,16 @@ SRCS	= \
 			exec/builtin_exit.c\
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
-			parsing/check_tok_err.c parsing/first_parsing.c parsing/second_parsing.c parsing/get_env.c\
-			parsing/split_quotes_space.c parsing/clean_quotes_space.c parsing/clean.c\
-			parsing/init.c parsing/main.c parsing/expand.c parsing/fill_nodes.c\
-
+			parsing/[1]main.c				parsing/[2]get_env.c\
+			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
+			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\
+			parsing/[7]expand.c 			parsing/[8]expand_utils.c\
+			parsing/[9]clean_quotes.c\
+			parsing/[10]check_tok_err.c\
+			parsing/[11]process_redir.c 	parsing/[12]redir_type.c\
+			parsing/[13]fill_nodes.c 		parsing/[14]fill_nodes_utils.c\
+			parsing/clean.c 				parsing/init.c\
+			
 SRCDIR		= srcs/
 OBJDIR 		= objs
 SUBOBJ		= objs/exec objs/parsing

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_quotes_space.c                               :+:      :+:    :+:   */
+/*   [9]clean_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/19 16:46:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:36:35 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int del_dollard(t_tok *lst, int i)
+int 	del_dollard(t_tok *lst, int i)
 {
 	int	j;
 	
