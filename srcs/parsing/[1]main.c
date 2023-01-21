@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 23:08:05 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/21 12:00:19 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ void	 init_data(t_data **data, t_envp *envi)
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 }
 
-
-
-
-
 int main(int ac, char **av, char **env)
 {
 	char *input;
@@ -95,8 +91,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	data = NULL;
 	t_envp *envir;
-	
-	
+
 	envir = get_env(env);
 	if (!envir)
 		return (ft_envpclear(&envir), 0);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_quotes_space.c                               :+:      :+:    :+:   */
+/*   [3]split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 03:20:09 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:11:35 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,54 +21,6 @@ int	is_sep(char c)
 	else if (c == ' ')
 		return (1);
 	return (0);
-}
-
-int	split_dbq(char *input, int i, t_tok **lst)
-{
-	int		j;
-	char	*tmp;
-
-	j = i;
-	while (input[j + 1] && is_sep(input[j]) != 3)
-		j++;
-	if (input[j] != '\"' && input [j + 1] == '\0')
-		return (-2);
-	tmp = malloc(sizeof(char) * (j - i + 3));
-	if (!tmp)
-		return (-2);
-	j = 0;
-	i--;
-	tmp[j] = '\"';
-	while (is_sep(input[++i]) != 3)
-		tmp[++j] = input[i];
-	tmp[++j] = '\"';
-	tmp[++j] = '\0';
-	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), ++i);
-}
-
-int	split_sq(char *input, int i, t_tok **lst)
-{
-	int		j;
-	char	*tmp;
-
-	j = i;
-	while (is_sep(input[j]) != 2 && input[j + 1])
-		j++;
-	if (input[j] != '\'' && input [j + 1] == '\0')
-		return (-2);
-	tmp = malloc(sizeof(char) * (j - i + 3));
-	if (!tmp)
-		return (-2);
-	j = 0;
-	i--;
-	tmp[j] = '\'';
-	while (is_sep(input[++i]) != 2)
-		tmp[++j] = input[i];
-	tmp[++j] = '\'';
-	tmp[++j] = '\0';
-	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), ++i);
 }
 
 int	split_space(char *input, int i, t_tok **lst)
@@ -97,4 +49,23 @@ int	split_space(char *input, int i, t_tok **lst)
 	tmp[++j] = '\0';
 	lstadd_back_token(lst, lstnew_token(tmp));
 	return (free(tmp), --i);
+}
+
+t_tok	*init_token_lst(char *input, t_data	**lst)
+{
+	int		i;
+	t_tok	*tok_lst;
+
+	(void)lst;
+	i = 0;
+	tok_lst = NULL;
+	while (i >= 0 && input[i])
+	{
+		if (i >= 0 && input[i] && is_sep(input[i]) != 1)
+			i = split_space(input, i, &tok_lst);
+		i++;
+	}
+	if (i < 0)
+		clean_parsing(&tok_lst, lst);
+	return (tok_lst);
 }
