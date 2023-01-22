@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 17:03:53 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:19:30 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void	ft_free_data(t_data *data)
 		if (tmp->args)
 			ft_free_dble_array((void **)tmp->args);
 		if (tmp->env)
+		{
 			ft_free_dble_array((void **)tmp->env);
+			tmp->envp = NULL;
+		}
 		if (tmp->fds)
 			free(tmp->fds);
 		if (tmp->cmd_path)

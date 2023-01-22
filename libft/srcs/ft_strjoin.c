@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:13:46 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 21:55:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 15:23:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2)
 		s2 = malloc(sizeof(char));
 	len = ft_strlen(s1) + ft_strlen(s2);
-	dest = malloc(sizeof(char) * (len + 1));
+	dest = ft_calloc((len + 1), sizeof(char));
 	if (!dest)
 		return (NULL);
 	i = -1;
