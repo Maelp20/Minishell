@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:05:32 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:34:24 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:46:48 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ int	count_nodes(t_tok **lst)
 void	create_data_nodes(int nb_nodes, t_data **data, t_envp *envir)
 {
 	int		i;
-	t_data	*temp;
 
 	i = 0;
-	temp = *data;
 	while (i < nb_nodes)
 	{
-		lstadd_back_args(&temp, lstnew_args(envir));
+		lstadd_back_args(data, lstnew_args(envir));
 		i++;
 	}
 }
@@ -73,7 +71,7 @@ int	is_builtin(char *token)
 	return (0);
 }
 
-void	create_data_args(t_tok **lst, t_data **data)
+int	create_data_args(t_tok **lst, t_data **data)
 {
 	t_tok	*temp;
 	t_data	*data_tmp;
@@ -88,6 +86,8 @@ void	create_data_args(t_tok **lst, t_data **data)
 		i++;
 		temp = temp->next;
 	}
+	if (i == 0)
+		return (0) ;
 	data_tmp->args = ft_calloc(i + 1, sizeof(char*));
 	temp = *lst;
 	j = 0;
@@ -106,6 +106,7 @@ void	create_data_args(t_tok **lst, t_data **data)
 		data_tmp->out_pipe = 1;
 		data_tmp->next->in_pipe = 1;
 	}
+	return (1);
 }
 
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
@@ -113,13 +114,18 @@ void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
 	int		nb_nodes;
 	t_data	*data_temp;
 
-	data_temp = *data;
+	if (!lst)
+		return ;
 	nb_nodes = count_nodes(lst);
+	// if (nb_nodes < 2)
+	// 	return ;
 	create_data_nodes(nb_nodes, data, envir);
+	data_temp = *data;
 	while (data_temp)
 	{
 		process_redir(lst, &data_temp);
-		create_data_args(lst, &data_temp);
+		if (create_data_args(lst, &data_temp) == 0)
+			return ;
 		data_temp = data_temp->next;
 	}
 }
