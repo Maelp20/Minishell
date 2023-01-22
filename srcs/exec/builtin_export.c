@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 18:42:10 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 16:40:43 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 int	replace_var_in_env(t_envp *envp, t_envp *new)
 {
 	if (!new || !envp)
-		return (1);
+		return (0);
 	while (envp)
 	{
 		if(ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
 		{
+			free(envp->var[1]);
 			envp->var[1] = ft_strdup(new->var[1]);
-			return (1);
+			{
+				ft_free_dble_array((void **)new->var);
+				free(new);
+				return (1);
+			}
 		}
 		envp = envp->next;
 	}
@@ -164,7 +169,7 @@ int	ft_export(t_data *data)
 			return (err_status);
 		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
-			exit(EXIT_FAILURE);
+			return(perror("malloc"), set_err_status(1));
 		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
 		if (!replace_var_in_env(data->envp, new))

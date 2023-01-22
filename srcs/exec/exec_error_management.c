@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 17:03:53 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 15:30:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	set_err_status(int nb)
 
 void	msg_no_such_file(char *str)
 {
+	err_status = 127;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd("no such file or directory: ", 2);
 	ft_putstr_fd(str, 2);
@@ -30,6 +31,7 @@ void	msg_no_such_file(char *str)
 
 void	msg_cmd_not_found(char *cmd)
 {
+	err_status = 127;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
@@ -109,7 +111,6 @@ void	ft_free_data(t_data *data)
 
 void	clean_exit(t_data *data, int err)
 {
-	//printf("Clean exit\n");
 	if (data->envp)
 		ft_envpclear(&(data->envp));
     ft_free_data(data);

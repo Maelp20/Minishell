@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 17:49:23 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 17:11:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	child(t_data *data, t_data *first_node)
 	if (data->is_builtin)
 	{
 		exec_builtin(data);
-		exit (EXIT_SUCCESS);
+		clean_exit(first_node, set_err_status(0));
 	}
 	else
 	{
@@ -85,18 +85,18 @@ static void	child(t_data *data, t_data *first_node)
 			if (access(data->args[0], F_OK | X_OK) != 0)
 			{
 				msg_no_such_file(data->args[0]);
-				clean_exit(data, set_err_status(errno));
+				clean_exit(first_node, set_err_status(errno));
 			}
 			if(execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
-			clean_exit(data, set_err_status(errno));
+			clean_exit(first_node, set_err_status(errno));
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
-			clean_exit(data, 2);
+			clean_exit(first_node, err_status);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
-		clean_exit(data, set_err_status(errno));
+		clean_exit(first_node, set_err_status(errno));
 	}
 }
 
@@ -166,6 +166,7 @@ int ft_exec(t_data *data)
 		ft_close_pipes(data);
 		ft_wait(data);
 	}
+	ft_free_data(data);
 	return (err_status);
 }
 
