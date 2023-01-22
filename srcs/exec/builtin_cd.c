@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 19:02:37 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 15:26:31 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	cd_err_msg(char *str)
 {
-	err_status = 1;
+	err_status = 127;
 	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
