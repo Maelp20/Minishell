@@ -6,14 +6,15 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 18:16:13 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 20:03:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 /* pour EXIT builtin :
-	ATTENTION : la valeur de retour sera entre 0 et 255. exit doit tout nettoyer (free et close).
+	ATTENTION : la valeur de retour sera entre 0 et 255. exit doit tout 
+	nettoyer (free et close).
  */
 
 int	ft_numeric(char *str)
@@ -32,7 +33,7 @@ int	ft_numeric(char *str)
 void	ft_exit(t_data *data)
 {
 	int	code;
-	
+
 	code = 0;
 	printf("exit\n");
 	if (data->args[1] && ft_numeric(data->args[1]))
@@ -45,7 +46,7 @@ void	ft_exit(t_data *data)
 	if (data->args[1] && data->args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		err_status = 1;
+		g_status = 1;
 		return ;
 	}
 	if (data->args[1])

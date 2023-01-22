@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 16:40:43 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 20:05:03 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	replace_var_in_env(t_envp *envp, t_envp *new)
 		return (0);
 	while (envp)
 	{
-		if(ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
+		if (ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
 		{
 			free(envp->var[1]);
 			envp->var[1] = ft_strdup(new->var[1]);
@@ -59,13 +59,15 @@ void	sort_envp(t_envp *envp)
 	}
 }
 
-/* We copy env in dst without the last line ("_=...") because we don't want it in export */
+/* We copy env in dst without the last line ("_=...") 
+because we don't want it in export */
 
-t_envp *copy_envp(t_envp *envp)
+t_envp	*copy_envp(t_envp *envp)
 {
-	t_envp *dst = NULL;
-	t_envp *tmp;
+	t_envp	*dst;
+	t_envp	*tmp;
 
+	dst = NULL;
 	while (envp)
 	{
 		if (!ft_strcmp(envp->var[0], "_="))
@@ -74,7 +76,7 @@ t_envp *copy_envp(t_envp *envp)
 			tmp->var = malloc(sizeof(char *) * 3);
 			tmp->var[0] = ft_strdup(envp->var[0]);
 			if (envp->var[1])
-				tmp->var[1]= ft_strdup(envp->var[1]);
+				tmp->var[1] = ft_strdup(envp->var[1]);
 			tmp->var[2] = NULL;
 			tmp->next = dst;
 			dst = tmp;
@@ -84,7 +86,8 @@ t_envp *copy_envp(t_envp *envp)
 	return (dst);
 }
 
-/* Show export : sorting env in ASCII order and adding "declare -x" each line. */
+/* Show export : sorting env in ASCII order and adding "declare -x" 
+each line. */
 
 void	ft_show_export(t_envp *envp)
 {
@@ -115,16 +118,9 @@ void	ft_show_export(t_envp *envp)
 
 /* Export builtin : 
 - Without args : we show export.
-- With args : we add the named variable to env, or if it already exists, we replace it's value
+- With args : we add the named variable to env, or if it already exists,
+ we replace it's value
 with our newly defined value. */
-
-void	export_err_msg(char *str)
-{
-	err_status = 1;
-	ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\': not a valid identifier\n", 2);
-}
 
 int	check_valid_identifier(char *str)
 {
@@ -134,23 +130,30 @@ int	check_valid_identifier(char *str)
 
 	invalid = "!@#$%^&*()`~-|[]{};:,./<>?";
 	if (ft_strcmp(str, "="))
-		return (export_err_msg(str), err_status);
+		return (msg_export_err(str), g_status);
 	if (str[0] >= '0' && str[0] <= '9')
-		return (export_err_msg(str), err_status);
+		return (msg_export_err(str), g_status);
 	i = -1;
 	while (str[++i] && str[i] != '=')
 	{
 		j = -1;
-		while(invalid[++j])
+		while (invalid[++j])
 		{
 			if (invalid[j] == str[i])
-				return (export_err_msg(str), err_status);
+				return (msg_export_err(str), g_status);
 			if (str[i] == '+' && str[i + 1] && str[i + 1] != '=')
-				return (export_err_msg(str), err_status);
+				return (msg_export_err(str), g_status);
 		}
 	}
 	if (i == 0)
-		return (export_err_msg(str), err_status);
+		return (msg_export_err(str), g_status);
+	return (0);
+}
+
+int	check_for_option_export(char *str)
+{
+	if (str[0] == '-')
+		return (msg_export_option(str), set_err_status(2));
 	return (0);
 }
 
@@ -158,23 +161,24 @@ int	ft_export(t_data *data)
 {
 	int		i;
 	t_envp	*new;
-	
-	err_status = 0;
+
+	g_status = 0;
 	i = 0;
 	if (!data->args[1])
-		return(ft_show_export(data->envp), err_status);
+		return (ft_show_export(data->envp), g_status);
+	if (check_for_option_export(data->args[1]))
+		return (2);
 	while (data->args[++i])
 	{
 		if (check_valid_identifier(data->args[i]))
-			return (err_status);
+			continue ;
 		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
-			return(perror("malloc"), set_err_status(1));
+			return (perror("malloc"), set_err_status(1));
 		new->var = ft_split(data->args[i], '=');
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_back(&(data->envp), new);
 	}
-	//ft_show_export(data->envp);
-	return (err_status);
+	return (g_status);
 }

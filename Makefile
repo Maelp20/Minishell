@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
+#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/21 13:09:34 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/22 19:22:46 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS	= \
 			exec/exec_utils.c\
 			exec/exec_get_cmd_path.c\
 			exec/exec_error_management.c\
+			exec/print_errors.c\
 			exec/builtin_cd.c\
 			exec/builtin_echo.c\
 			exec/builtin_pwd.c\
