@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 16:30:40 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:53:20 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
+		node->is_append = 0;
 		if (!node->outfile)
 			clean_parsing(lst, data);
 		one_node(lst);
@@ -88,6 +89,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
 		clean_parsing(lst, data);
+	node->is_append = 0;
 	multi_node(lst_node, lst);
 }
 
