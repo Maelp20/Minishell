@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_type.c                                       :+:      :+:    :+:   */
+/*   [12]redir_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 11:42:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:30:40 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	{
 		node->is_heredoc = ft_strdup((*lst_node)->next->token);
 		node->is_append = 1;
+		if (!node->outfile)
+			clean_parsing(lst, data);
 		one_node(lst);
 		return ;
 	}	
@@ -44,14 +46,25 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
 		node->is_append = 1;
+		if (!node->outfile)
+		{
+			clean_parsing(lst, data);
+			return ;
+		}
 		one_node(lst);
 		return ;
 	}	
 	if (!(*lst_node)->next)
+	{
 		clean_parsing(lst, data);
+		return ;
+	}
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
+	{
 		clean_parsing(lst, data);
+		return ;
+	}
 	node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -65,6 +78,8 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
+		if (!node->outfile)
+			clean_parsing(lst, data);
 		one_node(lst);
 		return ;
 	}	

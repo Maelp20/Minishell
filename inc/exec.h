@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/21 13:37:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:41:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,14 @@ t_tok	*ft_lstlast_tok(t_tok *lst);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args(t_envp *envir);
 void	lstadd_back_args(t_data **lst, t_data *new);
-void	create_data_args(t_tok **lst, t_data **data);
+int	create_data_args(t_tok **lst, t_data **data);
 
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
 void 	clean_parsing(t_tok **lst, t_data **data);
 void	ft_free_tok(t_tok **lst_tok);
+void	ft_free_data_pars(t_data *data);
 /*---------------------------------------ENV---------------------------------*/
 
 t_envp	*lstnew_env(char **content);
