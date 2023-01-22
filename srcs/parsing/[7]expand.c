@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   [7]expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 11:18:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:07:36 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	trigger_expand(char *str, int i, t_data *data)
 			len += len_expanded(str + i + 1, len_env(str, i + 1), data);
 			i += len_env(str, i + 1) + 1;
 		}
-		len++;
-		i++;
+		else
+		{
+			len++;
+			i++;
+		}
 	}
 	return (len);
 }
@@ -87,12 +90,16 @@ void	fill_expand(char *temp, char *token, t_data *data)
 		{
 			temp += write_expanded(token + i + 1, temp, len_env(token, i + 1), data);
 			i += len_env(token, i + 1) + 1;
+			printf("i %d\n", i);
 		}
-		*temp = token[i];
-		temp++;
-		i++;
+		else
+		{
+			*temp = token[i];
+			temp++;
+			i++;
+		}
 	}
-	*temp = '\0';
+	*temp = 0;
 }
 
 char	*expand_from(char *token, t_data *data)
@@ -101,6 +108,7 @@ char	*expand_from(char *token, t_data *data)
 	int		i;
 
 	i = 0;
+	printf("%c\n", token[i]);
 	i = trigger_expand(token, i, data);
 	temp = ft_calloc(i + 1, sizeof(char));
 	fill_expand(temp, token, data);
