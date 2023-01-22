@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 17:06:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:17:08 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**extract(char *token)
 	return (extracted);
 }
 
-t_tok	*split_sep(t_tok *lst)
+void	split_sep(t_tok *lst)
 {
 	char	**splitted;
 	t_tok	*insert;
@@ -113,7 +113,7 @@ t_tok	*split_sep(t_tok *lst)
 		//printf("splitted : %s\n", splitted[i]);
 	}
 	ft_free_dble_array((void **)splitted);
-	return (lst);
+	//return (lst);
 }
 
 void	clean_token(t_tok **lst)
@@ -125,7 +125,7 @@ void	clean_token(t_tok **lst)
 	{
 		if (!is_sep((tmp)->token[0]) && has_a_sep ((tmp)->token))
 		{
-			tmp = split_sep(tmp);
+			split_sep(tmp);
 			tmp = tmp->next;
 		}
 		else
