@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 17:11:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 20:06:30 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ static void	child(t_data *data, t_data *first_node)
 				msg_no_such_file(data->args[0]);
 				clean_exit(first_node, set_err_status(errno));
 			}
-			if(execve(data->args[0], data->args, data->env) == -1)
+			if (execve(data->args[0], data->args, data->env) == -1)
 				perror("execve");
 			clean_exit(first_node, set_err_status(errno));
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
-			clean_exit(first_node, err_status);
+			clean_exit(first_node, g_status);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
 		clean_exit(first_node, set_err_status(errno));
@@ -109,7 +109,7 @@ since at all times it can be a heredoc, a file or a pipe.
 
 int	init_pipes(t_data *data)
 {
-	t_data *first_node;
+	t_data	*first_node;
 
 	first_node = data;
 	while (data)
@@ -129,25 +129,25 @@ int	init_pipes(t_data *data)
 	{
 		if (data->in_pipe)
 			data->in_fd = data->fds->pipe[0];
-		if(data->out_pipe)	
+		if (data->out_pipe)	
 			data->out_fd = data->next->fds->pipe[1];
 		data = data->next;
 	}
 	return (0);
 }
 
-int ft_exec(t_data *data)
+int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
-	err_status = 0;
+	g_status = 0;
 	first_node = data;
 	if (ft_data_size(data) == 1 && data->is_builtin)
 		exec_builtin(data);
 	else
 	{
 		if (init_pipes(data))
-			return (err_status);
+			return (g_status);
 		while (data)
 		{
 			data->pid = fork();
@@ -167,11 +167,8 @@ int ft_exec(t_data *data)
 		ft_wait(data);
 	}
 	ft_free_data(data);
-	return (err_status);
+	return (g_status);
 }
-
-
-
 
 /* int main (int ac, char **av, char **envp)
 {

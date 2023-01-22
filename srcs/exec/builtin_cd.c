@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 15:26:31 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 20:15:42 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@
 
 void	cd_err_msg(char *str)
 {
-	err_status = 127;
+	g_status = 1;
 	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	perror(str);
 }
 
 void	update_old_pwd_env(t_envp *envp)
 {
-	int	oldpwd;
-	char *curr_pwd;
+	int		oldpwd;
+	char	*curr_pwd;
 
 	oldpwd = 0;
 	curr_pwd = getcwd(NULL, 0);
@@ -45,7 +44,7 @@ void	update_old_pwd_env(t_envp *envp)
 			oldpwd = 1;
 			break ;
 		}
-		envp = envp->next;		
+		envp = envp->next;
 	}
 	if (oldpwd)
 	{
@@ -80,12 +79,12 @@ int	ft_cd(t_data *data)
 	char	*tmp;
 	char	*path;
 
-	err_status = 0;
+	g_status = 0;
 	if (!data->args[1] || ft_strcmp(data->args[1], ""))
 		return (0);
 	if (data->args[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2),
-				set_err_status(1));
+			set_err_status(1));
 	update_old_pwd_env(data->envp);
 	tmp = ft_strjoin("/", data->args[1]);
 	if (!tmp)
@@ -94,7 +93,7 @@ int	ft_cd(t_data *data)
 	if (!path)
 		return (perror("malloc"), set_err_status(1));
 	if (chdir(path) == -1)
-		return(free(tmp), free(path), cd_err_msg(data->args[1]), err_status);
+		return (free(tmp), free(path), cd_err_msg(data->args[1]), g_status);
 	update_pwd_env(data->envp);
-	return (free(tmp), free(path), err_status);
+	return (free(tmp), free(path), g_status);
 }

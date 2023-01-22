@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 16:41:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:02:29 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef EXEC_H
+# define EXEC_H
 
 # include "../libft/inc/libft.h"
 # include <unistd.h>
@@ -24,13 +24,13 @@
 # include <stdbool.h>
 # include <errno.h>
 
-extern int	err_status;
+extern int	g_status;
 
-typedef	struct s_tok
+typedef struct s_tok
 {
-	char *token;
-	struct s_tok *next;
-	struct s_tok *prev;
+	char			*token;
+	struct s_tok	*next;
+	struct s_tok	*prev;
 }	t_tok;
 
 typedef struct s_pipes
@@ -38,20 +38,24 @@ typedef struct s_pipes
 	int	pipe[2];
 }		t_pipes;
 
-typedef struct s_envp 
+typedef struct s_envp
 {	
-	char	**var;
-	struct s_envp *next;
+	char			**var;
+	struct s_envp	*next;
 }		t_envp;
 
 /*
 Data struct changes :
-- I will check for access for each cmd right before executing, and put the correct path in *cmd_path;
-- If there are pipes before and/or after the command, in_pipe = 1 and/or out_pipe = 1.
+- I will check for access for each cmd right before executing, and put the 
+correct path in *cmd_path;
+- If there are pipes before and/or after the command, in_pipe = 1 and/or 
+out_pipe = 1.
 	I will pipe accordingly using the t_pipes fds struct;
-- If there is a file to read from or to, you must fill *infile and/or *outfile with their names.
+- If there is a file to read from or to, you must fill *infile and/or 
+*outfile with their names.
 	I will open them in "in_fd" and/or "out_fd";
-- If there is a heredoc, put the limiter in *is_heredoc, I will create it during exec.
+- If there is a heredoc, put the limiter in *is_heredoc, I will create it
+during exec.
  */
 
 typedef struct s_data
@@ -62,11 +66,11 @@ typedef struct s_data
 	char			*is_heredoc;
 	char			*infile;
 	char			*outfile;
-	
+
 	t_envp			*envp;
 	t_pipes			*fds;
 	pid_t			pid;
-	
+
 	int				is_builtin;
 	int				is_append;
 	int				in_fd;
@@ -77,11 +81,10 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-
-/*------------------------------------to_delete-------------------------------*/
-void print_tok_list(t_tok *list);
-void print_tout_huehue(t_data **data);
-void print_env(t_envp *list);
+/*------------------------------------to_delete--------------*/
+void	print_tok_list(t_tok *list);
+void	print_tout_huehue(t_data **data);
+void	print_env(t_envp *list);
 /*---------------------PARSING----------------------*/
 
 int		is_sep(char c);
@@ -111,7 +114,7 @@ void	one_node(t_tok **lst);
 void	multi_node(t_tok **lst_node, t_tok **lst);
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 
-void 	clean_quotes(t_tok **lst);
+void	clean_quotes(t_tok **lst);
 
 /*------------------------------linked_list_utils-------------------------*/
 void	tok_del_one(t_tok *lst);
@@ -122,12 +125,12 @@ t_tok	*ft_lstlast_tok(t_tok *lst);
 t_data	*ft_lstlast_arg(t_data *lst);
 t_data	*lstnew_args(t_envp *envir);
 void	lstadd_back_args(t_data **lst, t_data *new);
-int	create_data_args(t_tok **lst, t_data **data);
+int		create_data_args(t_tok **lst, t_data **data);
 
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
-void 	clean_parsing(t_tok **lst, t_data **data);
+void	clean_parsing(t_tok **lst, t_data **data);
 void	ft_free_tok(t_tok **lst_tok);
 void	ft_free_data_pars(t_data *data);
 /*---------------------------------------ENV---------------------------------*/
@@ -140,8 +143,8 @@ char	**parse_env(t_envp *envir);
 
 /*---------------------EXEC----------------------*/
 
-int ft_exec(t_data *data);
-int	truc(void);
+int		ft_exec(t_data *data);
+int		truc(void);
 
 /*-------------------------------------BUILTINS-------------------------------*/
 
@@ -160,7 +163,7 @@ t_envp	*ft_envplast(t_envp *envp);
 void	ft_envpadd_front(t_envp **envp, t_envp *new);
 void	ft_envpadd_back(t_envp **envp, t_envp *new);
 void	ft_envpclear(t_envp **envp);
-char 	*seek_pwd_in_env(t_envp *envp);
+char	*seek_pwd_in_env(t_envp *envp);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strcmp_spec(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
@@ -175,10 +178,14 @@ void	ft_free_close(t_data *data);
 void	ft_free_dble_array(void **tab);
 void	ft_free_data(t_data *data);
 void	clean_exit(t_data *data, int err);
-void	msg_cmd_not_found(char *cmd);
-void	msg_no_such_file(char *str);
 int		set_err_status(int nb);
 
+void	msg_cmd_not_found(char *cmd);
+void	msg_no_such_file(char *str);
+void	msg_export_err(char *str);
+void	msg_unset_err(char *str);
+void	msg_unset_option(char *str);
+void	msg_export_option(char *str);
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 
 void	ft_open_infile(t_data *data);

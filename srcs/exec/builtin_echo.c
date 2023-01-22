@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 16:04:17 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/22 20:03:19 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 /* Echo builtin :
 	1 - checks if flag "-n" is present
-	(note that the bash command integrates "-n" or "-nn", "-nnnnn" etc as valid flags, 
-	and they can be multiples. Ex : command "echo -n -nnn -n Lol" just prints "Lol".)
+	(note that the bash command integrates "-n" or "-nn", "-nnnnn" etc as valid 
+	flags, 
+	and they can be multiples. Ex : command "echo -n -nnn -n Lol" just prints 
+	"Lol".)
 	2 - We print everything after the flag (or flags).
-	3 - If there wasn't any valid flags before the strings to print, we print a newline.
+	3 - If there wasn't any valid flags before the strings to print, we print 
+	a newline.
 */
 
 int	is_valid_flag(char *str)
@@ -25,7 +28,7 @@ int	is_valid_flag(char *str)
 	int	i;
 
 	i = 0;
-	if(str[0] == '-')
+	if (str[0] == '-')
 	{
 		while (str[++i])
 			if (str[i] != 'n')
@@ -40,7 +43,7 @@ int	ft_echo(t_data *data)
 	int	i;
 	int	flag;
 
-	err_status = 0;
+	g_status = 0;
 	if (!data->args[1])
 		return (ft_printf("\n"), 0);
 	i = 1;
