@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   second_parsing.c                                   :+:      :+:    :+:   */
+/*   [5]split_separator.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/18 17:36:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:19:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,66 +23,9 @@ void	print_tok_list(t_tok *list)
 	while (current)
 	{
 		i++;
-		printf("%d %s\n",i, current->token);
+		printf("%d %s\n", i, current->token);
 		current = current->next;
 	}
-}
-
-int	check_separator(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
-}
-
-int	is_separator(char c1, char c2)
-{
-	if (c2 && ((c1 == '>'  && c2 == '>') || (c1 == '<' && c2 == '<')))
-		return (2);
-    else if (c1 == '>' || c1 == '<' || c1 == '|')
-		return (1);	
-	return (0);
-}
-
-int	has_a_sep(char *token)
-{
-	int i;
-
-	i = 0;
-	while (token[i])
-	{
-		if (token[i] == '>' || token[i] == '<' || token [i] == '|')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	countword(char *token)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (token[i])
-	{
-		if (!check_separator(token[i]))
-		{
-			j++;
-			while (token[i] && !check_separator(token[i]))
-				i++;
-		}
-		else
-		{
-			j++;
-			if (is_separator(token[i], token[i + 1]) == 2)
-				i += 2;
-			else if (is_separator(token[i], token[i + 1]) == 1)
-				i += 1;
-		}
-	}
-	return (j);
 }
 
 char	*fill_word(char *token, int len)
@@ -135,7 +78,7 @@ char	**extract(char *token)
 
 	i = 0;
 	nb_word = countword(token);
-	extracted = ft_calloc(sizeof(char *), nb_word + 1);
+	extracted = ft_calloc(nb_word + 1, sizeof(char *));
 	while (i < nb_word)
 	{
 		len = len_word(token);

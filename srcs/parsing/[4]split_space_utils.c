@@ -1,43 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   [4]split_space_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 18:28:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 22:22:30 by yanthoma         ###   ########.fr       */
+/*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
+/*   Updated: 2023/01/21 13:10:46 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-t_data	*ft_lstlast_arg(t_data *lst)
+void	tok_del_one(t_tok *lst)
+{
+	if (lst->token)
+		free(lst->token);
+	if (lst)
+		free(lst);
+}
+
+t_tok	*lstnew_token(char *content)
+{
+	t_tok	*dest;
+
+	dest = malloc(sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	dest->token = ft_strdup(content);
+	dest->next = NULL;
+	dest->prev = NULL;
+	return (dest);
+}
+
+void	lstadd_back_token(t_tok **lst, t_tok *new)
+{
+	if (!(*lst))
+		*lst = new;
+	else
+	{
+		if ((*lst)->next == NULL)
+				new->prev = *lst;
+		lstadd_back_token(&((*lst)->next), new);
+	}
+}
+
+t_tok	*ft_lstlast_tok(t_tok *lst)
 {
 	if (!lst)
 		return (NULL);
 	if (lst->next == NULL)
 		return (lst);
-	return (ft_lstlast_arg(lst->next));
-}
-
-t_data	*lstnew_args(t_envp *envir)
-{
-	t_data	*dest;
-
-	dest = ft_calloc(1, sizeof(t_data));
-	dest->envp = envir;
-	dest->env = parse_env(dest->envp);
-	if (!dest)
-		return (NULL);
-	dest->next = NULL;
-	return (dest);
-}
-
-void	lstadd_back_args(t_data **lst, t_data *new)
-{
-	if (!(*lst))
-		*lst = new;
-	else
-		lstadd_back_args(&((*lst)->next), new);
+	return (ft_lstlast_tok(lst->next));
 }

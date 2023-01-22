@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/20 17:46:42 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/21 13:37:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,50 +77,65 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-		/*---------------------PARSING----------------------*/
-void print_tok_list(t_tok *list);
 
-t_tok	*lstnew_token(char *content);
-void	lstadd_back_token(t_tok **lst, t_tok *new);
-t_tok	*ft_lstlast_tok(t_tok *lst);
-void	tok_del_one(t_tok *lst);
-t_tok	*init_token_lst(char *input, t_data	**lst);
+/*------------------------------------to_delete-------------------------------*/
+void print_tok_list(t_tok *list);
+void print_tout_huehue(t_data **data);
+void print_env(t_envp *list);
+/*---------------------PARSING----------------------*/
 
 int		is_sep(char c);
-int		split_dbq(char *input, int i, t_tok **lst);
-int		split_sq(char *input, int i, t_tok **lst);
 int		split_space(char *input, int i, t_tok **lst);
+t_tok	*init_token_lst(char *input, t_data	**lst);
 
+int		check_separator(char c);
+int		is_separator(char c1, char c2);
+int		has_a_sep(char *token);
+int		countword(char *token);
 void	clean_token(t_tok **lst);
-void 	clean_quotes(t_tok **lst);
 
+int		is_char_var(char c);
+int		len_env(char *str, int i);
+int		len_expanded(char *str, int len_env, t_data *data);
 void	expand(t_tok **lst, t_data **data);
-
-/*---------------------------------------INIT---------------------------------*/
-void	init_struct(t_data *data, char **envi);
-t_data	*ft_lstlast_arg(t_data *lst);
-t_data	*lstnew_args();
-void	lstadd_back_args(t_data **lst, t_data *new);
-void	create_data_args(t_tok **lst, t_data **data);
-void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 
 void	verif_redir(t_tok **tok_lst, t_data **data);
 void	verif_pipe(t_tok **tok_lst, t_data **data);
-int	check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
+int		check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
+
+int		check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node);
+void	process_redir(t_tok **lst, t_data **data);
+
+void	process_node(t_tok **node, t_tok **lst);
+void	one_node(t_tok **lst);
+void	multi_node(t_tok **lst_node, t_tok **lst);
+void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
+
+void 	clean_quotes(t_tok **lst);
+
+/*------------------------------linked_list_utils-------------------------*/
+void	tok_del_one(t_tok *lst);
+t_tok	*lstnew_token(char *content);
+void	lstadd_back_token(t_tok **lst, t_tok *new);
+t_tok	*ft_lstlast_tok(t_tok *lst);
+
+t_data	*ft_lstlast_arg(t_data *lst);
+t_data	*lstnew_args(t_envp *envir);
+void	lstadd_back_args(t_data **lst, t_data *new);
+void	create_data_args(t_tok **lst, t_data **data);
+
+/*-----------------------------------ERR/CLEAN--------------------------------*/
 
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
-void clean_parsing(t_tok **lst, t_data **data);
+void 	clean_parsing(t_tok **lst, t_data **data);
 void	ft_free_tok(t_tok **lst_tok);
 /*---------------------------------------ENV---------------------------------*/
-void print_env(t_envp *list);
+
 t_envp	*lstnew_env(char **content);
 t_envp	*get_env(char **envi);
-char **parse_env(t_envp *envir);
+char	**parse_env(t_envp *envir);
 
 /*--------------------------------------PATH---------------------------------*/
-
-/*---------------------------------------LEX---------------------------------*/
-int is_quote(char c);
 
 /*---------------------EXEC----------------------*/
 
