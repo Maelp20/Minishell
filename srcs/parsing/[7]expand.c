@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 18:07:36 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:26:28 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	fill_expand(char *temp, char *token, t_data *data)
 		{
 			temp += write_expanded(token + i + 1, temp, len_env(token, i + 1), data);
 			i += len_env(token, i + 1) + 1;
-			printf("i %d\n", i);
 		}
 		else
 		{
@@ -108,7 +107,6 @@ char	*expand_from(char *token, t_data *data)
 	int		i;
 
 	i = 0;
-	printf("%c\n", token[i]);
 	i = trigger_expand(token, i, data);
 	temp = ft_calloc(i + 1, sizeof(char));
 	fill_expand(temp, token, data);

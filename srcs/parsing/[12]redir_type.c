@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 18:53:20 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:20:44 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	{
 		node->is_heredoc = ft_strdup((*lst_node)->next->token);
 		node->is_append = 1;
-		if (!node->outfile)
+		if (!node->is_heredoc)
 			clean_parsing(lst, data);
 		one_node(lst);
 		return ;
 	}	
 	if (!(*lst_node)->next)
 		clean_parsing(lst, data);
-	node->outfile = ft_strdup((*lst_node)->next->token);
-	if (!node->outfile)
+	node->is_heredoc = ft_strdup((*lst_node)->next->token);
+	if (!node->is_heredoc)
 		clean_parsing(lst, data);
-	node->is_append = 1;
 	multi_node(lst_node, lst);
 }
 

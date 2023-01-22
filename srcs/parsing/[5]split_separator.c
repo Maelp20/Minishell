@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 18:17:08 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:26:41 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	**extract(char *token)
 
 	i = 0;
 	nb_word = countword(token);
-	printf("nb_word : %d\n", nb_word);
 	extracted = ft_calloc(nb_word + 1, sizeof(char *));
 	while (i < nb_word)
 	{
@@ -100,7 +99,6 @@ void	split_sep(t_tok *lst)
 	
 	i = 0;
 	splitted = extract(lst->token);
-	//printf("splitted : %s\n", splitted[i]);
 	free(lst->token);
 	lst->token = ft_strdup(splitted[i]);
 	while (splitted[++i])
@@ -110,10 +108,8 @@ void	split_sep(t_tok *lst)
 		lst->next = insert;
 		insert->next = temp;
 		lst = lst->next;
-		//printf("splitted : %s\n", splitted[i]);
 	}
 	ft_free_dble_array((void **)splitted);
-	//return (lst);
 }
 
 void	clean_token(t_tok **lst)
