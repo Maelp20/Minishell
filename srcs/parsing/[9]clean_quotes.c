@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:36:35 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:07:15 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int 	del_dollard(t_tok *lst, int i)
 	j = i;
 	lst->token[i] = lst->token[i + 1];
 	i++;
-	printf("%c\n", lst->token[i]);
 	while (lst->token[j + 1])
 	{
 		lst->token[j] = lst->token [j + 1];
@@ -87,7 +86,7 @@ void	clean_quotes(t_tok **lst)
 	while (temp)
 	{
 		i = 0;
-		while (temp->token[i])
+		while (temp->token && temp->token[i])
 		{
 			if (temp->token[i] == '\"')
 				i = clean_dbq(temp, i);
@@ -97,9 +96,8 @@ void	clean_quotes(t_tok **lst)
 				i = del_dollard(temp, i);
 			if (temp->token[i] != '\'' && temp->token[i] != '\"' )
 				i++;
-			
 		}
-		temp->token[i] = '\0';
+		temp->token[i] = 0;
 		temp = temp->next;
 	}
 }

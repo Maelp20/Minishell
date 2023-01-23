@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/22 19:22:46 by mpignet          ###   ########.fr        #
+#    Updated: 2023/01/23 15:44:52 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,10 @@ RM		= rm -rfd
 
 all:		${NAME}
 
+# $(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+# 				mkdir -p ${OBJDIR} ${SUBOBJ}
+# 				${CC} ${CFLAGS} ${CINC} -c $< -o $@
+
 ${OBJDIR}/%.o : ${SRCDIR}%.c ${INC}
 				mkdir -p ${OBJDIR} ${SUBOBJ}
 				${CC} ${CFLAGS} ${CINC} -c $< -o $@
@@ -84,4 +88,4 @@ re:			fclean
 -include ./exec/*.d
 -include ./parsing/*.d
 
-.SILENT:
+##.SILENT:
