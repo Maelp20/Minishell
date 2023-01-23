@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 23:26:28 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:51:24 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	expand(t_tok **lst, t_data **data)
 	while (tmp)
 	{
 		i = -1;
-		while (tmp->token[++i])
+		while (tmp->token && tmp->token[++i])
 		{
 			if (tmp->token[i] == '\"')
 				dbl++;

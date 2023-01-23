@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 22:31:56 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:52:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	ft_free_data_pars(t_data *data)
 			free(tmp->infile);
 		if (tmp->outfile)
 			free(tmp->outfile);
-		free(tmp);
+		if(tmp)
+			free(tmp);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 00:31:28 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:54:13 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int main(int ac, char **av, char **env)
 		i++;
 		}
 		free(input);
+		//ft_free_data_pars(data);
 	}
 	ft_free_data(data);
 	ft_envpclear(&envir);
