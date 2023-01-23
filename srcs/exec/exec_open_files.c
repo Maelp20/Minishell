@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/16 17:06:47 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 20:00:57 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_create_infile(t_data *data)
 
 	tmp_fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
-		clean_exit(data, 2);
+		clean_exit(data, 1);
 	stdin_fd = dup(STDIN_FILENO);
 	ft_putstr_fd("> ", 1);
 	line = get_next_line(stdin_fd);
@@ -46,13 +46,16 @@ void	ft_open_infile(t_data *data)
 	{
 		data->in_fd = open(".heredoc.tmp", O_RDONLY);
 		if (data->in_fd < 0)
-			perror("infile");
+			perror("heredoc");
 	}
 	else
 	{
 		data->in_fd = open(data->infile, O_RDONLY);
 		if (data->in_fd < 0)
-			perror("infile");
+		{
+			perror(data->infile);
+			set_err_status(1);
+		}
 	}
 }
 
@@ -62,12 +65,18 @@ void	ft_open_outfile(t_data *data)
 	{
 		data->out_fd = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->out_fd < 0)
-			perror("outfile");
+		{
+			perror(data->outfile);
+			set_err_status(1);
+		}
 	}
 	else
 	{
 		data->out_fd = open(data->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (data->out_fd < 0)
-			perror("outfile");
+		{
+			perror(data->outfile);
+			set_err_status(1);
+		}
 	}
 }

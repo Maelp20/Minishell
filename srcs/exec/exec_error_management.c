@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 20:05:58 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 19:51:29 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	print_tout_huehue(t_data **data);
 
 int	set_err_status(int nb)
 {
-	g_status = nb;
-	return (g_status);
+	g_var.g_status = nb;
+	return (g_var.g_status);
 }
 
 void	ft_close_pipes(t_data *data)
@@ -49,7 +49,10 @@ void	ft_wait(t_data *data)
 
 	(void)data;
 	while (wait(&status) != -1)
+	{
+		g_var.g_status = WEXITSTATUS(status);
 		continue ;
+	}
 }
 
 void	ft_free_dble_array(void **tab)

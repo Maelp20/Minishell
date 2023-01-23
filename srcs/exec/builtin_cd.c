@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 20:15:42 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 18:58:59 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	cd_err_msg(char *str)
 {
-	g_status = 1;
+	g_var.g_status = 1;
 	ft_putstr_fd("minishell: cd: ", 2);
 	perror(str);
 }
@@ -79,7 +79,7 @@ int	ft_cd(t_data *data)
 	char	*tmp;
 	char	*path;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	if (!data->args[1] || ft_strcmp(data->args[1], ""))
 		return (0);
 	if (data->args[2])
@@ -93,7 +93,7 @@ int	ft_cd(t_data *data)
 	if (!path)
 		return (perror("malloc"), set_err_status(1));
 	if (chdir(path) == -1)
-		return (free(tmp), free(path), cd_err_msg(data->args[1]), g_status);
+		return (free(tmp), free(path), cd_err_msg(data->args[1]), g_var.g_status);
 	update_pwd_env(data->envp);
-	return (free(tmp), free(path), g_status);
+	return (free(tmp), free(path), g_var.g_status);
 }

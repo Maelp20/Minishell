@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 20:05:10 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 19:22:36 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	ft_pwd(t_data *data)
 {
 	char	*path;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	if (data->args[1] && data->args[1][0] == '-')
-		return (ft_putstr_fd("minishell: pwd: invalid option", 2),
+		return (ft_putstr_fd("minishell: pwd: invalid option\n", 2),
 			set_err_status(127));
 	path = getcwd(NULL, 0);
 	if (!path)
@@ -34,5 +34,5 @@ int	ft_pwd(t_data *data)
 	}
 	printf("%s\n", path);
 	free(path);
-	return (g_status);
+	return (g_var.g_status);
 }
