@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:12:30 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 15:00:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 18:34:37 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_get_path(t_data *data)
 		tmp_env = tmp_env->next;
 	}
 	if (!found)
-		return (msg_cmd_not_found(data->args[0]), set_err_status(1), NULL);
+		return (msg_cmd_not_found(data->args[0]), NULL);
 	paths = ft_split(tmp_env->var[1], ':');
 	if (!paths)
 		return (set_err_status(1), NULL);
