@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 14:51:24 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:29:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,35 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 	l = 0;
 	len = 0;
 	tmp = data->envp;
-	while (tmp)
+	printf("len env %d\n", len_env);
+	if (*str == '?')
 	{
+		printf("g_status %d\n", g_status);
+		len += len_status(g_status);
+		l += len;
+		while (k < len)
+		{
+			temp[l] = g_status % 10 + '0';
+			g_status /= 10;
+			l--;
+			k++;
+		}
+		
+		printf("write expanded len = %d\n", len);
+		return (len);
+	}
+	while (tmp && len_env > 0)
+	{
+		printf("write expanded str = %s\n", str);
 		if (!ft_strncmp(str, tmp->var[0], len_env))
+		{
+			printf("if write expanded str = %s\n", str);
+			printf("tmp->var[0] = %s\n", tmp->var[0]);
 			break ;
+		}
 		tmp = tmp->next;
 	}
-	if (tmp)
+	if (tmp && len_env > 0)
 	{
 		len += (int)ft_strlen(tmp->var[1]);
 		while (tmp->var[1][k])
@@ -39,6 +61,7 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 			k++;
 		}
 	}
+	printf("write expanded temp = %s\n", temp);
 	return (len);
 }
 
