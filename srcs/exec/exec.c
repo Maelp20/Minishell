@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/22 20:06:30 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 19:50:50 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,13 @@ static void	child(t_data *data, t_data *first_node)
 	}
 	else
 	{
+		//printf("ARG : %s\n", data->args[0]);
 		if (ft_strchr(data->args[0], '/'))
 		{
+			// if(stat())
+			// {
+				
+			// }
 			if (access(data->args[0], F_OK | X_OK) != 0)
 			{
 				msg_no_such_file(data->args[0]);
@@ -93,7 +98,7 @@ static void	child(t_data *data, t_data *first_node)
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
-			clean_exit(first_node, g_status);
+			clean_exit(first_node, g_var.g_status);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			perror("execve");
 		clean_exit(first_node, set_err_status(errno));
@@ -140,14 +145,17 @@ int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	first_node = data;
-	if (ft_data_size(data) == 1 && data->is_builtin)
+	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile)
+	{
+		data->pid = -2;
 		exec_builtin(data);
+	}
 	else
 	{
 		if (init_pipes(data))
-			return (g_status);
+			return (g_var.g_status);
 		while (data)
 		{
 			data->pid = fork();
@@ -167,7 +175,7 @@ int	ft_exec(t_data *data)
 		ft_wait(data);
 	}
 	ft_free_data(data);
-	return (g_status);
+	return (g_var.g_status);
 }
 
 /* int main (int ac, char **av, char **envp)

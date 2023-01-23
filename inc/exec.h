@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 18:27:28 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:56:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <stdbool.h>
 # include <errno.h>
-
-extern int	g_status;
 
 typedef struct s_tok
 {
@@ -33,13 +32,21 @@ typedef struct s_tok
 	struct s_tok	*prev;
 }	t_tok;
 
+typedef	struct s_glob
+{
+	int	g_status;
+	int	g_stop;
+}		t_glob;
+
+extern t_glob	g_var;
+
 typedef struct s_pipes
-{	
+{
 	int	pipe[2];
 }		t_pipes;
 
 typedef struct s_envp
-{	
+{
 	char			**var;
 	struct s_envp	*next;
 }		t_envp;
