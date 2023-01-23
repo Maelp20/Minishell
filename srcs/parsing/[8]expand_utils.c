@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:18:55 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 19:02:13 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:38:12 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	len_expanded(char *str, int len_env, t_data *data)
 	tmp = data->envp;
 	printf("len expanded str = %s\n", str);
 	if (*str == '?')
-		return(len_status(g_status));
+		return(len_status(g_var.g_status));
 	while (tmp)
 	{
 		if (!ft_strncmp(str, tmp->var[0], len_env))

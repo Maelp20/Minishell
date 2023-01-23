@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 19:29:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:37:43 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 	printf("len env %d\n", len_env);
 	if (*str == '?')
 	{
-		printf("g_status %d\n", g_status);
-		len += len_status(g_status);
-		l += len;
+		printf("g_status %d\n", g_var.g_status);
+		len += len_status(g_var.g_status);
 		while (k < len)
 		{
-			temp[l] = g_status % 10 + '0';
-			g_status /= 10;
+			temp[l] = g_var.g_status % 10 + '0';
+			g_var.g_status /= 10;
 			l--;
 			k++;
 		}
