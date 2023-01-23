@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
 /*   Updated: 2023/01/23 18:56:22 by mpignet          ###   ########.fr       */
@@ -105,6 +105,7 @@ int		countword(char *token);
 void	clean_token(t_tok **lst);
 
 int		is_char_var(char c);
+int		len_status(int status);
 int		len_env(char *str, int i);
 int		len_expanded(char *str, int len_env, t_data *data);
 void	expand(t_tok **lst, t_data **data);

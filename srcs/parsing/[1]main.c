@@ -6,13 +6,13 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 15:54:13 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:35:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int g_status = 0;
+int g_status;
 
 void print_tout_huehue(t_data **data)
 {
@@ -119,6 +119,7 @@ int main(int ac, char **av, char **env)
 				ft_exec(data);
 				
 			}
+			printf("main %d\n", g_status);
 		i++;
 		}
 		free(input);
