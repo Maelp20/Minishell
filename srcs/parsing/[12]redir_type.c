@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [12]redir_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 23:20:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:17:47 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		node->is_heredoc = ft_strdup((*lst_node)->next->token);
+		ft_heredoc(*data);
 		node->is_append = 1;
 		if (!node->is_heredoc)
 			clean_parsing(lst, data);
@@ -30,6 +31,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	if (!(*lst_node)->next)
 		clean_parsing(lst, data);
 	node->is_heredoc = ft_strdup((*lst_node)->next->token);
+	ft_heredoc(*data);
 	if (!node->is_heredoc)
 		clean_parsing(lst, data);
 	multi_node(lst_node, lst);

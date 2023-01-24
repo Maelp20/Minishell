@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 19:51:29 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 19:34:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,10 @@ void	ft_free_data(t_data *data)
 	{
 		tmp = data;
 		data = data->next;
-		if (tmp->args)
-			ft_free_dble_array((void **)tmp->args);
-		if (tmp->env)
-		{
-			ft_free_dble_array((void **)tmp->env);
-			tmp->envp = NULL;
-		}
+		ft_free_dble_array((void **)tmp->args);
+		tmp->args = NULL;
+		ft_free_dble_array((void **)tmp->env);
+		tmp->envp = NULL;
 		if (tmp->fds)
 			free(tmp->fds);
 		if (tmp->cmd_path)
@@ -103,4 +100,13 @@ void	clean_exit(t_data *data, int err)
 	ft_free_data(data);
 	rl_clear_history();
 	exit(err);
+}
+
+int	check_if_dir(char *path, t_data *data)
+{
+	
+	stat(path, &data->path_stat);
+	if (S_ISDIR(data->path_stat.st_mode))
+		return (1);
+	return (0);
 }

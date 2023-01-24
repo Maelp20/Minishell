@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [5]split_separator.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 15:29:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:07:03 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ void	split_sep(t_tok *lst)
 	splitted = extract(lst->token);
 	free(lst->token);
 	lst->token = ft_strdup(splitted[i]);
-	printf("splitted[i] = %s\n", splitted[i]);
+	//printf("splitted[i] = %s\n", splitted[i]);
 	//i++;
 	while (splitted[++i])
 	{
 		//i++;
-		printf("splitted[i] = %s\n", splitted[i]);
+		//printf("splitted[i] = %s\n", splitted[i]);
 		insert = lstnew_token(ft_strdup(splitted[i]));
 		temp = lst->next;
 		lst->next = insert;

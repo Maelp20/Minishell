@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 18:56:22 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 19:34:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <stdbool.h>
@@ -69,8 +70,8 @@ typedef struct s_data
 {
 	char			**args;
 	char			**env;
-	char			*cmd_path;
 	char			*is_heredoc;
+	char			*cmd_path;
 	char			*infile;
 	char			*outfile;
 
@@ -85,6 +86,7 @@ typedef struct s_data
 	int				in_pipe;
 	int				out_pipe;
 	int				size;
+	struct stat		path_stat;
 	struct s_data	*next;
 }	t_data;
 
@@ -189,14 +191,16 @@ void	clean_exit(t_data *data, int err);
 int		set_err_status(int nb);
 
 void	msg_cmd_not_found(char *cmd);
-void	msg_no_such_file(char *str);
-void	msg_export_err(char *str);
-void	msg_unset_err(char *str);
-void	msg_unset_option(char *str);
-void	msg_export_option(char *str);
+void	msg_invalid_id(char *str, int i);
+void	msg_invalid_option(char *str, int i);
+void	msg_is_directory(char *str);
+void	msg_perror(char *str);
+
+int	check_if_dir(char *path, t_data *data);
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 
-void	ft_open_infile(t_data *data);
-void	ft_open_outfile(t_data *data);
+int		ft_open_infile(t_data *data);
+int		ft_open_outfile(t_data *data);
+void	ft_heredoc(t_data *data);
 
 #endif
