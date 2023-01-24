@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 19:50:50 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 16:09:44 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,21 @@ static void	do_dups(t_data *data)
 	}
 }
 
-static void	redirect_fds(t_data *data)
+int	redirect_fds(t_data *data)
 {
 	if (data->infile)
-		ft_open_infile(data);
+	{
+		if(ft_open_infile(data))
+			return (1);
+	}
 	if (data->outfile)
-		ft_open_outfile(data);
+	{
+		if(ft_open_outfile(data))
+			return (1);
+	}
 	//printf("cmd : %s, file : %s, in : %d / out : %d\n", data->args[0], data->infile, data->in_fd, data->out_fd);
 	do_dups(data);
+	return (0);
 }
 
 void	exec_builtin(t_data *data)
@@ -71,37 +78,38 @@ void	exec_builtin(t_data *data)
 
 static void	child(t_data *data, t_data *first_node)
 {
-	redirect_fds(data);
+	if (redirect_fds(data))
+		return ;
 	ft_close_pipes(first_node);
 	if (data->is_builtin)
 	{
 		exec_builtin(data);
-		clean_exit(first_node, set_err_status(0));
+		clean_exit(first_node, g_var.g_status);
 	}
 	else
 	{
-		//printf("ARG : %s\n", data->args[0]);
 		if (ft_strchr(data->args[0], '/'))
 		{
-			// if(stat())
-			// {
-				
-			// }
+			if(check_if_dir(data->args[0]))
+			{
+				msg_is_directory(data->args[0]);
+				clean_exit(first_node, g_var.g_status);
+			}
 			if (access(data->args[0], F_OK | X_OK) != 0)
 			{
-				msg_no_such_file(data->args[0]);
-				clean_exit(first_node, set_err_status(errno));
+				msg_perror(data->args[0]);
+				clean_exit(first_node, g_var.g_status);
 			}
 			if (execve(data->args[0], data->args, data->env) == -1)
-				perror("execve");
-			clean_exit(first_node, set_err_status(errno));
+				msg_perror(data->args[0]);
+			clean_exit(first_node, g_var.g_status);
 		}
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
 			clean_exit(first_node, g_var.g_status);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
-			perror("execve");
-		clean_exit(first_node, set_err_status(errno));
+			msg_perror(data->args[0]);
+		clean_exit(first_node, g_var.g_status);
 	}
 }
 
@@ -147,11 +155,10 @@ int	ft_exec(t_data *data)
 
 	g_var.g_status = 0;
 	first_node = data;
-	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile)
-	{
-		data->pid = -2;
+	data->pid = -2;
+	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile
+		&& !data->infile)
 		exec_builtin(data);
-	}
 	else
 	{
 		if (init_pipes(data))
