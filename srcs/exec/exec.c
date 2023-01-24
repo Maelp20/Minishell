@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 18:24:22 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 19:35:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	child(t_data *data, t_data *first_node)
 	{
 		if (ft_strchr(data->args[0], '/'))
 		{
-			if(check_if_dir(data->args[0]))
+			if(check_if_dir(data->args[0], data))
 			{
 				msg_is_directory(data->args[0]);
 				clean_exit(first_node, g_var.g_status);

@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 18:14:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 19:34:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_data
 	int				in_pipe;
 	int				out_pipe;
 	int				size;
+	struct stat		path_stat;
 	struct s_data	*next;
 }	t_data;
 
@@ -195,7 +196,7 @@ void	msg_invalid_option(char *str, int i);
 void	msg_is_directory(char *str);
 void	msg_perror(char *str);
 
-int		check_if_dir(char *path);
+int	check_if_dir(char *path, t_data *data);
 /*---------------------------------OPEN/HEREDOC-------------------------------*/
 
 int		ft_open_infile(t_data *data);
