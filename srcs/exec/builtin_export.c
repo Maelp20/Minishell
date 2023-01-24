@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 18:59:46 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 16:32:21 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ int	check_valid_identifier(char *str)
 
 	invalid = "!@#$%^&*()`~-|[]{};:,./<>?";
 	if (ft_strcmp(str, "="))
-		return (msg_export_err(str), g_var.g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	if (str[0] >= '0' && str[0] <= '9')
-		return (msg_export_err(str), g_var.g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	i = -1;
 	while (str[++i] && str[i] != '=')
 	{
@@ -140,20 +140,20 @@ int	check_valid_identifier(char *str)
 		while (invalid[++j])
 		{
 			if (invalid[j] == str[i])
-				return (msg_export_err(str), g_var.g_status);
+				return (msg_invalid_id(str, 0), g_var.g_status);
 			if (str[i] == '+' && str[i + 1] && str[i + 1] != '=')
-				return (msg_export_err(str), g_var.g_status);
+				return (msg_invalid_id(str, 0), g_var.g_status);
 		}
 	}
 	if (i == 0)
-		return (msg_export_err(str), g_var.g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	return (0);
 }
 
 int	check_for_option_export(char *str)
 {
 	if (str[0] == '-')
-		return (msg_export_option(str), set_err_status(2));
+		return (msg_invalid_option(str, 0), 1);
 	return (0);
 }
 

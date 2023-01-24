@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 19:51:29 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/23 21:09:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,14 @@ void	clean_exit(t_data *data, int err)
 	ft_free_data(data);
 	rl_clear_history();
 	exit(err);
+}
+
+int	check_if_dir(char *path)
+{
+	struct stat	path_stat;
+	
+	stat(path, &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
+		return (1);
+	return (0);
 }

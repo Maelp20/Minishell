@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 18:59:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 17:00:13 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	ft_exit(t_data *data)
 	int	code;
 
 	code = 0;
-	//printf("pid : %d\n", data->pid);
 	if (data->pid != 0)
 		printf("exit\n");
 	if (data->args[1] && (ft_num(data->args[1]) || ft_long(data->args[1])))
