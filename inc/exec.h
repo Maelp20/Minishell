@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 16:47:18 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 18:14:56 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_data
 {
 	char			**args;
 	char			**env;
-	char			*cmd_path;
 	char			*is_heredoc;
+	char			*cmd_path;
 	char			*infile;
 	char			*outfile;
 

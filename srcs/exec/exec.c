@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 16:09:44 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 18:24:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	do_dups(t_data *data)
 {
-	if (data->in_pipe || data->infile)
+	if (data->in_pipe || data->infile || data->is_heredoc)
 	{
 		if (dup2(data->in_fd, STDIN_FILENO) == -1)
 		{
@@ -40,7 +40,7 @@ static void	do_dups(t_data *data)
 
 int	redirect_fds(t_data *data)
 {
-	if (data->infile)
+	if (data->infile || data->is_heredoc)
 	{
 		if(ft_open_infile(data))
 			return (1);
@@ -79,7 +79,7 @@ void	exec_builtin(t_data *data)
 static void	child(t_data *data, t_data *first_node)
 {
 	if (redirect_fds(data))
-		return ;
+		clean_exit(first_node, g_var.g_status);
 	ft_close_pipes(first_node);
 	if (data->is_builtin)
 	{
@@ -157,7 +157,7 @@ int	ft_exec(t_data *data)
 	first_node = data;
 	data->pid = -2;
 	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile
-		&& !data->infile)
+		&& !data->infile && !data->is_heredoc)
 		exec_builtin(data);
 	else
 	{
@@ -198,12 +198,14 @@ int	ft_exec(t_data *data)
 	first_node = data;
 	data->envp = envi;
 	data->fds = malloc (sizeof(t_pipes));
-	if (pipe(data->fds->pipe) == -1)
-		perror("pipe");
+	// if (pipe(data->fds->pipe) == -1)
+	// 	perror("pipe");
 	data->args = malloc (sizeof(char **) * 3);
-	data->args[0] = "echo";
-	data->args[1] = "lol";
+	data->args[0] = "cat";
+	data->args[1] = NULL;
 	data->args[2] = NULL;
+	data->is_heredoc[0] = "lol";
+	data->is_heredoc[0] = "hey";
 	data->in_fd = 0;
 	data->out_fd = 0;
 	data->is_builtin = 1;
@@ -216,9 +218,9 @@ int	ft_exec(t_data *data)
 	data->envp = envi;
 	data->args = malloc (sizeof(char **) * 3);
 	data->fds = malloc (sizeof(t_pipes));
-	if (pipe(data->fds->pipe) == -1)
-		perror("pipe");
-	data->args[0] = "wc";
+	// if (pipe(data->fds->pipe) == -1)
+	// 	perror("pipe");
+	data->args[0] = "ls";
 	data->args[1] = NULL;
 	data->args[2] = NULL;
 	data->in_fd = 0;
@@ -228,7 +230,7 @@ int	ft_exec(t_data *data)
 	data->outfile = NULL;
 	data->in_pipe = 1;
 	data->out_pipe = 0;
-	data->cmd_path = "/usr/bin/wc";
+	data->cmd_path = "/usr/bin/ls";
 	data->is_builtin = 0;
 	data->next = NULL;
 	data = first_node;
