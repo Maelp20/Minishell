@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 20:37:43 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/24 02:03:03 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,22 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 	l = 0;
 	len = 0;
 	tmp = data->envp;
-	printf("len env %d\n", len_env);
 	if (*str == '?')
 	{
-		printf("g_status %d\n", g_var.g_status);
-		len += len_status(g_var.g_status);
-		while (k < len)
+		char *status = ft_itoa(g_var.g_status);
+		while (status[k])
 		{
-			temp[l] = g_var.g_status % 10 + '0';
-			g_var.g_status /= 10;
-			l--;
+			temp[l] = status[k];
+			l++;
 			k++;
 		}
-		
-		printf("write expanded len = %d\n", len);
-		return (len);
+		free(status);
+		return (len_status(g_var.g_status));
 	}
 	while (tmp && len_env > 0)
 	{
-		printf("write expanded str = %s\n", str);
 		if (!ft_strncmp(str, tmp->var[0], len_env))
-		{
-			printf("if write expanded str = %s\n", str);
-			printf("tmp->var[0] = %s\n", tmp->var[0]);
 			break ;
-		}
 		tmp = tmp->next;
 	}
 	if (tmp && len_env > 0)
@@ -60,7 +51,6 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 			k++;
 		}
 	}
-	printf("write expanded temp = %s\n", temp);
 	return (len);
 }
 
@@ -155,7 +145,7 @@ void	expand(t_tok **lst, t_data **data)
 				dbl++;
 			if (tmp->token[i] == '\'' && !(dbl % 2))
 				sq++;
-			if (tmp->token[i] == '$' && !(sq % 2))
+			if (tmp->token[i] == '$' && !(sq % 2) && tmp->token[i + 1] != '\"')
 			{
 				temp = ft_strdup(tmp->token);
 				free (tmp->token);
