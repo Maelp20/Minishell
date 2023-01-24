@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:18:55 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/24 01:22:59 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:32:51 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	len_env(char *str, int i)
 	int	len;
 
 	len = 0;
-	if (*str + 1 == '?')
+	if ((str[i]) == '?')
 		return (1);
 	while (is_char_var(str[i]))
 	{
@@ -55,6 +55,7 @@ int	len_expanded(char *str, int len_env, t_data *data)
 {
 	t_envp	*tmp;
 	int		len;
+	int comp_len;
 
 	len = 0;
 	tmp = data->envp;
@@ -62,7 +63,8 @@ int	len_expanded(char *str, int len_env, t_data *data)
 		return(len_status(g_var.g_status));
 	while (tmp)
 	{
-		if (!ft_strncmp(str, tmp->var[0], len_env))
+		comp_len = (int)ft_strlen(tmp->var[0]) - 1;
+		if (len_env == comp_len && ft_strncmp(str, tmp->var[0], len_env) == 0)
 			break ;
 		tmp = tmp->next;
 	}
