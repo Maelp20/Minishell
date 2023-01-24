@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 19:29:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:47:44 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,29 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 	int		len;
 	int		k;
 	int		l;
+	int		comp_len;
 
 	k = 0;
 	l = 0;
 	len = 0;
 	tmp = data->envp;
-	printf("len env %d\n", len_env);
 	if (*str == '?')
 	{
-		printf("g_status %d\n", g_status);
-		len += len_status(g_status);
-		l += len;
-		while (k < len)
+		char *status = ft_itoa(g_var.g_status);
+		while (status[k])
 		{
-			temp[l] = g_status % 10 + '0';
-			g_status /= 10;
-			l--;
+			temp[l] = status[k];
+			l++;
 			k++;
 		}
-		
-		printf("write expanded len = %d\n", len);
-		return (len);
+		free(status);
+		return (len_status(g_var.g_status));
 	}
 	while (tmp && len_env > 0)
 	{
-		printf("write expanded str = %s\n", str);
-		if (!ft_strncmp(str, tmp->var[0], len_env))
-		{
-			printf("if write expanded str = %s\n", str);
-			printf("tmp->var[0] = %s\n", tmp->var[0]);
+		comp_len = (int)ft_strlen(tmp->var[0]) - 1;
+		if (len_env == comp_len && ft_strncmp(str, tmp->var[0], len_env) == 0)
 			break ;
-		}
 		tmp = tmp->next;
 	}
 	if (tmp && len_env > 0)
@@ -61,7 +53,6 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 			k++;
 		}
 	}
-	printf("write expanded temp = %s\n", temp);
 	return (len);
 }
 
@@ -80,7 +71,7 @@ int	trigger_expand(char *str, int i, t_data *data)
 			dbl++;
 		if (str[i] == '\'' && !(dbl % 2))
 			sq++;
-		if (str[i] == '$' && !(sq % 2) && str[i + 1] != '\"')
+		if (str[i] == '$' && !(sq % 2) && str[i + 1] != '\"' && str[i + 1] != 0)
 		{
 			len += len_expanded(str + i + 1, len_env(str, i + 1), data);
 			i += len_env(str, i + 1) + 1;
@@ -109,7 +100,7 @@ void	fill_expand(char *temp, char *token, t_data *data)
 			dbl++;
 		if (token[i] == '\'' && !(dbl % 2))
 			sq++;
-		if (token[i] == '$' && !(sq % 2) && token[i + 1] != '\"')
+		if (token[i] == '$' && !(sq % 2) && token[i + 1] != '\"' && token[i + 1] != 0)
 		{
 			temp += write_expanded(token + i + 1, temp, len_env(token, i + 1), data);
 			i += len_env(token, i + 1) + 1;
@@ -156,7 +147,7 @@ void	expand(t_tok **lst, t_data **data)
 				dbl++;
 			if (tmp->token[i] == '\'' && !(dbl % 2))
 				sq++;
-			if (tmp->token[i] == '$' && !(sq % 2))
+			if (tmp->token[i] == '$' && !(sq % 2) && tmp->token[i + 1] != '\"' && (tmp->token[i + 1] != ' ' || tmp->token[i + 1] != 0))
 			{
 				temp = ft_strdup(tmp->token);
 				free (tmp->token);
