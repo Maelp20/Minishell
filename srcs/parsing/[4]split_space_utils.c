@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:10:46 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:18:15 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ t_tok	*lstnew_token(char *content)
 	return (dest);
 }
 
+t_tok	*lstnew_token2(char *content)
+{
+	t_tok	*dest;
+
+	dest = malloc(sizeof(*dest));
+	if (!dest)
+		return (NULL);
+	dest->token = ft_strdup(content);
+	dest->next = NULL;
+	dest->prev = NULL;
+	free(content);
+	return (dest);
+}
 void	lstadd_back_token(t_tok **lst, t_tok *new)
 {
 	if (!(*lst))
