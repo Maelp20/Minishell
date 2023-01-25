@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 19:34:00 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/24 23:47:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <stdbool.h>
 # include <errno.h>
+#include <signal.h>
 
 typedef struct s_tok
 {
@@ -37,6 +38,7 @@ typedef	struct s_glob
 {
 	int	g_status;
 	int	g_stop;
+	int	g_pars;
 }		t_glob;
 
 extern t_glob	g_var;
