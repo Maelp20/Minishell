@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 02:49:46 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 16:31:56 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:43:12 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	verif_redir(t_tok **tok_lst, t_data **data)
 		}
 		if (comp_redir(temp) && ft_strcmp(temp->next->token, "|"))
 		{
-			disp_error(tok_lst, data, "|kk");
+			disp_error(tok_lst, data, "|");
 			return (1);
 		}
 		temp = temp->next;
