@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 17:00:09 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:41:16 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	set_err_status(int nb)
 
 void    ft_close_pipes(t_data *data)
 {
-    data = data->next;
-    while (data)
-    {
-        if (data->in_pipe)
-        {            
-            close(data->fds->pipe[0]);
-            close(data->fds->pipe[1]);
-        }
-        data = data->next;
-    }
+	data = data->next;
+	while (data)
+	{
+		if (data->in_pipe)
+		{			
+			close(data->fds->pipe[0]);
+			close(data->fds->pipe[1]);
+		}
+		data = data->next;
+	}
 }
 
 void	ft_close_fds(t_data *data)
@@ -78,10 +78,16 @@ void	ft_free_data(t_data *data)
 	{
 		tmp = data;
 		data = data->next;
-		ft_free_dble_array((void **)tmp->args);
-		tmp->args = NULL;
-		ft_free_dble_array((void **)tmp->env);
-		tmp->envp = NULL;
+		if (tmp->args)
+		{		
+			ft_free_dble_array((void **)tmp->args);
+			tmp->args = NULL;
+		}
+		if (tmp->env)
+		{			
+			ft_free_dble_array((void **)tmp->env);
+			tmp->envp = NULL;
+		}
 		if (tmp->fds)
 			free(tmp->fds);
 		if (tmp->cmd_path)
