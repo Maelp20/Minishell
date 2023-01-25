@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 16:46:01 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:18:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	split_sep(t_tok *lst)
 	{
 		//i++;
 		//printf("splitted[i] = %s\n", splitted[i]);
-		insert = lstnew_token(ft_strdup(splitted[i]));
+		insert = lstnew_token2(ft_strdup(splitted[i]));
 		temp = lst->next;
 		lst->next = insert;
 		insert->next = temp;
