@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 19:35:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 18:28:36 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,12 @@ static void	do_dups(t_data *data)
 int	redirect_fds(t_data *data)
 {
 	if (data->infile || data->is_heredoc)
-	{
 		if(ft_open_infile(data))
 			return (1);
-	}
 	if (data->outfile)
-	{
 		if(ft_open_outfile(data))
 			return (1);
-	}
-	//printf("cmd : %s, file : %s, in : %d / out : %d\n", data->args[0], data->infile, data->in_fd, data->out_fd);
+	//printf("cmd : %s, infile : %s, in_fd : %d / out_fd : %d\n", data->args[0], data->infile, data->in_fd, data->out_fd);
 	do_dups(data);
 	return (0);
 }

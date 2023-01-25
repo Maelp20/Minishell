@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 19:34:24 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 18:20:55 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_heredoc(t_data *data)
 	int		stdin_fd;
 	char	*line;
 	
+	setup_sigint_handler();
 	tmp_fd = open("/tmp/.heredoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		clean_exit(data, 1);
