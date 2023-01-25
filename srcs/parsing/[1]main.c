@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 16:33:57 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:36:33 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,28 @@ void handle_sigEOF(int sig)
     printf("\n");
 	exit(0);
 }
-// void setup_sigeof() {
-//     struct sigaction sa;
-//     sa.sa_handler = SIG_IGN;
-//     sigemptyset(&sa.sa_mask);
-//     sa.sa_flags = 0;
-//     sigaction(SIGEOF, &sa, NULL);
-// }
 
-// void setup_sigint_handler() 
-// {
-//     struct sigaction sa;
-// 	struct sigaction eof;
-	
-//     sa.sa_handler = &handle_sigint;
-//     sigemptyset(&sa.sa_mask);
-//     sa.sa_flags = SA_RESTART;
-//     sigaction(SIGINT, &sa, NULL);
-	
-//     sa.sa_handler = SIG_IGN;
-//     sigemptyset(&sa.sa_mask);
-//     sa.sa_flags = 0;
-//     sigaction(SIGQUIT, &sa, NULL);
 
-//     eof.sa_handler = &handle_sigEOF;
-//     sigemptyset(&eof.sa_mask);
-//     eof.sa_flags = 0;
-//     sigaction(EOF, &eof, NULL);
-// }
+void setup_sigint_handler() 
+{
+    struct sigaction sa;
+	struct sigaction eof;
+	
+    sa.sa_handler = &handle_sigint;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGINT, &sa, NULL);
+	
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGQUIT, &sa, NULL);
+
+    eof.sa_handler = &handle_sigEOF;
+    sigemptyset(&eof.sa_mask);
+    eof.sa_flags = 0;
+    sigaction(EOF, &eof, NULL);
+}
 
 void print_tout_huehue(t_data **data)
 {
@@ -129,7 +123,7 @@ void init_data(t_data **data, t_envp *envi)
 
 int main(int ac, char **av, char **env)
 {
-	//setup_sigint_handler();
+	setup_sigint_handler();
 	
 	char *input;
 	t_data *data;
@@ -146,7 +140,12 @@ int main(int ac, char **av, char **env)
 	while (ac > 0)
 	{
 		init_data(&data, envir);
-		input = readline("Minishell>");
+		input = readline("Minishell> ");
+		if (input == 0)
+		{
+			printf("exits\n");
+			exit(0);
+		}
 		if (input && *input)
 		{
 			add_history(input);

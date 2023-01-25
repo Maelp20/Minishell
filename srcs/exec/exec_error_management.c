@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
 /*   Updated: 2023/01/25 18:27:52 by mpignet          ###   ########.fr       */
@@ -20,7 +20,7 @@ int	set_err_status(int nb)
 	return (g_var.g_status);
 }
 
-void	ft_close_pipes(t_data *data)
+void    ft_close_pipes(t_data *data)
 {
 	data = data->next;
 	while (data)
