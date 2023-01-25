@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 16:32:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 19:18:31 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	clean_quotes(t_tok **lst);
 /*------------------------------linked_list_utils-------------------------*/
 void	tok_del_one(t_tok *lst);
 t_tok	*lstnew_token(char *content);
+t_tok	*lstnew_token2(char *content);
 void	lstadd_back_token(t_tok **lst, t_tok *new);
 t_tok	*ft_lstlast_tok(t_tok *lst);
 
