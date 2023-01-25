@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/24 23:48:11 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:38:23 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	disp_error(t_tok **tok_lst, t_data **data, char *token)
 	ft_free_data_pars(*data);
 	ft_free_tok(tok_lst);
 	g_var.g_status = 2;
-	g_var.g_pars = 1;
 }
 
 void	clean_parsing(t_tok **lst, t_data **data)
@@ -40,9 +39,15 @@ void	ft_free_data_pars(t_data *data)
 		tmp = data;
 		data = data->next;
 		if (tmp->args)
+		{
 			ft_free_dble_array((void **)tmp->args);
-		// if (tmp->env)
-		// 	ft_free_dble_array((void **)tmp->env);
+			tmp->args = NULL;
+		}
+		if (tmp->env)
+		{
+			ft_free_dble_array((void **)tmp->env);
+			tmp->env = NULL;
+		}
 		if (tmp->fds)
 			free(tmp->fds);
 		if (tmp->cmd_path)
