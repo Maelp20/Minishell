@@ -3,66 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 18:27:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 20:30:09 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	print_tout_huehue(t_data **data);
-
 int	set_err_status(int nb)
 {
-	g_var.g_status = nb;
-	return (g_var.g_status);
-}
-
-void    ft_close_pipes(t_data *data)
-{
-	data = data->next;
-	while (data)
-	{
-		if (data->in_pipe)
-		{
-			if (data->in_pipe)
-			{		
-				close(data->fds->pipe[0]);
-				close(data->fds->pipe[1]);
-			}	
-		}
-		data = data->next;
-	}
-}
-
-void	ft_close_fds(t_data *data)
-{
-	if (data->in_fd != -1)
-	{
-		if (close (data->in_fd) == -1)
-			perror("close");
-	}
-	if (data->out_fd != -1)
-	{
-		if (close (data->out_fd) == -1)
-			perror("close");
-	}
-	data = data->next;
-	ft_close_pipes(data);
-}
-
-void	ft_wait(t_data *data)
-{
-	int	status;
-
-	(void)data;
-	while (wait(&status) != -1)
-	{
-		g_var.g_status = WEXITSTATUS(status);
-		continue ;
-	}
+	g_status = nb;
+	return (g_status);
 }
 
 void	ft_free_dble_array(void **tab)
@@ -75,6 +28,20 @@ void	ft_free_dble_array(void **tab)
 	while (tab[++i])
 		free(tab[i]);
 	free(tab);
+}
+
+static void	ft_free_the_rest(t_data *tmp)
+{
+	if (tmp->fds)
+		free(tmp->fds);
+	if (tmp->cmd_path)
+		free(tmp->cmd_path);
+	if (tmp->is_heredoc)
+		free(tmp->is_heredoc);
+	if (tmp->infile)
+		free(tmp->infile);
+	if (tmp->outfile)
+		free(tmp->outfile);
 }
 
 void	ft_free_data(t_data *data)
@@ -95,16 +62,7 @@ void	ft_free_data(t_data *data)
 			ft_free_dble_array((void **)tmp->env);
 			tmp->envp = NULL;
 		}
-		if (tmp->fds)
-			free(tmp->fds);
-		if (tmp->cmd_path)
-			free(tmp->cmd_path);
-		if (tmp->is_heredoc)
-			free(tmp->is_heredoc);
-		if (tmp->infile)
-			free(tmp->infile);
-		if (tmp->outfile)
-			free(tmp->outfile);
+		ft_free_the_rest(tmp);
 		free(tmp);
 	}
 }
@@ -116,13 +74,4 @@ void	clean_exit(t_data *data, int err)
 	ft_free_data(data);
 	rl_clear_history();
 	exit(err);
-}
-
-int	check_if_dir(char *path, t_data *data)
-{
-	
-	stat(path, &data->path_stat);
-	if (S_ISDIR(data->path_stat.st_mode))
-		return (1);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:53:33 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/23 18:59:19 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 20:07:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	ft_env(t_data *data)
 {
 	t_envp	*first_node;
 
-	g_var.g_status = 0;
+	g_status = 0;
 	if (!data->envp)
 		return ;
 	if (data->args[1])
 	{
 		ft_putstr_fd("minishell: env: no options or arguments allowed\n", 2);
-		g_var.g_status = 127;
+		g_status = 127;
 		return ;
 	}
 	first_node = data->envp;

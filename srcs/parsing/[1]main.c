@@ -3,61 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   [1]main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 19:23:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:56:12 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-t_glob g_var;
+int	g_status = 0;
 
-void handle_sigint(int sig) 
+void	handle_sigint(int sig)
 {
     // handle the SIGINT signal
 	(void)sig;
-    printf("\n");
-	g_var.g_status = 130;
+	printf("\n");
+	g_status = 130;
 	rl_replace_line("", 0);
-    rl_on_new_line();
-    rl_redisplay();
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void handle_sigEOF(int sig) 
+void	handle_sig_eof(int sig)
 {
 	(void)sig;
-    printf("\n");
+	printf("\n");
 	exit(0);
 }
 
-
-void setup_sigint_handler() 
+void	setup_sigint_handler(void)
 {
-    struct sigaction sa;
-	struct sigaction eof;
-	
-    sa.sa_handler = &handle_sigint;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa, NULL);
-	
-    sa.sa_handler = SIG_IGN;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGQUIT, &sa, NULL);
+	struct sigaction	sa;
+	struct sigaction	eof;
 
-    eof.sa_handler = &handle_sigEOF;
-    sigemptyset(&eof.sa_mask);
-    eof.sa_flags = 0;
-    sigaction(EOF, &eof, NULL);
+	sa.sa_handler = &handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGQUIT, &sa, NULL);
+	eof.sa_handler = &handle_sig_eof;
+	sigemptyset(&eof.sa_mask);
+	eof.sa_flags = 0;
+	sigaction(EOF, &eof, NULL);
 }
 
-void print_tout_huehue(t_data **data)
+void	print_tout_huehue(t_data **data)
 {
-	t_data *temp;
-	int i;
+	t_data	*temp;
+	int		i;
 
 	temp = *data;
 	while (temp)
@@ -83,11 +80,11 @@ void print_tout_huehue(t_data **data)
 	}
 }
 
-char **parse_env(t_envp *envir)
+char	**parse_env(t_envp *envir)
 {
-	t_envp *temp;
-	int i;
-	char **envi;
+	t_envp	*temp;
+	int		i;
+	char	**envi;
 
 	i = 0;
 	temp = envir;
@@ -111,7 +108,7 @@ char **parse_env(t_envp *envir)
 	return (envi);
 }
 
-void init_data(t_data **data, t_envp *envi)
+void	init_data(t_data **data, t_envp *envi)
 {
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -121,18 +118,16 @@ void init_data(t_data **data, t_envp *envi)
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	setup_sigint_handler();
-	
-	char *input;
-	t_data *data;
-	t_tok *lst;
+	char	*input;
+	t_data	*data;
+	t_tok	*lst;
+	t_envp	*envir;
 
+	setup_sigint_handler();
 	(void)av;
 	data = NULL;
-	t_envp *envir;
-
 	envir = get_env(env);
 	if (!envir)
 		return (ft_envpclear(&envir), 0);
@@ -162,7 +157,6 @@ int main(int ac, char **av, char **env)
 					ft_exec(data);
 				}
 			}
-		
 		}
 		free(input);
 		//ft_free_data_pars(data);

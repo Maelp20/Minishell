@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 17:00:13 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 20:12:00 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int	check_long_neg(char *str)
 {
-	int	i;
+	int		i;
 	char	*reference;
 
 	i = -1;
@@ -32,7 +32,7 @@ int	check_long_neg(char *str)
 
 int	check_long_pos(char *str)
 {
-	int	i;
+	int		i;
 	char	*reference;
 
 	i = -1;
@@ -93,15 +93,12 @@ void	ft_exit(t_data *data)
 	if (data->args[1] && data->args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_var.g_status = 1;
+		g_status = 1;
 		return ;
 	}
 	if (data->args[1])
 		code = ft_atoi(data->args[1]);
 	if (code > 255)
-	{
 		code = code % 256;
-		clean_exit(data, set_err_status(code));
-	}
 	clean_exit(data, set_err_status(code));
 }
