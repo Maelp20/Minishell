@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
+#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/23 15:44:52 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/25 20:45:27 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@
 SRCS	= \
 			exec/exec.c\
 			exec/exec_open_files.c\
+			exec/exec_handle_fds.c\
 			exec/exec_utils.c\
+			exec/exec_utils_envp.c\
 			exec/exec_get_cmd_path.c\
 			exec/exec_error_management.c\
 			exec/print_errors.c\
@@ -25,6 +27,7 @@ SRCS	= \
 			exec/builtin_exit.c\
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
+			exec/builtin_export_display.c\
 			parsing/[1]main.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
 			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\

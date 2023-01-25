@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [7]expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/24 15:47:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:44:46 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 	tmp = data->envp;
 	if (*str == '?')
 	{
-		char *status = ft_itoa(g_var.g_status);
+		char *status = ft_itoa(g_status);
 		while (status[k])
 		{
 			temp[l] = status[k];
@@ -34,7 +34,7 @@ int	write_expanded(char *str, char *temp, int len_env, t_data *data)
 			k++;
 		}
 		free(status);
-		return (len_status(g_var.g_status));
+		return (len_status(g_status));
 	}
 	while (tmp && len_env > 0)
 	{

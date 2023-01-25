@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 19:18:31 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:38:46 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <stdbool.h>
 # include <errno.h>
-#include <signal.h>
+# include <signal.h>
 
 typedef struct s_tok
 {
@@ -34,13 +34,7 @@ typedef struct s_tok
 	struct s_tok	*prev;
 }	t_tok;
 
-typedef	struct s_glob
-{
-	int	g_status;
-	int	g_stop;
-}		t_glob;
-
-extern t_glob	g_var;
+extern int	g_status;
 
 typedef struct s_pipes
 {
@@ -156,7 +150,6 @@ char	**parse_env(t_envp *envir);
 /*---------------------EXEC----------------------*/
 
 int		ft_exec(t_data *data);
-int		truc(void);
 
 /*-------------------------------------BUILTINS-------------------------------*/
 
@@ -166,6 +159,7 @@ int		ft_pwd(t_data *data);
 void	ft_env(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
+void	ft_show_export(t_envp *envp);
 void	ft_exit(t_data *data);
 
 /*-------------------------------------UTILS----------------------------------*/
@@ -198,11 +192,14 @@ void	msg_invalid_option(char *str, int i);
 void	msg_is_directory(char *str);
 void	msg_perror(char *str);
 
-int	check_if_dir(char *path, t_data *data);
-/*---------------------------------OPEN/HEREDOC-------------------------------*/
+int		check_if_dir(char *path, t_data *data);
+/*--------------------------------FDS/HEREDOC-------------------------------*/
 
+int		init_pipes(t_data *data);
+int		redirect_fds(t_data *data);
 int		ft_open_infile(t_data *data);
 int		ft_open_outfile(t_data *data);
 void	ft_heredoc(t_data *data);
+void	setup_sigint_handler(void);
 
 #endif

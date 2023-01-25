@@ -6,18 +6,27 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 19:34:24 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/25 19:54:03 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	check_if_dir(char *path, t_data *data)
+{
+	stat(path, &data->path_stat);
+	if (S_ISDIR(data->path_stat.st_mode))
+		return (1);
+	return (0);
+}
 
 void	ft_heredoc(t_data *data)
 {
 	int		tmp_fd;
 	int		stdin_fd;
 	char	*line;
-	
+
+	setup_sigint_handler();
 	tmp_fd = open("/tmp/.heredoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		clean_exit(data, 1);
