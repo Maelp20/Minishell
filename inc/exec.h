@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 23:47:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:32:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef	struct s_glob
 {
 	int	g_status;
 	int	g_stop;
-	int	g_pars;
 }		t_glob;
 
 extern t_glob	g_var;
@@ -114,8 +113,8 @@ int		len_env(char *str, int i);
 int		len_expanded(char *str, int len_env, t_data *data);
 void	expand(t_tok **lst, t_data **data);
 
-void	verif_redir(t_tok **tok_lst, t_data **data);
-void	verif_pipe(t_tok **tok_lst, t_data **data);
+int		verif_redir(t_tok **tok_lst, t_data **data);
+int		verif_pipe(t_tok **tok_lst, t_data **data);
 int		check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
 
 int		check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node);

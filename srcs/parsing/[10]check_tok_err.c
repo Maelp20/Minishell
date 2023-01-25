@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 02:49:46 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 23:12:51 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:31:56 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	int	comp_redir( t_tok *lst_node)
 		return (0);
 }
 
-void	verif_redir(t_tok **tok_lst, t_data **data)
+int	verif_redir(t_tok **tok_lst, t_data **data)
 {
 	t_tok	*temp;
 
@@ -39,18 +39,24 @@ void	verif_redir(t_tok **tok_lst, t_data **data)
 				&& ft_strcmp(temp->next->token, ">")))
 		{
 			disp_error(tok_lst, data, "\\n");
-			return ;
+			return (1);
 		}
 		if (comp_redir(temp) && !temp->next)
 		{
 			disp_error(tok_lst, data, "\\n");
-			return ;
+			return (1);
+		}
+		if (comp_redir(temp) && ft_strcmp(temp->next->token, "|"))
+		{
+			disp_error(tok_lst, data, "|kk");
+			return (1);
 		}
 		temp = temp->next;
 	}
+	return (0);
 }
 
-void	verif_pipe(t_tok **tok_lst, t_data **data)
+int	verif_pipe(t_tok **tok_lst, t_data **data)
 {
 	t_tok	*temp;
 
@@ -58,23 +64,24 @@ void	verif_pipe(t_tok **tok_lst, t_data **data)
 	if (ft_strcmp(temp->token, "|"))
 	{
 		disp_error(tok_lst, data, "|");
-		return ;
+		return (1);
 	}
 	while (temp)
 	{
 		if (ft_strcmp(temp->token, "|") && !temp->next)
 		{
 			disp_error(tok_lst, data, "|");
-			return ;
+			return (1);
 		}
 		if (ft_strcmp(temp->token, "|") && (temp->next
 				&& ft_strcmp(temp->next->token, "|")))
 		{
 			disp_error(tok_lst, data, "|");
-			return ;
+			return (1);
 		}
 		temp = temp->next;
 	}
+	return (0);
 }
 
 int	check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data)

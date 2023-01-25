@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 01:37:48 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:33:57 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,26 @@ void handle_sigEOF(int sig)
 //     sigaction(SIGEOF, &sa, NULL);
 // }
 
-void setup_sigint_handler() 
-{
-    struct sigaction sa;
-	struct sigaction eof;
+// void setup_sigint_handler() 
+// {
+//     struct sigaction sa;
+// 	struct sigaction eof;
 	
-    sa.sa_handler = &handle_sigint;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa, NULL);
+//     sa.sa_handler = &handle_sigint;
+//     sigemptyset(&sa.sa_mask);
+//     sa.sa_flags = SA_RESTART;
+//     sigaction(SIGINT, &sa, NULL);
 	
-    sa.sa_handler = SIG_IGN;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGQUIT, &sa, NULL);
+//     sa.sa_handler = SIG_IGN;
+//     sigemptyset(&sa.sa_mask);
+//     sa.sa_flags = 0;
+//     sigaction(SIGQUIT, &sa, NULL);
 
-    eof.sa_handler = &handle_sigEOF;
-    sigemptyset(&eof.sa_mask);
-    eof.sa_flags = 0;
-    sigaction(EOF, &eof, NULL);
-}
+//     eof.sa_handler = &handle_sigEOF;
+//     sigemptyset(&eof.sa_mask);
+//     eof.sa_flags = 0;
+//     sigaction(EOF, &eof, NULL);
+// }
 
 void print_tout_huehue(t_data **data)
 {
@@ -129,10 +129,9 @@ void init_data(t_data **data, t_envp *envi)
 
 int main(int ac, char **av, char **env)
 {
-	setup_sigint_handler();
+	//setup_sigint_handler();
 	
 	char *input;
-	int i = 0;
 	t_data *data;
 	t_tok *lst;
 
@@ -158,18 +157,14 @@ int main(int ac, char **av, char **env)
 			clean_quotes(&lst);
 			if (lst)
 			{
-				verif_pipe(&lst, &data);
-				verif_redir(&lst, &data);
+				if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
+				{
+					fill_node_with_tok(&lst, &data, envir);
+					ft_exec(data);
+				}
 			}
-			if(lst)
-			{
-				fill_node_with_tok(&lst, &data, envir);
-			}
-			if (g_var.g_pars != 1)
-				ft_exec(data);
-		i++;
+		
 		}
-		g_var.g_pars = 0;
 		free(input);
 		//ft_free_data_pars(data);
 	}
