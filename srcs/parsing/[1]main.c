@@ -6,13 +6,59 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/24 01:23:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/25 01:37:48 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 t_glob g_var;
+
+void handle_sigint(int sig) 
+{
+    // handle the SIGINT signal
+	(void)sig;
+    printf("\n");
+	g_var.g_status = 130;
+	rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
+}
+
+void handle_sigEOF(int sig) 
+{
+	(void)sig;
+    printf("\n");
+	exit(0);
+}
+// void setup_sigeof() {
+//     struct sigaction sa;
+//     sa.sa_handler = SIG_IGN;
+//     sigemptyset(&sa.sa_mask);
+//     sa.sa_flags = 0;
+//     sigaction(SIGEOF, &sa, NULL);
+// }
+
+void setup_sigint_handler() 
+{
+    struct sigaction sa;
+	struct sigaction eof;
+	
+    sa.sa_handler = &handle_sigint;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGINT, &sa, NULL);
+	
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGQUIT, &sa, NULL);
+
+    eof.sa_handler = &handle_sigEOF;
+    sigemptyset(&eof.sa_mask);
+    eof.sa_flags = 0;
+    sigaction(EOF, &eof, NULL);
+}
 
 void print_tout_huehue(t_data **data)
 {
@@ -83,6 +129,8 @@ void init_data(t_data **data, t_envp *envi)
 
 int main(int ac, char **av, char **env)
 {
+	setup_sigint_handler();
+	
 	char *input;
 	int i = 0;
 	t_data *data;
@@ -116,11 +164,12 @@ int main(int ac, char **av, char **env)
 			if(lst)
 			{
 				fill_node_with_tok(&lst, &data, envir);
-				ft_exec(data);
-				
 			}
+			if (g_var.g_pars != 1)
+				ft_exec(data);
 		i++;
 		}
+		g_var.g_pars = 0;
 		free(input);
 		//ft_free_data_pars(data);
 	}
