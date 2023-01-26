@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:30:09 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:40:06 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	set_err_status(int nb)
 {
-	g_status = nb;
-	return (g_status);
+	g_var.g_status = nb;
+	return (g_var.g_status);
 }
 
 void	ft_free_dble_array(void **tab)
@@ -42,6 +42,8 @@ static void	ft_free_the_rest(t_data *tmp)
 		free(tmp->infile);
 	if (tmp->outfile)
 		free(tmp->outfile);
+	if (tmp->is_heredoc)
+		unlink("/tmp/.heredoc.tmp");
 }
 
 void	ft_free_data(t_data *data)

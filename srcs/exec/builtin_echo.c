@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:06:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:39:16 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_echo(t_data *data)
 	int	i;
 	int	flag;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	if (!data->args[1])
 		return (printf("\n"), 0);
 	i = 1;
