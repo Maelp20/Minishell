@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:51:14 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:48:10 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,27 @@ static void	exec_path_given(t_data *data, t_data *first_node)
 	if (check_if_dir(data->args[0], data))
 	{
 		msg_is_directory(data->args[0]);
-		clean_exit(first_node, g_status);
+		clean_exit(first_node, g_var.g_status);
 	}
 	if (access(data->args[0], F_OK | X_OK) != 0)
 	{
 		msg_perror(data->args[0]);
-		clean_exit(first_node, g_status);
+		clean_exit(first_node, g_var.g_status);
 	}
 	if (execve(data->args[0], data->args, data->env) == -1)
 		msg_perror(data->args[0]);
-	clean_exit(first_node, g_status);
+	clean_exit(first_node, g_var.g_status);
 }
 
 static void	child(t_data *data, t_data *first_node)
 {
-	if (redirect_fds(data))
-		clean_exit(first_node, g_status);
+	if (redirect_fds(data) || g_var.g_stop == 1)
+		clean_exit(first_node, g_var.g_status);
 	ft_close_pipes(first_node);
 	if (data->is_builtin)
 	{
 		exec_builtin(data);
-		clean_exit(first_node, g_status);
+		clean_exit(first_node, g_var.g_status);
 	}
 	else
 	{
@@ -66,10 +66,10 @@ static void	child(t_data *data, t_data *first_node)
 			exec_path_given(data, first_node);
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
-			clean_exit(first_node, g_status);
+			clean_exit(first_node, g_var.g_status);
 		if (execve(data->cmd_path, data->args, data->env) == -1)
 			msg_perror(data->args[0]);
-		clean_exit(first_node, g_status);
+		clean_exit(first_node, g_var.g_status);
 	}
 }
 
@@ -92,15 +92,13 @@ static void	exec_fork(t_data *data, t_data *first_node)
 	}
 	else if (data->pid == 0)
 		child(data, first_node);
-	if (data->is_heredoc)
-		unlink("/tmp/.heredoc.tmp");
 }
 
 int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	first_node = data;
 	data->pid = -2;
 	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile
@@ -109,7 +107,7 @@ int	ft_exec(t_data *data)
 	else
 	{
 		if (init_pipes(data))
-			return (g_status);
+			return (g_var.g_status);
 		while (data)
 		{
 			exec_fork(data, first_node);
@@ -120,7 +118,7 @@ int	ft_exec(t_data *data)
 		ft_wait(data);
 	}
 	ft_free_data(data);
-	return (g_status);
+	return (g_var.g_status);
 }
 
 /* int main (int ac, char **av, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 02:19:33 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:44:09 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	handle_signal_hd(int signal, siginfo_t *info,  void *context)
 	if (signal == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
-		g_status = 130;
+		g_var.g_stop = 1;
+		g_var.g_status = 130;
 	}
 	if (signal == SIGQUIT)
 		ft_putstr_fd("\b\b  \b\b", 0);
@@ -72,6 +73,7 @@ void	ft_heredoc(t_data *data)
 		free(line);
 	close (stdin_fd);
 	close (tmp_fd);
+	setup_sigint_handler();
 }
 
 int	ft_open_infile(t_data *data)

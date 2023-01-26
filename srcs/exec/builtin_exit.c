@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:12:00 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:39:29 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_exit(t_data *data)
 	if (data->args[1] && data->args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_status = 1;
+		g_var.g_status = 1;
 		return ;
 	}
 	if (data->args[1])

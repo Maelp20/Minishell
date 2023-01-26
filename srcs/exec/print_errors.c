@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 18:11:29 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:07:58 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:40:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	msg_perror(char *str)
 {
-	g_status = errno;
+	g_var.g_status = errno;
 	ft_putstr_fd("minishell: ", 2);
 	perror(str);
 }
 
 void	msg_is_directory(char *str)
 {
-	g_status = 126;
+	g_var.g_status = 126;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": Is a directory\n", 2);
@@ -29,7 +29,7 @@ void	msg_is_directory(char *str)
 
 void	msg_cmd_not_found(char *cmd)
 {
-	g_status = 127;
+	g_var.g_status = 127;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
@@ -37,7 +37,7 @@ void	msg_cmd_not_found(char *cmd)
 
 void	msg_invalid_id(char *str, int i)
 {
-	g_status = 1;
+	g_var.g_status = 1;
 	if (!i)
 		ft_putstr_fd("minishell: export: `", 2);
 	else
@@ -48,7 +48,7 @@ void	msg_invalid_id(char *str, int i)
 
 void	msg_invalid_option(char *str, int i)
 {
-	g_status = 1;
+	g_var.g_status = 1;
 	if (!i)
 		ft_putstr_fd("minishell: export: `", 2);
 	else

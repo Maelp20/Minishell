@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:44:07 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:39:35 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	check_valid_identifier(char *str)
 
 	invalid = "!@#$%^&*()`~-|[]{};:,./<>?";
 	if (ft_strcmp(str, "="))
-		return (msg_invalid_id(str, 0), g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	if (str[0] >= '0' && str[0] <= '9')
-		return (msg_invalid_id(str, 0), g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	i = -1;
 	while (str[++i] && str[i] != '=')
 	{
@@ -57,13 +57,13 @@ int	check_valid_identifier(char *str)
 		while (invalid[++j])
 		{
 			if (invalid[j] == str[i])
-				return (msg_invalid_id(str, 0), g_status);
+				return (msg_invalid_id(str, 0), g_var.g_status);
 			if (str[i] == '+' && str[i + 1] && str[i + 1] != '=')
-				return (msg_invalid_id(str, 0), g_status);
+				return (msg_invalid_id(str, 0), g_var.g_status);
 		}
 	}
 	if (i == 0)
-		return (msg_invalid_id(str, 0), g_status);
+		return (msg_invalid_id(str, 0), g_var.g_status);
 	return (0);
 }
 
@@ -79,10 +79,10 @@ int	ft_export(t_data *data)
 	int		i;
 	t_envp	*new;
 
-	g_status = 0;
+	g_var.g_status = 0;
 	i = 0;
 	if (!data->args[1])
-		return (ft_show_export(data->envp), g_status);
+		return (ft_show_export(data->envp), g_var.g_status);
 	if (check_for_option_export(data->args[1]))
 		return (2);
 	while (data->args[++i])
@@ -97,5 +97,5 @@ int	ft_export(t_data *data)
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_back(&(data->envp), new);
 	}
-	return (g_status);
+	return (g_var.g_status);
 }
