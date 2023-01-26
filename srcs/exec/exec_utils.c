@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:34:42 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:40:20 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_wait(t_data *data)
 	(void)data;
 	while (wait(&status) != -1)
 	{
-		g_status = WEXITSTATUS(status);
+		g_var.g_status = WEXITSTATUS(status);
 		continue ;
 	}
 }

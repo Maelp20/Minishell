@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 20:44:55 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:40:53 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	disp_error(t_tok **tok_lst, t_data **data, char *token)
 	ft_putstr_fd("'\n", 2);
 	ft_free_data_pars(*data);
 	ft_free_tok(tok_lst);
-	g_status = 2;
+	g_var.g_status = 2;
 }
 
 void	clean_parsing(t_tok **lst, t_data **data)

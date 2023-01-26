@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   [1]main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 02:38:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:14:11 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	g_status = 0;
+t_glob	g_var;
 
 void	handle_sigint(int sig)
 {
 	(void)sig;
 	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	setup_sigint_handler(void)
@@ -108,7 +111,6 @@ int	main(int ac, char **av, char **env)
 	t_tok	*lst;
 	t_envp	*envir;
 
-	setup_sigint_handler();
 	(void)av;
 	data = NULL;
 	envir = get_env(env);
@@ -117,6 +119,8 @@ int	main(int ac, char **av, char **env)
 	// print_env(envir);
 	while (ac > 0)
 	{
+		setup_sigint_handler();
+		g_var.g_stop = 0;
 		init_data(&data, envir);
 		input = readline("Minishell> ");
 		if (input == 0)

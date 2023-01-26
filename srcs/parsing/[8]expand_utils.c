@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:18:55 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 20:44:51 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 17:40:49 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	len_expanded(char *str, int len_env, t_data *data)
 	len = 0;
 	tmp = data->envp;
 	if (*str == '?')
-		return(len_status(g_status));
+		return(len_status(g_var.g_status));
 	while (tmp)
 	{
 		comp_len = (int)ft_strlen(tmp->var[0]) - 1;
