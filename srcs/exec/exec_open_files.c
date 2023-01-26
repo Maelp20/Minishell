@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 19:54:03 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 02:19:33 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+
+static void	handle_signal_hd(int signal, siginfo_t *info,  void *context)
+{
+	(void)info;
+	(void)context;
+	if (signal == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		g_status = 130;
+	}
+	if (signal == SIGQUIT)
+		ft_putstr_fd("\b\b  \b\b", 0);
+}
+void	signal_heredoc_handler(void)
+{
+	struct sigaction	s_sig;
+
+	s_sig.sa_sigaction = &handle_signal_hd;
+	s_sig.sa_flags = SA_SIGINFO;
+	sigemptyset(&s_sig.sa_mask);
+	sigaction(SIGINT, &s_sig, 0);
+	sigaction(SIGQUIT, &s_sig, 0);
+}
+
 
 int	check_if_dir(char *path, t_data *data)
 {
@@ -26,7 +51,7 @@ void	ft_heredoc(t_data *data)
 	int		stdin_fd;
 	char	*line;
 
-	setup_sigint_handler();
+	signal_heredoc_handler();
 	tmp_fd = open("/tmp/.heredoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		clean_exit(data, 1);
