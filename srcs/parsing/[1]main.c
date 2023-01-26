@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [1]main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:56:12 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 02:38:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,13 @@ int	g_status = 0;
 
 void	handle_sigint(int sig)
 {
-    // handle the SIGINT signal
 	(void)sig;
 	printf("\n");
-	g_status = 130;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	handle_sig_eof(int sig)
-{
-	(void)sig;
-	printf("\n");
-	exit(0);
 }
 
 void	setup_sigint_handler(void)
 {
 	struct sigaction	sa;
-	struct sigaction	eof;
 
 	sa.sa_handler = &handle_sigint;
 	sigemptyset(&sa.sa_mask);
@@ -45,10 +32,6 @@ void	setup_sigint_handler(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
-	eof.sa_handler = &handle_sig_eof;
-	sigemptyset(&eof.sa_mask);
-	eof.sa_flags = 0;
-	sigaction(EOF, &eof, NULL);
 }
 
 void	print_tout_huehue(t_data **data)
@@ -138,7 +121,7 @@ int	main(int ac, char **av, char **env)
 		input = readline("Minishell> ");
 		if (input == 0)
 		{
-			printf("exits\n");
+			printf("exit\n");
 			exit(0);
 		}
 		if (input && *input)
