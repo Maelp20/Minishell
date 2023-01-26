@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:44:09 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/26 18:01:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@ static void	handle_signal_hd(int signal, siginfo_t *info,  void *context)
 void	signal_heredoc_handler(void)
 {
 	struct sigaction	s_sig;
+	struct sigaction	sa;
+	
 
 	s_sig.sa_sigaction = &handle_signal_hd;
 	s_sig.sa_flags = SA_SIGINFO;
 	sigemptyset(&s_sig.sa_mask);
 	sigaction(SIGINT, &s_sig, 0);
-	sigaction(SIGQUIT, &s_sig, 0);
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 
