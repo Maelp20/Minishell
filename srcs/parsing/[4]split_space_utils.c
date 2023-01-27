@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 19:18:15 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:13:50 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_tok	*lstnew_token2(char *content)
 	free(content);
 	return (dest);
 }
+
 void	lstadd_back_token(t_tok **lst, t_tok *new)
 {
 	if (!(*lst))
