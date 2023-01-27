@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/27 19:59:04 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/27 20:03:59 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS	= \
 			parsing/[1]main.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
 			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\
-			parsing/[7]expand.c 			parsing/[8]expand_utils.c	[8]expand_utils2.c\
+			parsing/[7]expand.c 			parsing/[8]expand_utils.c	parsing/[8]expand_utils2.c\
 			parsing/[9]clean_quotes.c\
 			parsing/[10]check_tok_err.c\
 			parsing/[11]process_redir.c 	parsing/[12]redir_type.c\

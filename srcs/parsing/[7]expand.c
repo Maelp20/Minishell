@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 19:55:36 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:05:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	expand(t_tok **lst, t_data **data)
 	tmp = *lst;
 	while (tmp)
 	{
-		expand_extenstion(tmp, &dbl, &sq, data);
+		expand_extension(tmp, &dbl, &sq, data);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 19:57:11 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:05:04 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int		len_expanded(char *str, int len_env, t_data *data);
 int		write_status(char *temp);
 int		write_t_envp(int *len, t_envp *tmp, char *temp);
 void	process_token(char *tk, int *i, char **temp);
-void	expand_extenstion(t_tok *tmp, int *dbl, int *sq, t_data **data);
+void	expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data);
+char	*expand_from(char *token, t_data *data);
 void	expand(t_tok **lst, t_data **data);
 
 int		verif_redir(t_tok **tok_lst, t_data **data);
