@@ -6,13 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 21:55:00 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 21:55:38 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 22:46:30 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	handle_signal_hd(int signal, siginfo_t *info,  void *context)
+static void	handle_signal_hd(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
