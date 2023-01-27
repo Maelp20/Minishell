@@ -6,16 +6,16 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/23 15:07:15 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:48:06 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int 	del_dollard(t_tok *lst, int i)
+int	del_dollard(t_tok *lst, int i)
 {
 	int	j;
-	
+
 	j = i;
 	lst->token[i] = lst->token[i + 1];
 	i++;
@@ -76,6 +76,13 @@ int	clean_sq(t_tok *lst, int i)
 	return (i - 1);
 }
 
+int	trigger_del_dollard(char *token, int i)
+{
+	if (token[i] == '$' && (token[i + 1] == '\"' || token[i + 1] == '\''))
+		return (1);
+	return (0);
+}
+
 void	clean_quotes(t_tok **lst)
 {
 	t_tok	*temp;
@@ -92,7 +99,7 @@ void	clean_quotes(t_tok **lst)
 				i = clean_dbq(temp, i);
 			if (temp->token[i] == '\'' )
 				i = clean_sq(temp, i);
-			if (temp->token[i] == '$' && (temp->token[i + 1] == '\"' || temp->token[i + 1] == '\''))
+			if (trigger_del_dollard(temp->token, i))
 				i = del_dollard(temp, i);
 			if (temp->token[i] != '\'' && temp->token[i] != '\"' )
 				i++;
