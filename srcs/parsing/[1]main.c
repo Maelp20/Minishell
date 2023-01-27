@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [1]main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 18:14:11 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 20:25:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ int	main(int ac, char **av, char **env)
 			}
 		}
 		free(input);
-		//ft_free_data_pars(data);
 	}
 	ft_free_data(data);
 	ft_envpclear(&envir);

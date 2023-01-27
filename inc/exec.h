@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 20:05:04 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:25:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ int		create_data_args(t_tok **lst, t_data **data);
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
 void	clean_parsing(t_tok **lst, t_data **data);
 void	ft_free_tok(t_tok **lst_tok);
-void	ft_free_data_pars(t_data *data);
 /*---------------------------------------ENV---------------------------------*/
 
 t_envp	*lstnew_env(char **content);
