@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 18:11:29 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:40:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:40:58 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	msg_invalid_id(char *str, int i)
 
 void	msg_invalid_option(char *str, int i)
 {
-	g_var.g_status = 1;
+	g_var.g_status = 2;
 	if (!i)
 		ft_putstr_fd("minishell: export: `", 2);
 	else

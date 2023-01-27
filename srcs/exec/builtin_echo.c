@@ -6,22 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:31:20 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:39:16 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:29:31 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-/* Echo builtin :
-	1 - checks if flag "-n" is present
-	(note that the bash command integrates "-n" or "-nn", "-nnnnn" etc as valid 
-	flags, 
-	and they can be multiples. Ex : command "echo -n -nnn -n Lol" just prints 
-	"Lol".)
-	2 - We print everything after the flag (or flags).
-	3 - If there wasn't any valid flags before the strings to print, we print 
-	a newline.
-*/
 
 int	is_valid_flag(char *str)
 {

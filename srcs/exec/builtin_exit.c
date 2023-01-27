@@ -6,16 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:32:55 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:39:29 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:31:15 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-/* pour EXIT builtin :
-	ATTENTION : la valeur de retour sera entre 0 et 255. exit doit tout 
-	nettoyer (free et close).
- */
 
 int	check_long_neg(char *str)
 {

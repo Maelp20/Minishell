@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:39:01 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:21:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,16 @@ void	cd_err_msg(char *str)
 	perror(str);
 }
 
-void	add_oldpwd_to_env(t_envp *envp, char *curr_pwd)
-{
-	ft_envpadd_front(&envp, ft_envpnew("OLDPWD=", curr_pwd));
-	free(curr_pwd);
-}
-
-void	update_old_pwd_env(t_envp *envp)
+void	update_old_pwd_env(t_envp *envp, char *curr_pwd)
 {
 	int		oldpwd;
-	char	*curr_pwd;
+	t_envp	*start;
 
 	oldpwd = 0;
-	curr_pwd = getcwd(NULL, 0);
-	if (!curr_pwd)
-		curr_pwd = seek_pwd_in_env(envp);
+	start = envp;
 	if (!curr_pwd)
 		return ;
-	while (envp->var)
+	while (envp)
 	{
 		if (ft_strnstr(envp->var[0], "OLDPWD=", 7))
 		{
@@ -58,7 +50,7 @@ void	update_old_pwd_env(t_envp *envp)
 		envp->var[1] = curr_pwd;
 	}
 	else
-		add_oldpwd_to_env(envp, curr_pwd);
+		ft_envpadd_back(&start, ft_envpnew("OLDPWD=", curr_pwd));
 }
 
 void	update_pwd_env(t_envp *envp)
@@ -81,6 +73,7 @@ int	ft_cd(t_data *data)
 {
 	char	*tmp;
 	char	*path;
+	char	*curr_pwd;
 
 	g_var.g_status = 0;
 	if (!data->args[1] || ft_strcmp(data->args[1], ""))
@@ -88,15 +81,18 @@ int	ft_cd(t_data *data)
 	if (data->args[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2),
 			set_err_status(1));
-	update_old_pwd_env(data->envp);
+	curr_pwd = getcwd(NULL, 0);
+	if (!curr_pwd)
+		return (cd_err_msg(data->args[1]), g_var.g_status);
 	tmp = ft_strjoin("/", data->args[1]);
 	if (!tmp)
-		return (perror("malloc"), set_err_status(1));
+		return (perror("malloc"), free(curr_pwd), clean_exit(data, set_err_status(1)), 1);
 	path = ft_strjoin_spec(getcwd(NULL, 0), tmp);
-	if (!path)
-		return (perror("malloc"), set_err_status(1));
+		if (!path)
+			return (perror("malloc"), free(curr_pwd), free(tmp), clean_exit(data, set_err_status(1)), 1);
 	if (chdir(path) == -1)
-		return (free(tmp), free(path), cd_err_msg(data->args[1]), g_var.g_status);
+		return (free(tmp), free(path), free(curr_pwd), cd_err_msg(data->args[1]), g_var.g_status);
+	update_old_pwd_env(data->envp, curr_pwd);
 	update_pwd_env(data->envp);
 	return (free(tmp), free(path), g_var.g_status);
 }
