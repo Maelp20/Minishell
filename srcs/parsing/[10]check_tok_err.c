@@ -6,24 +6,22 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 02:49:46 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 19:26:26 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:19:29 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-
 
 static	int	comp_redir( t_tok *lst_node)
 {
 	if (ft_strcmp(lst_node->token, "<<"))
 		return (1);
 	else if (ft_strcmp(lst_node->token, ">>"))
-		return ( 1);
-	else if ( ft_strcmp(lst_node->token,"<"))
-		return ( 1);
+		return (1);
+	else if (ft_strcmp(lst_node->token, "<"))
+		return (1);
 	else if (ft_strcmp(lst_node->token, ">"))
-		return  (1);
+		return (1);
 	else
 		return (0);
 }
@@ -37,25 +35,13 @@ int	verif_redir(t_tok **tok_lst, t_data **data)
 	{
 		if (ft_strcmp(temp->token, "<") && (temp->next
 				&& ft_strcmp(temp->next->token, ">")))
-		{
-			disp_error(tok_lst, data, "\\n");
-			return (1);
-		}
+			return (disp_error(tok_lst, data, "\\n"), 1);
 		if (comp_redir(temp) && !temp->next)
-		{
-			disp_error(tok_lst, data, "\\n");
-			return (1);
-		}
+			return (disp_error(tok_lst, data, "\\n"), 1);
 		if (comp_redir(temp) && ft_strcmp(temp->next->token, "|"))
-		{
-			disp_error(tok_lst, data, "|");
-			return (1);
-		}
+			return (disp_error(tok_lst, data, "|"), 1);
 		if (comp_redir(temp) && comp_redir(temp->next))
-		{
-			disp_error(tok_lst, data, temp->token);
-			return (1);
-		}
+			return (disp_error(tok_lst, data, temp->token), 1);
 		temp = temp->next;
 	}
 	return (0);

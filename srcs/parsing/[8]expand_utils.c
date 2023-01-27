@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [8]expand_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:18:55 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/26 17:40:49 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 20:20:19 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	len_env(char *str, int i)
 	return (len);
 }
 
-int len_status(int status)
+int	len_status(int status)
 {
 	int	len;
 
@@ -55,12 +55,12 @@ int	len_expanded(char *str, int len_env, t_data *data)
 {
 	t_envp	*tmp;
 	int		len;
-	int comp_len;
+	int		comp_len;
 
 	len = 0;
 	tmp = data->envp;
 	if (*str == '?')
-		return(len_status(g_var.g_status));
+		return (len_status(g_var.g_status));
 	while (tmp)
 	{
 		comp_len = (int)ft_strlen(tmp->var[0]) - 1;

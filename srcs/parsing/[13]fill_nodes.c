@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:05:32 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/22 16:46:48 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:29:28 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
 	if (!lst)
 		return ;
 	nb_nodes = count_nodes(lst);
-	// if (nb_nodes < 2)
-	// 	return ;
 	create_data_nodes(nb_nodes, data, envir);
 	data_temp = *data;
 	while (data_temp)
