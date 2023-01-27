@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 18:01:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 19:34:46 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	handle_signal_hd(int signal, siginfo_t *info,  void *context)
 	if (signal == SIGQUIT)
 		ft_putstr_fd("\b\b  \b\b", 0);
 }
+
 void	signal_heredoc_handler(void)
 {
 	struct sigaction	s_sig;
@@ -42,7 +43,6 @@ void	signal_heredoc_handler(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-
 int	check_if_dir(char *path, t_data *data)
 {
 	stat(path, &data->path_stat);
@@ -57,6 +57,8 @@ void	ft_heredoc(t_data *data)
 	int		stdin_fd;
 	char	*line;
 
+	if (g_var.g_stop == 1)
+		return ;
 	signal_heredoc_handler();
 	tmp_fd = open("/tmp/.heredoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)

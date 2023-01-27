@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 18:23:07 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 19:31:23 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	handle_sigint_child(int sig)
 {
 	(void)sig;
 	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_redisplay();
 }
 
 void	setup_sig_child(void)
@@ -26,8 +26,8 @@ void	setup_sig_child(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = &handle_sigint_child;
-	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
@@ -111,15 +111,6 @@ static void	child(t_data *data, t_data *first_node)
 	}
 }
 
-/* 
-Special condition : if there is only one command and its a builtin, we need to 
-execute it in the parent and not a child. 
-This is to reproduce bash behaviour, where a single builtin call can modify 
-environment variables in parent for example.
-The rest of execution is pretty much like pipex except for the in and outs 
-management, since at all times it can be a heredoc, a file or a pipe.
-*/
-
 static void	exec_fork(t_data *data, t_data *first_node)
 {
 	data->pid = fork();
@@ -138,7 +129,8 @@ int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
-	g_var.g_status = 0;
+	if (!data->args)
+		return (ft_free_data(data), g_var.g_status);
 	first_node = data;
 	data->pid = -2;
 	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile
@@ -147,7 +139,7 @@ int	ft_exec(t_data *data)
 	else
 	{
 		if (init_pipes(data))
-			return (g_var.g_status);
+			clean_exit(data, g_var.g_status);
 		while (data)
 		{
 			exec_fork(data, first_node);
@@ -160,56 +152,3 @@ int	ft_exec(t_data *data)
 	ft_free_data(data);
 	return (g_var.g_status);
 }
-
-/* int main (int ac, char **av, char **envp)
-{
-	t_data	*data;
-	t_data	*first_node;
-	t_envp	*envi;
-
-	(void)ac;
-	(void)av;
-	envi = get_env(envp);
-	data = malloc (sizeof(t_data));
-	first_node = data;
-	data->envp = envi;
-	data->fds = malloc (sizeof(t_pipes));
-	// if (pipe(data->fds->pipe) == -1)
-	// 	perror("pipe");
-	data->args = malloc (sizeof(char **) * 3);
-	data->args[0] = "cat";
-	data->args[1] = NULL;
-	data->args[2] = NULL;
-	data->is_heredoc[0] = "lol";
-	data->is_heredoc[0] = "hey";
-	data->in_fd = 0;
-	data->out_fd = 0;
-	data->is_builtin = 1;
-	data->infile = NULL;
-	data->outfile = NULL;
-	data->in_pipe = 0;
-	data->out_pipe = 1;
-	data->next = malloc (sizeof(t_data));
-	data = data->next;
-	data->envp = envi;
-	data->args = malloc (sizeof(char **) * 3);
-	data->fds = malloc (sizeof(t_pipes));
-	// if (pipe(data->fds->pipe) == -1)
-	// 	perror("pipe");
-	data->args[0] = "ls";
-	data->args[1] = NULL;
-	data->args[2] = NULL;
-	data->in_fd = 0;
-	data->out_fd = 0;
-	data->is_builtin = 0;
-	data->infile = NULL;
-	data->outfile = NULL;
-	data->in_pipe = 1;
-	data->out_pipe = 0;
-	data->cmd_path = "/usr/bin/ls";
-	data->is_builtin = 0;
-	data->next = NULL;
-	data = first_node;
-	ft_exec(data);
-	return (0);
-} */

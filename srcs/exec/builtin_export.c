@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:39:35 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:46:02 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,13 @@ int	ft_export(t_data *data)
 			continue ;
 		new = ft_calloc(1, sizeof(t_envp));
 		if (!new)
-			return (perror("malloc"), set_err_status(1));
+			return (perror("malloc"), exit(set_err_status(1)), 1);
 		new->var = ft_split(data->args[i], '=');
+		if (!new->var)
+			return (perror("malloc"), exit(set_err_status(1)), 1);
 		new->var[0] = ft_strjoin_spec(new->var[0], "=");
+		if (!new->var[0])
+			return (perror("malloc"), exit(set_err_status(1)), 1);
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_back(&(data->envp), new);
 	}

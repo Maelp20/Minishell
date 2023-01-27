@@ -19,7 +19,7 @@ SRCS	= \
 			exec/exec_utils_envp.c\
 			exec/exec_get_cmd_path.c\
 			exec/exec_error_management.c\
-			exec/print_errors.c\
+			exec/exec_print_errors.c\
 			exec/builtin_cd.c\
 			exec/builtin_echo.c\
 			exec/builtin_pwd.c\

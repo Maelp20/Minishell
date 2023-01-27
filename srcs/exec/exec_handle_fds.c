@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:22:37 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/25 20:39:07 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:54:25 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,9 @@ void	ft_close_pipes(t_data *data)
 void	ft_close_fds(t_data *data)
 {
 	if (data->in_fd != -1)
-	{
-		if (close (data->in_fd) == -1)
-			perror("close");
-	}
+		close (data->in_fd);
 	if (data->out_fd != -1)
-	{
-		if (close (data->out_fd) == -1)
-			perror("close");
-	}
+		close (data->out_fd);
 	data = data->next;
 	ft_close_pipes(data);
 }
