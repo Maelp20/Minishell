@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 20:25:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:40:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,5 +211,8 @@ int		ft_open_infile(t_data *data);
 int		ft_open_outfile(t_data *data);
 void	ft_heredoc(t_data *data);
 void	setup_sigint_handler(void);
+
+void	sig_ignore_all(void);
+void	setup_sig_child(void);
 
 #endif
