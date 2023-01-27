@@ -6,27 +6,11 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/25 19:18:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:38:12 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-void	print_tok_list(t_tok *list)
-{
-	t_tok	*current;
-	int		i;
-
-	current = list;
-	i = 0;
-	printf("tok list : \n");
-	while (current)
-	{
-		i++;
-		printf("%d %s\n", i, current->token);
-		current = current->next;
-	}
-}
 
 char	*fill_word(char *token, int len)
 {
@@ -95,18 +79,14 @@ void	split_sep(t_tok *lst)
 	char	**splitted;
 	t_tok	*insert;
 	t_tok	*temp;
-	int i;
-	
+	int		i;
+
 	i = 0;
 	splitted = extract(lst->token);
 	free(lst->token);
 	lst->token = ft_strdup(splitted[i]);
-	//printf("splitted[i] = %s\n", splitted[i]);
-	//i++;
 	while (splitted[++i])
 	{
-		//i++;
-		//printf("splitted[i] = %s\n", splitted[i]);
 		insert = lstnew_token2(ft_strdup(splitted[i]));
 		temp = lst->next;
 		lst->next = insert;
