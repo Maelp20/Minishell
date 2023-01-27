@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:33:59 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:48:58 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 20:17:41 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_envp	*ft_envpnew(char *var, char *value)
 	new->var[0] = ft_strdup(var);
 	if (!new->var[0])
 		return (perror("malloc"), free(new), free(new->var),
-				exit(set_err_status(1)), NULL);
+			exit(set_err_status(1)), NULL);
 	new->var[1] = value;
 	new->var[2] = NULL;
 	new->next = NULL;

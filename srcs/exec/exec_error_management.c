@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 19:33:25 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 21:42:28 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ static void	ft_free_the_rest(t_data *tmp)
 	if (tmp->outfile)
 		free(tmp->outfile);
 	if (tmp->is_heredoc)
-	{
-		ft_putstr_fd("UNLINK\n", 2);
 		unlink("/tmp/.heredoc.tmp");
-	}
 }
 
 void	ft_free_data(t_data *data)

@@ -6,39 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:49:41 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 21:10:53 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-/* int	check_valid_identifier_unset(char *str)
-{
-	char	*invalid;
-	int		i;
-	int		j;
-
-	invalid = "!@#$%^&*()`~-|[]{};:,./<>?";
-	if (ft_strcmp(str, "="))
-		return (msg_invalid_id(str, 1), g_var.g_status);
-	if (str[0] >= '0' && str[0] <= '9')
-		return (msg_invalid_id(str, 1), g_var.g_status);
-	i = -1;
-	while (str[++i] && str[i] != '=')
-	{
-		j = -1;
-		while (invalid[++j])
-		{
-			if (invalid[j] == str[i])
-				return (msg_invalid_id(str, 1), g_var.g_status);
-			if (str[i] == '+' && str[i + 1] && str[i + 1] != '=')
-				return (msg_invalid_id(str, 1), g_var.g_status);
-		}
-	}
-	if (i == 0)
-		return (msg_invalid_id(str, 1), g_var.g_status);
-	return (0);
-} */
 
 int	check_for_option(char *str)
 {
@@ -77,8 +49,6 @@ int	ft_unset(t_data *data)
 		return (g_var.g_status);
 	while (data->args[++i])
 	{
-/* 		if (check_valid_identifier_unset(data->args[i]))
-			continue ; */
 		var = ft_strjoin(data->args[i], "=");
 		if (!var)
 			return (perror("malloc"), clean_exit(data, set_err_status(1)), 1);
