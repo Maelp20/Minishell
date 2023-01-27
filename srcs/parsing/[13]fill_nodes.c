@@ -6,23 +6,11 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:05:32 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 20:29:28 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:56:18 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-void	printf_data_args(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->args[i])
-	{
-		printf("data->args[%d] %s\n", i, data->args[i]);
-		i++;
-	}
-}
 
 int	count_nodes(t_tok **lst)
 {
@@ -75,30 +63,21 @@ int	create_data_args(t_tok **lst, t_data **data)
 {
 	t_tok	*temp;
 	t_data	*data_tmp;
-	int		i;
-	int		j;
+	int		i[2];
 
 	temp = *lst;
 	data_tmp = (*data);
-	i = 0;
-	while (temp && !ft_strcmp(temp->token, "|"))
-	{
-		i++;
-		temp = temp->next;
-	}
-	if (i == 0)
-		return (0) ;
-	data_tmp->args = ft_calloc(i + 1, sizeof(char*));
+	ft_bzero(i, sizeof(int) * 2);
+	trigger_creation(&i[0], temp, data_tmp);
+	if (i[0] == 0)
+		return (0);
 	temp = *lst;
-	j = 0;
-	while (i > 0 && temp && !ft_strcmp(temp->token, "|"))
+	while (i[0]-- > 0 && temp && !ft_strcmp(temp->token, "|"))
 	{
-		if (j == 0 && is_builtin(temp->token))
+		if (i[1] == 0 && is_builtin(temp->token))
 			data_tmp->is_builtin = 1;
-		data_tmp->args[j] = ft_strdup(temp->token);
+		data_tmp->args[i[1]++] = ft_strdup(temp->token);
 		process_node(&temp, &(*lst));
-		j++;
-		i--;
 	}
 	if (temp && ft_strcmp(temp->token, "|"))
 	{

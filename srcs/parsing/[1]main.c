@@ -6,65 +6,13 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 20:25:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:54:13 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 t_glob	g_var;
-
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	setup_sigint_handler(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	print_tout_huehue(t_data **data)
-{
-	t_data	*temp;
-	int		i;
-
-	temp = *data;
-	while (temp)
-	{
-		i = -1;
-		while (temp->args[++i])
-			printf("data->args[%d] %s\n", i, temp->args[i]);
-		i = -1;
-		// while (temp->env[++i])
-		// printf("data->env[%d] %s\n",i, temp->env[i]);
-		printf("data->cmd_path %s\n", temp->cmd_path);
-		printf("data->is_heredoc %s\n", temp->is_heredoc);
-		printf("data->infile %s\n", temp->infile);
-		printf("data->outfile %s\n", temp->outfile);
-		// print_env(temp->envp);
-		printf("is_builtin %d\n", temp->is_builtin);
-		printf("is_append %d\n", temp->is_append);
-		printf("in_fd %d\n", temp->in_fd);
-		printf("out_fd %d\n", temp->out_fd);
-		printf("in_pipe %d\n", temp->in_pipe);
-		printf("out_pipe %d\n", temp->out_pipe);
-		temp = temp->next;
-	}
-}
 
 char	**parse_env(t_envp *envir)
 {
@@ -98,10 +46,64 @@ void	init_data(t_data **data, t_envp *envi)
 {
 	*data = ft_calloc(1, sizeof(t_data));
 	if (!data)
-		printf("free blahblah\n");
+		ft_free_data(*data);
 	(*data)->envp = envi;
 	(*data)->env = parse_env((*data)->envp);
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
+}
+
+void	verif_quotes(char *input, t_data *data)
+{
+	int	i;
+	int	dbl;
+	int	sgl;
+
+	i = 0;
+	dbl = 0;
+	sgl = 0;
+	while (input[i])
+	{
+		if (input[i] == '\"' && sgl % 2 == 0)
+			dbl++;
+		if (input[i] == '\'' && dbl % 2 == 0)
+			sgl++;
+		i++;
+	}
+	if (dbl % 2 != 0 || sgl % 2 != 0)
+	{
+		printf("minishell: syntax error: unexpected end of file\n");
+		ft_free_data(data);
+		free (input);
+		exit(0);
+	}
+}
+
+void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
+{
+	input = readline("Minishell> ");
+	if (input == 0)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	if (input && *input)
+	{
+		add_history(input);
+		verif_quotes(input, data);
+		lst = init_token_lst(input, &data);
+		clean_token(&lst);
+		expand(&lst, &data);
+		clean_quotes(&lst);
+		if (lst)
+		{
+			if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
+			{
+				fill_node_with_tok(&lst, &data, envir);
+				ft_exec(data);
+			}
+		}
+	}
+	free(input);
 }
 
 int	main(int ac, char **av, char **env)
@@ -113,73 +115,18 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	data = NULL;
+	lst = NULL;
+	input = NULL;
 	envir = get_env(env);
 	if (!envir)
 		return (ft_envpclear(&envir), 0);
-	// print_env(envir);
 	while (ac > 0)
 	{
 		setup_sigint_handler();
 		g_var.g_stop = 0;
 		init_data(&data, envir);
-		input = readline("Minishell> ");
-		if (input == 0)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		if (input && *input)
-		{
-			add_history(input);
-			lst = init_token_lst(input, &data);
-			clean_token(&lst);
-			expand(&lst, &data);
-			// print_tok_list(lst);
-			clean_quotes(&lst);
-			if (lst)
-			{
-				if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
-				{
-					fill_node_with_tok(&lst, &data, envir);
-					ft_exec(data);
-				}
-			}
-		}
-		free(input);
+		prompt(input, lst, data, envir);
 	}
 	ft_free_data(data);
 	ft_envpclear(&envir);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	char *input;
-// 	int i = 0;
-// 	t_data *data;
-// 	t_tok	*lst;
-
-// 	(void)av;
-// 	(void)lst;
-// 	t_envp *envir = get_env(env);
-// 	data = NULL;
-// 	while (ac > 0)
-// 	{
-// 		init_data(&data,envir);
-// 		input = readline("Minishell>");
-// 		if (input && *input)
-// 		{
-// 			add_history(input);
-// 			char **result = ft_split(input, ' ');
-// 			data->args = result;
-// /* 			int i = 0;
-// 			while (data->args[i])
-// 			{
-// 				printf("%s\n", data->args[i]);
-// 				i++;
-// 			} */
-// 			ft_exec(data);
-// 		}
-// 		free(input);
-// 		i++;
-// 	}
-// }

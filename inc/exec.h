@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 22:40:22 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 22:56:06 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-/*------------------------------------to_delete--------------*/
-void	print_tok_list(t_tok *list);
-void	print_tout_huehue(t_data **data);
-void	print_env(t_envp *list);
+/*---------------------SIGNAL----------------------*/
+void	handle_sigint(int sig);
+void	setup_sigint_handler(void);
 /*---------------------PARSING----------------------*/
 
 int		is_sep(char c);
@@ -128,6 +127,7 @@ void	process_redir(t_tok **lst, t_data **data);
 void	process_node(t_tok **node, t_tok **lst);
 void	one_node(t_tok **lst);
 void	multi_node(t_tok **lst_node, t_tok **lst);
+void	trigger_creation(int *i, t_tok *temp, t_data *data_tmp);
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 
 void	clean_quotes(t_tok **lst);
