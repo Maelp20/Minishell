@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:12:30 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:51:49 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 21:06:03 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*ft_check_access(char *cmd, char **paths, t_data *data)
 		cmd_path = ft_strjoin(paths[i], cmd);
 		if (!cmd_path)
 			return (perror("malloc"), clean_exit(data, set_err_status(1)),
-					NULL);
+				NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);

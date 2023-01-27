@@ -6,17 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:46:02 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 21:41:22 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-/* Export builtin : 
-- Without args : we show export.
-- With args : we add the named variable to env, or if it already exists,
- we replace it's value
-with our newly defined value. */
 
 int	replace_var_in_env(t_envp *envp, t_envp *new)
 {
@@ -25,15 +19,7 @@ int	replace_var_in_env(t_envp *envp, t_envp *new)
 	while (envp)
 	{
 		if (ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
-		{
-			free(envp->var[1]);
-			envp->var[1] = ft_strdup(new->var[1]);
-			{
-				ft_free_dble_array((void **)new->var);
-				free(new);
-				return (1);
-			}
-		}
+			envp = new;
 		envp = envp->next;
 	}
 	return (0);
@@ -74,6 +60,22 @@ int	check_for_option_export(char *str)
 	return (0);
 }
 
+t_envp	*ft_prepare_new_var(char *arg)
+{
+	t_envp	*new;
+
+	new = ft_calloc(1, sizeof(t_envp));
+	if (!new)
+		return (perror("malloc"), exit(set_err_status(1)), NULL);
+	new->var = ft_split(arg, '=');
+	if (!new->var)
+		return (perror("malloc"), exit(set_err_status(1)), NULL);
+	new->var[0] = ft_strjoin_spec(new->var[0], "=");
+	if (!new->var[0])
+		return (perror("malloc"), exit(set_err_status(1)), NULL);
+	return (new);
+}
+
 int	ft_export(t_data *data)
 {
 	int		i;
@@ -89,15 +91,8 @@ int	ft_export(t_data *data)
 	{
 		if (check_valid_identifier(data->args[i]))
 			continue ;
-		new = ft_calloc(1, sizeof(t_envp));
-		if (!new)
-			return (perror("malloc"), exit(set_err_status(1)), 1);
-		new->var = ft_split(data->args[i], '=');
-		if (!new->var)
-			return (perror("malloc"), exit(set_err_status(1)), 1);
-		new->var[0] = ft_strjoin_spec(new->var[0], "=");
-		if (!new->var[0])
-			return (perror("malloc"), exit(set_err_status(1)), 1);
+		new = NULL;
+		new = ft_prepare_new_var(data->args[i]);
 		if (!replace_var_in_env(data->envp, new))
 			ft_envpadd_back(&(data->envp), new);
 	}

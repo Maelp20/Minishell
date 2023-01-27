@@ -6,15 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:28 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:37:37 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 21:01:55 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-/* We sort env in ASCII order. */
-
-void	sort_envp(t_envp *envp)
+static void	sort_envp(t_envp *envp)
 {
 	char	*buff1;
 	char	*buff2;
@@ -38,10 +36,7 @@ void	sort_envp(t_envp *envp)
 	}
 }
 
-/* We copy env in dst without the last line ("_=...") 
-because we don't want it in export */
-
-t_envp	*copy_envp(t_envp *envp)
+static t_envp	*copy_envp(t_envp *envp)
 {
 	t_envp	*dst;
 	t_envp	*tmp;
@@ -52,12 +47,15 @@ t_envp	*copy_envp(t_envp *envp)
 		if (!ft_strcmp(envp->var[0], "_="))
 		{			
 			tmp = ft_calloc(sizeof(t_envp), 1);
+			if (!tmp)
+				return (perror("malloc"), exit(set_err_status(1)), NULL);
 			tmp->var = ft_calloc(sizeof(char *), 3);
+			if (!tmp->var)
+				return (perror("malloc"), free(tmp), exit(set_err_status(1)),
+					NULL);
 			tmp->var[0] = ft_strdup(envp->var[0]);
 			if (envp->var[1])
-				tmp->var[1] = ft_strdup(envp->var[1]);			
-			if (!tmp || !tmp->var || !tmp->var[0] || !tmp->var[1])
-				return (perror("malloc"), exit(set_err_status(1)), NULL);
+				tmp->var[1] = ft_strdup(envp->var[1]);
 			tmp->var[2] = NULL;
 			tmp->next = dst;
 			dst = tmp;
@@ -67,8 +65,19 @@ t_envp	*copy_envp(t_envp *envp)
 	return (dst);
 }
 
-/* Show export : sorting env in ASCII order and adding "declare -x" 
-each line. */
+static void	ft_print_only_var_name(char *var_name)
+{
+	char	*name_only;
+
+	name_only = ft_strtrim(var_name, "=");
+	if (!name_only)
+	{
+		perror("malloc");
+		exit(set_err_status(1));
+	}
+	printf("%s", name_only);
+	free(name_only);
+}
 
 void	ft_show_export(t_envp *envp)
 {
@@ -82,15 +91,7 @@ void	ft_show_export(t_envp *envp)
 	{
 		printf("export ");
 		if (!dst->var[1])
-		{
-			dst->var[0] = ft_strtrim(dst->var[0], "=");
-			if (!dst->var[0])
-			{
-				perror("malloc");
-				exit(set_err_status(1));
-			}
-			printf("%s", dst->var[0]);
-		}
+			ft_print_only_var_name(dst->var[0]);
 		else
 		{
 			printf("%s", dst->var[0]);

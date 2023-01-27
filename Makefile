@@ -6,7 +6,7 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/27 19:36:53 by mpignet          ###   ########.fr        #
+#    Updated: 2023/01/27 21:56:03 by mpignet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS	= \
 			exec/exec_get_cmd_path.c\
 			exec/exec_error_management.c\
 			exec/exec_print_errors.c\
+			exec/heredoc.c\
 			exec/builtin_cd.c\
 			exec/builtin_echo.c\
 			exec/builtin_pwd.c\

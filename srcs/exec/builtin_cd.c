@@ -6,18 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 18:21:45 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 19:46:29 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-/* Cd builtin :
-	If PWD= is set, We add "OLD PWD=" in env with the current "PWD=" value.;
-	We use chdir to change directory;
-	We change the "PWD=" value in env with the current dir, using getcwd.
-	Note : if PWD is unset, we just use chdir and env is not modified.
-*/
 
 void	cd_err_msg(char *str)
 {
@@ -69,6 +62,16 @@ void	update_pwd_env(t_envp *envp)
 	envp->var[1] = getcwd(NULL, 0);
 }
 
+static int	ft_change_dir(t_data *data, char *path, char *curr_pwd, char *tmp)
+{
+	if (chdir(path) == -1)
+		return (free(tmp), free(path), free(curr_pwd),
+			cd_err_msg(data->args[1]), g_var.g_status);
+	update_old_pwd_env(data->envp, curr_pwd);
+	update_pwd_env(data->envp);
+	return (free(tmp), free(path), g_var.g_status);
+}
+
 int	ft_cd(t_data *data)
 {
 	char	*tmp;
@@ -86,13 +89,11 @@ int	ft_cd(t_data *data)
 		return (cd_err_msg(data->args[1]), g_var.g_status);
 	tmp = ft_strjoin("/", data->args[1]);
 	if (!tmp)
-		return (perror("malloc"), free(curr_pwd), clean_exit(data, set_err_status(1)), 1);
+		return (perror("malloc"), free(curr_pwd),
+			clean_exit(data, set_err_status(1)), 1);
 	path = ft_strjoin_spec(getcwd(NULL, 0), tmp);
-		if (!path)
-			return (perror("malloc"), free(curr_pwd), free(tmp), clean_exit(data, set_err_status(1)), 1);
-	if (chdir(path) == -1)
-		return (free(tmp), free(path), free(curr_pwd), cd_err_msg(data->args[1]), g_var.g_status);
-	update_old_pwd_env(data->envp, curr_pwd);
-	update_pwd_env(data->envp);
-	return (free(tmp), free(path), g_var.g_status);
+	if (!path)
+		return (perror("malloc"), free(curr_pwd), free(tmp),
+			clean_exit(data, set_err_status(1)), 1);
+	return (ft_change_dir(data, path, curr_pwd, tmp));
 }
