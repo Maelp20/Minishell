@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:11:35 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:51:00 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	split_space(char *input, int i, t_tok **lst)
 		{
 			while (input[len] && is_sep(input[len]) < 2)
 				len++;
-			len++;
 		}
 	}
 	tmp = malloc(sizeof(char) * ((len -= i) + 1));

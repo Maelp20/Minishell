@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   [12]redir_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/24 18:17:47 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 20:39:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,15 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->outfile = ft_strdup((*lst_node)->next->token);
 		node->is_append = 1;
 		if (!node->outfile)
-		{
 			clean_parsing(lst, data);
-			return ;
-		}
 		one_node(lst);
 		return ;
 	}	
 	if (!(*lst_node)->next)
-	{
 		clean_parsing(lst, data);
-		return ;
-	}
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
-	{
 		clean_parsing(lst, data);
-		return ;
-	}
 	node->is_append = 1;
 	multi_node(lst_node, lst);
 }

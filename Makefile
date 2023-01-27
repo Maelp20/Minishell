@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/27 20:03:59 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/27 22:57:09 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS	= \
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
 			exec/builtin_export_display.c\
+			parsing/[0]signal.c\
 			parsing/[1]main.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
 			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\
@@ -35,7 +36,7 @@ SRCS	= \
 			parsing/[9]clean_quotes.c\
 			parsing/[10]check_tok_err.c\
 			parsing/[11]process_redir.c 	parsing/[12]redir_type.c\
-			parsing/[13]fill_nodes.c 		parsing/[14]fill_nodes_utils.c\
+			parsing/[13]fill_nodes.c 		parsing/[13]fill_nodes2.c			parsing/[14]fill_nodes_utils.c\
 			parsing/clean.c 				parsing/init.c\
 			
 SRCDIR		= srcs/
