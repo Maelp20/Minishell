@@ -6,20 +6,13 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:10:01 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/26 17:39:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:49:41 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	check_for_option(char *str)
-{
-	if (str[0] == '-')
-		return (msg_invalid_option(str, 1), 1);
-	return (0);
-}
-
-int	check_valid_identifier_unset(char *str)
+/* int	check_valid_identifier_unset(char *str)
 {
 	char	*invalid;
 	int		i;
@@ -44,6 +37,13 @@ int	check_valid_identifier_unset(char *str)
 	}
 	if (i == 0)
 		return (msg_invalid_id(str, 1), g_var.g_status);
+	return (0);
+} */
+
+int	check_for_option(char *str)
+{
+	if (str[0] == '-')
+		return (msg_invalid_option(str, 1), 1);
 	return (0);
 }
 
@@ -77,8 +77,8 @@ int	ft_unset(t_data *data)
 		return (g_var.g_status);
 	while (data->args[++i])
 	{
-		if (check_valid_identifier_unset(data->args[i]))
-			continue ;
+/* 		if (check_valid_identifier_unset(data->args[i]))
+			continue ; */
 		var = ft_strjoin(data->args[i], "=");
 		if (!var)
 			return (perror("malloc"), clean_exit(data, set_err_status(1)), 1);
