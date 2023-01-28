@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 22:56:06 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 02:50:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int		verif_redir(t_tok **tok_lst, t_data **data);
 int		verif_pipe(t_tok **tok_lst, t_data **data);
 int		check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
 
+void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data);
+void	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data);
 int		check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node);
 void	process_redir(t_tok **lst, t_data **data);
 
@@ -149,6 +151,7 @@ int		create_data_args(t_tok **lst, t_data **data);
 void	disp_error(t_tok **tok_lst, t_data **data, char *token);
 void	clean_parsing(t_tok **lst, t_data **data);
 void	ft_free_tok(t_tok **lst_tok);
+void	free_structures(t_tok **lst, t_data **data);
 /*---------------------------------------ENV---------------------------------*/
 
 t_envp	*lstnew_env(char **content);

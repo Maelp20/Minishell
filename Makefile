@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/27 22:57:09 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/28 05:14:01 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS	= \
 			parsing/[9]clean_quotes.c\
 			parsing/[10]check_tok_err.c\
 			parsing/[11]process_redir.c 	parsing/[12]redir_type.c\
-			parsing/[13]fill_nodes.c 		parsing/[13]fill_nodes2.c			parsing/[14]fill_nodes_utils.c\
+			parsing/[13]fill_nodes.c 		parsing/[13]fill_nodes2.c	parsing/[14]fill_nodes_utils.c\
 			parsing/clean.c 				parsing/init.c\
 			
 SRCDIR		= srcs/
