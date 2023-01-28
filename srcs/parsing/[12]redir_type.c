@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 05:03:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 05:20:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->is_append = 1;
 		if (!node->outfile)
 			clean_parsing(lst, data);
+		check_out_file(node->outfile,node, lst, data);
 		one_node(lst_node);
 		return ;
 	}	
@@ -57,6 +58,7 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
 		clean_parsing(lst, data);
+	check_out_file(node->outfile,node, lst, data);
 	node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -73,6 +75,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->is_append = 0;
 		if (!node->outfile)
 			clean_parsing(lst, data);
+		check_out_file(node->outfile,node, lst, data);
 		one_node(lst_node);
 		return ;
 	}	
@@ -81,6 +84,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
 		clean_parsing(lst, data);
+	check_out_file(node->outfile,node, lst, data);
 	node->is_append = 0;
 	multi_node(lst_node, lst);
 }
@@ -96,6 +100,7 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->infile = ft_strdup((*lst_node)->next->token);
 		if (!node->infile)
 			clean_parsing(lst, data);
+		check_in_file(node->infile,node, lst, data);
 		one_node(lst_node);
 		return ;
 	}	
@@ -104,6 +109,7 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->infile = ft_strdup((*lst_node)->next->token);
 	if (!node->infile)
 		clean_parsing(lst, data);
+	check_in_file(node->infile,node, lst, data);
 	multi_node(lst_node, lst);
 }
 
