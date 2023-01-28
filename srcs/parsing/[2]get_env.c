@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:28:11 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:37:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ t_envp	*lstnew_env(char **content)
 	t_envp	*dest;
 	char	*temp;
 
-	dest = ft_calloc(1, sizeof(t_envp));
+
+		dest = ft_calloc(1, sizeof(t_envp));
+		dest->var = ft_calloc(3, sizeof(char *));
 	if (!dest)
-		return (NULL);
-	dest->var = content;
+		return (free(dest->var), free(dest), NULL);
+	dest->var[0] = ft_strdup(content[0]);
+	dest->var[1] = ft_strdup(content[1]);
+	dest->var[2] = NULL;
 	temp = dest->var[0];
 	dest->var[0] = ft_strjoin(dest->var[0], "=");
 	free(temp);
@@ -44,7 +48,7 @@ t_envp	*lstnew_env(char **content)
 		free (temp);
 	}
 	dest->next = NULL;
-	return (dest);
+	return (ft_free_dble_array((void **)content), dest);
 }
 
 //protect the malloc otherwise it's a fail
@@ -56,6 +60,8 @@ char	**split_at_first_equal(char *input)
 	size_t		second_len;
 
 	output = ft_calloc(3, sizeof(char *));
+	if (!output)
+		return (NULL);
 	equal_pos = ft_strchr(input, '=');
 	if (equal_pos)
 	{
@@ -67,7 +73,7 @@ char	**split_at_first_equal(char *input)
 		return (output);
 	}
 	else
-		return (NULL);
+		return (free (output), NULL);
 }
 
 t_envp	*get_env(char **envi)

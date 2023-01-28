@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 00:04:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:40:17 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	verif_quotes(char *input, t_data *data, t_envp *envir)
 		ft_free_data(data);
 		free (input);
 		ft_envpclear(&envir);
+		rl_clear_history();
 		exit(0);
 	}
 }
@@ -87,7 +88,7 @@ void	parser(char *input, t_data **data)
 	clean_token(&lst);
 	expand(&lst, data);
 	clean_quotes(&lst);
-
+	ft_free_tok(&lst);
 }
 
 void	prompt(t_envp *envir)
@@ -112,6 +113,7 @@ void	prompt(t_envp *envir)
 			add_history(input);
 		}
 		free(input);
+		ft_free_data(data);
 		input = NULL;
 	}
 }
