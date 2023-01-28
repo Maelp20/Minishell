@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/28 02:50:22 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 17:34:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int		ft_pwd(t_data *data);
 void	ft_env(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
-void	ft_show_export(t_envp *envp);
+void	ft_show_export(t_envp *envp, t_data *data);
 void	ft_exit(t_data *data);
 
 /*-------------------------------------UTILS----------------------------------*/
@@ -187,7 +187,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strcmp_spec(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
 char	*ft_get_path(t_data *data);
-
+char	*ft_strjoin_free_s2(char *s1, char *s2);
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
 void	ft_wait(t_data *data);

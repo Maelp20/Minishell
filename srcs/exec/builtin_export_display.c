@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:28 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 21:01:55 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/28 17:51:09 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_envp	*copy_envp(t_envp *envp)
 	return (dst);
 }
 
-static void	ft_print_only_var_name(char *var_name)
+static void	ft_print_only_var_name(char *var_name, t_data *data)
 {
 	char	*name_only;
 
@@ -73,17 +73,18 @@ static void	ft_print_only_var_name(char *var_name)
 	if (!name_only)
 	{
 		perror("malloc");
-		exit(set_err_status(1));
+		clean_exit(data, set_err_status(1));
 	}
 	printf("%s", name_only);
 	free(name_only);
 }
 
-void	ft_show_export(t_envp *envp)
+void	ft_show_export(t_envp *envp, t_data *data)
 {
 	t_envp	*first_node;
 	t_envp	*dst;
 
+	(void)data;
 	dst = copy_envp(envp);
 	sort_envp(dst);
 	first_node = dst;
@@ -91,7 +92,7 @@ void	ft_show_export(t_envp *envp)
 	{
 		printf("export ");
 		if (!dst->var[1])
-			ft_print_only_var_name(dst->var[0]);
+			ft_print_only_var_name(dst->var[0], data);
 		else
 		{
 			printf("%s", dst->var[0]);
