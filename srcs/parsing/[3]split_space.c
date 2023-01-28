@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 04:49:10 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:59:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_sep(char c)
 		return (3);
 	else if (c == '\'')
 		return (2);
-	else if (c == ' ')
+	else if (c == ' '|| (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
