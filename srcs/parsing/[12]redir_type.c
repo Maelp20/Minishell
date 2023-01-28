@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 20:39:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 05:03:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->is_heredoc)
 		free(node->is_heredoc);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	if (ft_strcmp((*lst_node)->token, (*lst)->token) || !(*lst_node)->next->next)
 	{
 		node->is_heredoc = ft_strdup((*lst_node)->next->token);
 		ft_heredoc(*data);
 		node->is_append = 1;
 		if (!node->is_heredoc)
 			clean_parsing(lst, data);
-		one_node(lst);
+		one_node(lst_node);
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -43,13 +43,13 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->outfile)
 		free(node->outfile);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	if (ft_strcmp((*lst_node)->token, (*lst)->token)|| !(*lst_node)->next->next)
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
 		node->is_append = 1;
 		if (!node->outfile)
 			clean_parsing(lst, data);
-		one_node(lst);
+		one_node(lst_node);
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -67,13 +67,13 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->outfile)
 		free(node->outfile);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	if (ft_strcmp((*lst_node)->token, (*lst)->token)|| !(*lst_node)->next->next)
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
 		node->is_append = 0;
 		if (!node->outfile)
 			clean_parsing(lst, data);
-		one_node(lst);
+		one_node(lst_node);
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -91,12 +91,12 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->infile)
 		free(node->infile);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	if (ft_strcmp((*lst_node)->token, (*lst)->token)|| !(*lst_node)->next->next)
 	{
 		node->infile = ft_strdup((*lst_node)->next->token);
 		if (!node->infile)
 			clean_parsing(lst, data);
-		one_node(lst);
+		one_node(lst_node);
 		return ;
 	}	
 	if (!(*lst_node)->next)
