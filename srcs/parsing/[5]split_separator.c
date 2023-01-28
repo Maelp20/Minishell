@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 20:38:12 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 23:41:59 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*fill_word(char *token, int len)
 
 	i = 0;
 	split = malloc(sizeof(char) * (len + 1));
-	while (i < len)
+	while (token [i] && i < len)
 	{
 		split[i] = token[i];
 		i++;
@@ -65,48 +65,58 @@ char	**extract(char *token)
 	extracted = ft_calloc(nb_word + 1, sizeof(char *));
 	while (i < nb_word)
 	{
-		len = len_word(token);
+		len = countlen_word(token);
 		extracted[i] = fill_word(token, len);
 		token += len;
 		i++;
 	}
-	extracted[i] = NULL;
+	extracted[i] = 0;
 	return (extracted);
 }
 
-void	split_sep(t_tok *lst)
+
+
+int	split_sep(t_tok *lst)
 {
 	char	**splitted;
 	t_tok	*insert;
 	t_tok	*temp;
 	int		i;
 
-	i = 0;
+	i = 1;
 	splitted = extract(lst->token);
 	free(lst->token);
-	lst->token = ft_strdup(splitted[i]);
-	while (splitted[++i])
+	lst->token = ft_strdup(splitted[0]);
+	while (splitted[i])
 	{
 		insert = lstnew_token2(ft_strdup(splitted[i]));
 		temp = lst->next;
 		lst->next = insert;
 		insert->next = temp;
 		lst = lst->next;
+		i++;
 	}
 	ft_free_dble_array((void **)splitted);
+	return (i);
 }
 
 void	clean_token(t_tok **lst)
 {
 	t_tok	*tmp;
+	int		i;
 
+	i = 0;
 	tmp = *lst;
 	while (tmp)
 	{
-		if (tmp->token && !is_sep((tmp)->token[0]) && has_a_sep ((tmp)->token))
+		if (has_a_sep ((tmp)->token))
 		{
-			split_sep(tmp);
-			tmp = tmp->next;
+			i = split_sep(tmp);
+			while (i > 0)
+			{
+				tmp = tmp->next;
+				i--;
+			}
 		}
 		else
 			tmp = (tmp)->next;

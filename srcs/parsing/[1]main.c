@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/27 22:54:13 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:04:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data **data, t_envp *envi)
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 }
 
-void	verif_quotes(char *input, t_data *data)
+void	verif_quotes(char *input, t_data *data, t_envp *envir)
 {
 	int	i;
 	int	dbl;
@@ -74,59 +74,58 @@ void	verif_quotes(char *input, t_data *data)
 		printf("minishell: syntax error: unexpected end of file\n");
 		ft_free_data(data);
 		free (input);
+		ft_envpclear(&envir);
 		exit(0);
 	}
 }
 
-void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
+void	parser(char *input, t_data **data)
 {
-	input = readline("Minishell> ");
-	if (input == 0)
+	t_tok	*lst;
+
+	lst = init_token_lst(input, data);
+	clean_token(&lst);
+	expand(&lst, data);
+	clean_quotes(&lst);
+
+}
+
+void	prompt(t_envp *envir)
+{
+	t_data	*data;
+	char	*input;
+	
+	setup_sigint_handler();
+	while (1)
 	{
-		printf("exit\n");
-		exit(0);
-	}
-	if (input && *input)
-	{
-		add_history(input);
-		verif_quotes(input, data);
-		lst = init_token_lst(input, &data);
-		clean_token(&lst);
-		expand(&lst, &data);
-		clean_quotes(&lst);
-		if (lst)
+		init_data(&data, envir);
+		input = readline("Minishell> ");
+		if (input == 0)
 		{
-			if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
-			{
-				fill_node_with_tok(&lst, &data, envir);
-				ft_exec(data);
-			}
+			printf("exit\n");
+			exit(0);
 		}
+		if (input && *input)
+		{
+			verif_quotes(input, data, envir);
+			parser(input, &data);
+			add_history(input);
+		}
+		free(input);
+		input = NULL;
 	}
-	free(input);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	t_data	*data;
-	t_tok	*lst;
 	t_envp	*envir;
 
 	(void)av;
-	data = NULL;
-	lst = NULL;
-	input = NULL;
+	(void)ac;
 	envir = get_env(env);
 	if (!envir)
 		return (ft_envpclear(&envir), 0);
-	while (ac > 0)
-	{
-		setup_sigint_handler();
-		g_var.g_stop = 0;
-		init_data(&data, envir);
-		prompt(input, lst, data, envir);
-	}
-	ft_free_data(data);
+	g_var.g_stop = 0;
+	prompt(envir);
 	ft_envpclear(&envir);
 }
