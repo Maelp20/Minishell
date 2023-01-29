@@ -104,6 +104,7 @@ int		check_separator(char c);
 int		is_separator(char c1, char c2);
 int		has_a_sep(char *token);
 int		countword(char *token);
+int		countlen_word(char *token);
 void	clean_token(t_tok **lst);
 
 int		is_char_var(char c);
