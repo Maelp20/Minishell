@@ -3,10 +3,9 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
+#    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-
 #    Updated: 2023/01/29 17:01:35 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -24,7 +23,6 @@ SRCS	= \
 			exec/exec_signals.c\
 			exec/heredoc.c\
 			exec/builtin_cd.c\
-			exec/builtin_cd_utils.c\
 			exec/builtin_echo.c\
 			exec/builtin_pwd.c\
 			exec/builtin_env.c\
@@ -32,7 +30,6 @@ SRCS	= \
 			exec/builtin_unset.c\
 			exec/builtin_export.c\
 			exec/builtin_export_display.c\
-			exec/builtin_export_utils.c\
 			parsing/[0]signal.c\
 			parsing/[1]main.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\

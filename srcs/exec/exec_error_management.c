@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 18:11:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/29 19:19:22 by yanthoma         ###   ########.fr       */s
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_free_data(t_data *data)
 		}
 		ft_free_the_rest(tmp);
 		free(tmp);
+		tmp = NULL;
 	}
 }
 
