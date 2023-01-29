@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 00:37:58 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 00:50:04 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_envp	*lstnew_env(char **content)
 	char	*temp;
 
 
-		dest = ft_calloc(1, sizeof(t_envp));
-		dest->var = ft_calloc(3, sizeof(char *));
+	dest = ft_calloc(1, sizeof(t_envp));
+	dest->var = ft_calloc(3, sizeof(char *));
 	if (!dest)
 		return (free(dest->var), free(dest), NULL);
 	dest->var[0] = ft_strdup(content[0]);
@@ -46,6 +46,7 @@ t_envp	*lstnew_env(char **content)
 		free (dest->var[1]);
 		dest->var[1] = ft_itoa(ft_atoi(temp) + 1);
 		free (temp);
+		temp = NULL;
 	}
 	dest->next = NULL;
 	return (ft_free_dble_array((void **)content), dest);
@@ -73,7 +74,7 @@ char	**split_at_first_equal(char *input)
 		return (output);
 	}
 	else
-		return (free (output), NULL);
+		return (free(output), NULL);
 }
 
 t_envp	*get_env(char **envi)
@@ -90,7 +91,7 @@ t_envp	*get_env(char **envi)
 	{
 		node = lstnew_env(split_at_first_equal(envi[i]));
 		if (!node)
-			return (NULL);
+			return (ft_envpclear(&head), NULL);
 		*tail = node;
 		tail = &node->next;
 		i++;

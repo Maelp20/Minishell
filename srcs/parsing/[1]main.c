@@ -6,13 +6,15 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 00:40:17 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 01:09:33 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 t_glob	g_var;
+
+void check_leaks();
 
 char	**parse_env(t_envp *envir)
 {
@@ -111,6 +113,7 @@ void	prompt(t_envp *envir)
 			verif_quotes(input, data, envir);
 			parser(input, &data);
 			add_history(input);
+			printf("TEST\n");
 		}
 		free(input);
 		ft_free_data(data);
