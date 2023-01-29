@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 01:09:44 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 17:34:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_tok
 {
 	char			*token;
 	struct s_tok	*next;
+	struct s_tok	*prev;
 }	t_tok;
 
 typedef struct s_glob
@@ -101,11 +102,8 @@ t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		check_separator(char c);
 int		is_separator(char c1, char c2);
-int		skip_separator(char *token, int i);
-int		length_separator(char *token);
 int		has_a_sep(char *token);
 int		countword(char *token);
-int		countlen_word(char *token);
 void	clean_token(t_tok **lst);
 
 int		is_char_var(char c);

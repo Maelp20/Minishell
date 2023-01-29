@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 19:59:34 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 05:20:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	ft_heredoc(*data);
 	if (!node->is_heredoc)
 		clean_parsing(lst, data);
-	//multi_node(lst_node, lst);
+	multi_node(lst_node, lst);
 }
 
 void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
@@ -60,7 +60,7 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		clean_parsing(lst, data);
 	check_out_file(node->outfile,node, lst, data);
 	node->is_append = 1;
-	//multi_node(lst_node, lst);
+	multi_node(lst_node, lst);
 }
 
 void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
@@ -86,7 +86,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		clean_parsing(lst, data);
 	check_out_file(node->outfile,node, lst, data);
 	node->is_append = 0;
-	//multi_node(lst_node, lst);
+	multi_node(lst_node, lst);
 }
 
 void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
@@ -110,7 +110,7 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	if (!node->infile)
 		clean_parsing(lst, data);
 	check_in_file(node->infile,node, lst, data);
-	//multi_node(lst_node, lst);
+	multi_node(lst_node, lst);
 }
 
 int	check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)

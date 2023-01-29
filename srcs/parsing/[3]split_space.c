@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 20:03:26 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:59:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ int	split_space(char *input, int i, t_tok **lst)
 
 	len = i;
 	while (input[len] && is_sep(input[len]) != 1)
+	{
+		if (is_sep(input[len++]) >= 2)
+		{
+			while (input[len] && is_sep(input[len]) < 2)
+				len++;
 			len++;
+		}
+	}
 	tmp = malloc(sizeof(char) * ((len -= i) + 1));
 	if (!tmp)
 		return (-2);
@@ -49,11 +56,12 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	int		i;
 	t_tok	*tok_lst;
 
+	(void)lst;
 	i = 0;
 	tok_lst = NULL;
 	while (i >= 0 && input[i])
 	{
-		if (is_sep(input[i]) != 1)
+		if (i >= 0 && input[i] && is_sep(input[i]) != 1)
 			i = split_space(input, i, &tok_lst);
 		i++;
 	}
