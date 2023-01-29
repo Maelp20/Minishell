@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 17:57:18 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:54:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	process_redir(t_tok **lst, t_data **data)
 	temp_data = *data;
 	while (lst && temp_tok && !ft_strcmp(temp_tok->token, "|"))
 	{
-		printf("boucle\n");
-		//printf("%d\n", (lst && !check_redir(lst, &temp_tok, data, temp_data)));
 		if (lst && check_redir(lst, &temp_tok, data, temp_data))
 			temp_tok = *lst;
 		else
@@ -53,7 +51,6 @@ void	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data)
 void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
 {
 	int	fd;
-	printf("HAUT\n");
 	stat(str, &node->path_stat);
 	if (S_ISDIR(node->path_stat.st_mode))
 	{
@@ -69,7 +66,6 @@ void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
 		return ;
 	}
 	close(fd);
-	printf("BAS\n");
 }
 
 
