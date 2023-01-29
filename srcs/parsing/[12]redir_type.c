@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 05:20:38 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 17:16:32 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->is_append = 1;
 		if (!node->is_heredoc)
 			clean_parsing(lst, data);
+		one_node(lst_node);
 		one_node(lst_node);
 		return ;
 	}	
@@ -50,6 +51,7 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		if (!node->outfile)
 			clean_parsing(lst, data);
 		check_out_file(node->outfile,node, lst, data);
+		one_node(lst_node);
 		one_node(lst_node);
 		return ;
 	}	
@@ -77,6 +79,7 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 			clean_parsing(lst, data);
 		check_out_file(node->outfile,node, lst, data);
 		one_node(lst_node);
+		one_node(lst_node);
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -101,6 +104,7 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		if (!node->infile)
 			clean_parsing(lst, data);
 		check_in_file(node->infile,node, lst, data);
+		one_node(lst_node);
 		one_node(lst_node);
 		return ;
 	}	

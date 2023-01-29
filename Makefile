@@ -6,7 +6,7 @@
 #    By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/28 05:14:01 by yanthoma         ###   ########.fr        #
+#    Updated: 2023/01/29 17:01:35 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ LIBFT = ${LIBFT_DIR}/libft.a
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
 CC		= cc
-CFLAGS	= -g -Wall -Wextra -Werror -MMD
+CFLAGS	= -g3 -Wall -Wextra -Werror -MMD
 LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG	= -lreadline
 NAME	= minishell
