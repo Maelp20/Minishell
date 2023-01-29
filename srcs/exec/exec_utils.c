@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:36:34 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/28 17:27:30 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/29 17:29:08 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,4 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	}
 	return (1);
-}
-
-char	*ft_strjoin_free_s2(char *s1, char *s2)
-{
-	char	*dest;
-	int		len;
-	int		i;
-	int		j;
-
-	if (!s2)
-	{
-		s2 = ft_calloc(sizeof(char), 1);
-		if (!s2)
-			return (NULL);
-	}
-	if (!s1)
-		return (free(s2), NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	dest = malloc(sizeof(char) * (len + 1));
-	if (!dest)
-		return (free(s2), NULL);
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	j = 0;
-	while (s2[j])
-		dest[i++] = s2[j++];
-	dest[i] = '\0';
-	return (free(s2), dest);
 }

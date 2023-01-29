@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/01/30 00:18:20 by yanthoma         ###   ########.fr       */
+=======
+/*   Updated: 2023/01/29 17:22:37 by mpignet          ###   ########.fr       */
+>>>>>>> 7043136983777f616b91b2d733b5daa80004f361
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,12 +175,19 @@ int		ft_exec(t_data *data);
 
 int		ft_echo(t_data *data);
 int		ft_cd(t_data *data);
+void	update_old_pwd_env(t_envp *envp, char *curr_pwd);
+void	update_pwd_env(t_envp *envp);
+void	cd_err_msg(char *str);
 int		ft_pwd(t_data *data);
 void	ft_env(t_data *data);
+void	ft_exit(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 void	ft_show_export(t_envp *envp, t_data *data);
-void	ft_exit(t_data *data);
+int		check_valid_identifier(char *str);
+int		check_for_option_export(char *str);
+int		count_equal_signs(char *arg);
+int		ft_dble_array_len(char **array);
 
 /*-------------------------------------UTILS----------------------------------*/
 
