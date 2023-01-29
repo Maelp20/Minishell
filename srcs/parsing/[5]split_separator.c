@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 22:31:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 13:40:26 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*fill_word(char *token, int len)
 
 	i = 0;
 	split = malloc(sizeof(char) * (len + 1));
-	while (i < len)
+	while (token [i] && i < len)
 	{
 		split[i] = token[i];
 		i++;
@@ -61,12 +61,11 @@ char	**extract(char *token)
 	int		len;
 
 	i = 0;
-	len = 0;
 	nb_word = countword(token);
 	extracted = ft_calloc(nb_word + 1, sizeof(char *));
-	while (token[len] && i < nb_word)
+	while (i < nb_word)
 	{
-		len = len_word(token);
+		len = countlen_word(token);
 		extracted[i] = fill_word(token, len);
 		token += len;
 		i++;
@@ -75,7 +74,9 @@ char	**extract(char *token)
 	return (extracted);
 }
 
-void	split_sep(t_tok *lst)
+
+
+int	split_sep(t_tok *lst)
 {
 	char	**splitted;
 	t_tok	*insert;
@@ -96,19 +97,26 @@ void	split_sep(t_tok *lst)
 		i++;
 	}
 	ft_free_dble_array((void **)splitted);
+	return (i);
 }
 
 void	clean_token(t_tok **lst)
 {
 	t_tok	*tmp;
+	int		i;
 
+	i = 0;
 	tmp = *lst;
 	while (tmp)
 	{
-		if (tmp->token && !is_sep((tmp)->token[0]) && has_a_sep ((tmp)->token))
+		if (has_a_sep ((tmp)->token))
 		{
-			split_sep(tmp);
-			tmp = tmp->next;
+			i = split_sep(tmp);
+			while (i > 0)
+			{
+				tmp = tmp->next;
+				i--;
+			}
 		}
 		else
 			tmp = (tmp)->next;
