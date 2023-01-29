@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 13:40:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 13:53:50 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	skip_quote(char *token, int i)
 	i++;
 	while (token[i] && token[i] != quote)
 		i++;
-	return (i);
+	return (i + 1);
 }
 
 int	skip_non_separator(char *token, int i)
@@ -111,7 +111,7 @@ int	countlen_word(char *token)
 	{
 		if (token[i] && (token[i] == '\'' || token[i] == '\"') )
 			i = skip_quote(token, i);
-		if (token[i] && !check_separator(token[i]))
+		else if (token[i] && !check_separator(token[i]))
 			i = skip_non_separator(token, i);
 		if (i > 0)
 			return (i);			

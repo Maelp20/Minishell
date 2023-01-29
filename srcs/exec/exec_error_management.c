@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/28 17:10:37 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/29 16:18:50 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,25 @@ void	ft_free_dble_array(void **tab)
 		return ;
 	i = -1;
 	while (tab[++i])
-		free(tab[i]);
+	{
+	free(tab[i]);
+		
+	}
+	free(tab);
+}
+
+void	ft_free_dble_array2(char **tab)
+{
+	int	i;
+
+	if (!tab)
+		return ;
+	i = -1;
+	while (tab[++i])
+	{
+	free(tab[i]);
+		
+	}
 	free(tab);
 }
 
@@ -71,6 +89,7 @@ void	ft_free_data(t_data *data)
 
 void	clean_exit(t_data *data, int err)
 {
+	printf("exit\n");
 	if (data->envp)
 		ft_envpclear(&(data->envp));
 	ft_free_data(data);

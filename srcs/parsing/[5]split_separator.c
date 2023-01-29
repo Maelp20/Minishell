@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 13:40:26 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:35:41 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	split_sep(t_tok *lst)
 		temp = lst->next;
 		lst->next = insert;
 		insert->next = temp;
+		insert->prev = lst;
 		lst = lst->next;
 		i++;
 	}
