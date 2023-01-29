@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 16:08:54 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:20:46 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,13 @@ void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
 {
 	input = readline("Minishell> ");
 	if (input == 0)
-	{
-		printf("exit\n");
-		clean_exit(data, 0);
-	}
+		o_signal(data);
 	if (input && *input)
 	{
 		add_history(input);
 		verif_quotes(input, data);
 		lst = init_token_lst(input, &data);
-		clean_token(&lst);
-		expand(&lst, &data);
-		clean_quotes(&lst);
+		pars_token(lst, data);
 		if (lst)
 		{
 			if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
@@ -102,6 +97,8 @@ void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
 				ft_exec(data);
 			}
 		}
+		else
+			ft_free_data(data);
 	}
 	else
 		ft_free_data(data);

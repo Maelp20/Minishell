@@ -6,7 +6,11 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/01/30 00:18:20 by yanthoma         ###   ########.fr       */
+=======
 /*   Updated: 2023/01/29 17:22:37 by mpignet          ###   ########.fr       */
+>>>>>>> 7043136983777f616b91b2d733b5daa80004f361
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +102,8 @@ void	setup_sigint_handler(void);
 
 int		is_sep(char c);
 int		split_space(char *input, int i, t_tok **lst);
+void	o_signal(t_data *data);
+void	pars_token(t_tok *lst, t_data *data);	
 t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		check_separator(char c);

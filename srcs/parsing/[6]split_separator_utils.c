@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 13:53:50 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 21:46:18 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,7 @@ int	countword(char *token)
 int	countlen_word(char *token)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 0;
 	while (token[i])
 	{
