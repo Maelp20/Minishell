@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/28 17:34:08 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/29 14:16:58 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		check_separator(char c);
 int		is_separator(char c1, char c2);
 int		has_a_sep(char *token);
 int		countword(char *token);
+int		countlen_word(char *token);
 void	clean_token(t_tok **lst);
 
 int		is_char_var(char c);

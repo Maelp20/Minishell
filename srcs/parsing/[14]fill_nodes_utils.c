@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:27:03 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:18:29 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:06:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	process_node(t_tok **node, t_tok **lst)
 
 	temp = (*node)->next;
 	tok_del_one(*node);
+	//printf("Process_node: %s\n", (*node)->token);
 	*node = temp;
 	*lst = temp;
 }
