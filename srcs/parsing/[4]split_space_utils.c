@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 00:33:23 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 03:16:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_tok	*lstnew_token(char *content)
 {
 	t_tok	*dest;
 
-	dest = malloc(sizeof(*dest));
+	dest = ft_calloc(1, sizeof(*dest));
 	if (!dest)
 		return (NULL);
 	dest->token = ft_strdup(content);
