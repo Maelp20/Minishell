@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 10:08:33 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:56:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	setup_sigint_handler(void);
 int		is_sep(char c);
 int		split_space(char *input, int i, t_tok **lst);
 void	o_signal(t_data *data);
-void	pars_token(t_tok *lst, t_data *data);	
+void	pars_token(t_tok *lst, t_data *data);
+int		skip_quote(char *token, int i);
 t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		check_separator(char c);
