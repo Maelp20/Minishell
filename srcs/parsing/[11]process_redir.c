@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 03:41:01 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:17:36 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
 	fd = open(str, O_RDONLY );
 	if (fd == -1)
 	{
-		//printf("fd = -1\n");
 		perror(str);
 		free_structures(lst, data);
 		return ;
@@ -74,7 +73,5 @@ void	free_structures(t_tok **lst, t_data **data)
 	
 	(void)data;
 	ft_free_tok(lst);
-	//ft_free_data(*data);
-	lst = NULL;
-	//*data = NULL;
+	lst = NULL;;
 }
