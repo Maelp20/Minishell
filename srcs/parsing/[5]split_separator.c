@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 19:51:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:33:11 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ int	split_sep(t_tok *lst)
 		insert->prev = lst;
 		
 		//pb si premier node
-		// if(temp)
-		// 	temp->prev = insert;
+		if(temp)
+			temp->prev = insert;
+		//if (!temp)
+			lst = lst->next;
 		// lst = temp->next;
 		i++;
 	}
