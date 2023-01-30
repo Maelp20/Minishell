@@ -6,11 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/01/29 22:58:03 by yanthoma         ###   ########.fr       */
-=======
-/*   Updated: 2023/01/29 16:47:56 by mpignet          ###   ########.fr       */
->>>>>>> 7043136983777f616b91b2d733b5daa80004f361
+/*   Updated: 2023/01/30 00:27:34 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +91,7 @@ static void	exec_fork(t_data *data, t_data *first_node)
 int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
-printf("exec\n");
+
 	if (!data->args)
 		return (ft_free_data(data), g_var.g_status);
 	first_node = data;

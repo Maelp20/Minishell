@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 17:06:09 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:33:23 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	tok_del_one(t_tok *lst)
 {
 	if (lst && lst->token)
 		free(lst->token);
-	//lst->token = NULL;
 	if (lst)
 		free(lst);
-	//lst = NULL;
 }
 
 t_tok	*lstnew_token(char *content)
