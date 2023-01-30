@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 09:17:24 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:04:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ int	split_space(char *input, int i, t_tok **lst)
 	while (input[len] && is_sep(input[len]) != 1)
 	{
 		if (is_sep(input[len++]) >= 2)
-		{
-			while (input[len] && is_sep(input[len]) < 2)
-				len++;
-			len++;
-		}
+			len = skip_quote(input, len);
 	}
 	tmp = ft_calloc(((len -= i) + 1), sizeof(char));
 	if (!tmp)

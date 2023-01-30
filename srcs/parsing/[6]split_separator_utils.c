@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 10:10:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:46:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ int	skip_quote(char *token, int i)
 	char	quote;
 
 	quote = token[i];
-	//printf("token[i] = %c", token[i]);
 	i++;
 	while (token[i] && token[i] != quote)
-	{
-		//printf("token[i] = %c\n", token[i]);
 		i++;
-	}
-	
+	if(token[i] == '\0')
+		return (i);
 	return (i + 1);
 }
 
