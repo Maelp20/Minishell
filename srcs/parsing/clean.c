@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 19:25:15 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:56:39 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	disp_error(t_tok **tok_lst, t_data **data, char *token)
 	ft_free_data(*data);
 	ft_free_tok(tok_lst);
 	g_var.g_status = 2;
+	printf("test\n");
 }
 
 void	clean_parsing(t_tok **lst, t_data **data)

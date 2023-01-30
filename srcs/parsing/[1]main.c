@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 00:20:46 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 02:23:44 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data **data, t_envp *envi)
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 }
 
-void	verif_quotes(char *input, t_data *data)
+void	verif_quotes(char *input, t_data *data, t_envp *envir)
 {
 	int	i;
 	int	dbl;
@@ -73,6 +73,7 @@ void	verif_quotes(char *input, t_data *data)
 	{
 		printf("minishell: syntax error: unexpected end of file\n");
 		ft_free_data(data);
+		ft_envpclear(&envir);
 		free (input);
 		exit(0);
 	}
@@ -86,7 +87,7 @@ void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
 	if (input && *input)
 	{
 		add_history(input);
-		verif_quotes(input, data);
+		verif_quotes(input, data, envir);
 		lst = init_token_lst(input, &data);
 		pars_token(lst, data);
 		if (lst)
