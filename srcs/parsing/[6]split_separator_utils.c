@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 13:44:39 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:33:57 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	skip_quote(char *token, int i)
 	quote = token[i];
 	i++;
 	while (token[i] && token[i] != quote)
+	{
 		i++;
+	}	
 	if(token[i] == '\0')
 		return (i);
 	return (i + 1);

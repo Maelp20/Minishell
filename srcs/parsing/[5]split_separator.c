@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 14:24:29 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:12:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,51 @@ char	**extract(char *token)
 
 
 
+// int	split_sep(t_tok *lst)
+// {
+// 	char	**splitted;
+// 	t_tok	*insert;
+// 	t_tok	*temp;
+// 	int		i;
+
+// 	i = 1;
+// 	splitted = extract(lst->token);
+// 	int j = 0;
+// 	while (splitted[j])
+// 	{
+// 		//splitted[%d] = %s\n", j, splitted[j]);
+// 		j++;
+// 	}
+// 	free(lst->token);
+// 	lst->token = ft_strdup(splitted[0]);
+// 	while (splitted[i])
+// 	{
+// 		insert = lstnew_token2(ft_strdup(splitted[i]));
+// 		temp = lst->next;
+// 		// if (!lst->prev)
+// 		// {
+// 		lst->next = insert;
+// 		insert->next = temp;
+// 		insert->prev = lst;
+// 		lst = lst->next;
+// 		//}
+		
+// 		//pb si premier node
+		
+// 		//if (!temp)
+		
+// 		// lst = temp->next;
+// 		// if(temp)
+// 		//  	temp->prev = insert;
+// 		// lst = temp->next;
+// 		i++;
+// 	}
+// 	ft_free_dble_array((void **)splitted);
+// 	return (i);
+// }
+
+
+
 int	split_sep(t_tok *lst)
 {
 	char	**splitted;
@@ -88,7 +133,7 @@ int	split_sep(t_tok *lst)
 	int j = 0;
 	while (splitted[j])
 	{
-		printf("splitted[%d] = %s\n", j, splitted[j]);
+		printf("[%d] = %s\n", j, splitted[j]);
 		j++;
 	}
 	free(lst->token);
@@ -97,27 +142,14 @@ int	split_sep(t_tok *lst)
 	{
 		insert = lstnew_token2(ft_strdup(splitted[i]));
 		temp = lst->next;
-		// if (!lst->prev)
-		// {
 		lst->next = insert;
 		insert->next = temp;
-		insert->prev = lst;
-		lst = lst->next;
-		//}
-		
-		//pb si premier node
-		
-		//if (!temp)
-		
-		// lst = temp->next;
-		// if(temp)
-		//  	temp->prev = insert;
-		// lst = temp->next;
 		i++;
 	}
 	ft_free_dble_array((void **)splitted);
 	return (i);
 }
+
 
 void	clean_token(t_tok **lst)
 {

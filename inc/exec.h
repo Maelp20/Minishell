@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 10:56:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:03:38 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_tok
 {
 	char			*token;
 	struct s_tok	*next;
-	struct s_tok	*prev;
+	//struct s_tok	*prev;
 }	t_tok;
 
 typedef struct s_glob
@@ -163,7 +163,10 @@ t_envp	*get_env(char **envi);
 char	**parse_env(t_envp *envir);
 
 /*--------------------------------------PATH---------------------------------*/
-
+void	tok_addback(t_tok **lst, t_tok *node);
+t_tok	*tok_new(char *str);
+void	clean_tok(t_tok **lst); 
+void	tok_delone(t_tok *node);
 /*---------------------EXEC----------------------*/
 
 int		ft_exec(t_data *data);

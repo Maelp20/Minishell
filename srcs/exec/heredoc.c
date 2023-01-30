@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 21:55:00 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 15:01:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:20:48 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,4 @@ void	ft_heredoc(t_data *data)
 	close (stdin_fd);
 	close (tmp_fd);
 	setup_sigint_handler();
-	printf("end\n");
 }
