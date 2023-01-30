@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 16:08:54 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:04:05 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data **data, t_envp *envi)
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
 }
 
-void	verif_quotes(char *input, t_data *data)
+void	verif_quotes(char *input, t_data *data, t_envp *envir)
 {
 	int	i;
 	int	dbl;
@@ -73,6 +73,7 @@ void	verif_quotes(char *input, t_data *data)
 	{
 		printf("minishell: syntax error: unexpected end of file\n");
 		ft_free_data(data);
+		ft_envpclear(&envir);
 		free (input);
 		exit(0);
 	}
@@ -82,18 +83,13 @@ void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
 {
 	input = readline("Minishell> ");
 	if (input == 0)
-	{
-		printf("exit\n");
-		clean_exit(data, 0);
-	}
+		o_signal(data);
 	if (input && *input)
 	{
 		add_history(input);
-		verif_quotes(input, data);
+		verif_quotes(input, data, envir);
 		lst = init_token_lst(input, &data);
-		clean_token(&lst);
-		expand(&lst, &data);
-		clean_quotes(&lst);
+		pars_token(lst, data);
 		if (lst)
 		{
 			if (verif_pipe(&lst, &data) == 0 && verif_redir(&lst, &data) == 0)
@@ -102,6 +98,8 @@ void	prompt(char *input, t_tok *lst, t_data *data, t_envp *envir)
 				ft_exec(data);
 			}
 		}
+		else
+			ft_free_data(data);
 	}
 	else
 		ft_free_data(data);
@@ -129,7 +127,6 @@ int	main(int ac, char **av, char **env)
 		init_data(&data, envir);
 		prompt(input, lst, data, envir);
 	}
-	printf("salut\n");
 	ft_free_data(data);
 	ft_envpclear(&envir);
 }

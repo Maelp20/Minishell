@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 05:10:48 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:08:54 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	process_redir(t_tok **lst, t_data **data)
 	temp_data = *data;
 	while (lst && temp_tok && !ft_strcmp(temp_tok->token, "|"))
 	{
-		if (lst && !check_redir(lst, &temp_tok, data, temp_data))
-			temp_tok = temp_tok->next;
-		else
+		if (lst && check_redir(lst, &temp_tok, data, temp_data))
 			temp_tok = *lst;
+		else
+			temp_tok = temp_tok->next;
 	}
 }
 
 
-void	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data)
+int	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data)
 {
 	int	fd;
 
@@ -37,35 +37,36 @@ void	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data)
 	if (S_ISDIR(node->path_stat.st_mode))
 	{
 		free_structures(lst, data);
-		return ;
+		return (0);
 	}
 	fd = open(str, O_RDONLY | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		perror(str);
 		free_structures(lst, data);
-		return ;
+		return (0);
 	}
 	close(fd);
+	return (1);
 }
-void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
+int	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
 {
 	int	fd;
-
 	stat(str, &node->path_stat);
 	if (S_ISDIR(node->path_stat.st_mode))
 	{
 		free_structures(lst, data);
-		return ;
+		return (0);
 	}
-	fd = open(str, O_RDONLY | O_EXCL);
+	fd = open(str, O_RDONLY );
 	if (fd == -1)
 	{
 		perror(str);
 		free_structures(lst, data);
-		return ;
+		return (0);
 	}
 	close(fd);
+	return (1);
 }
 
 
@@ -74,7 +75,5 @@ void	free_structures(t_tok **lst, t_data **data)
 	
 	(void)data;
 	ft_free_tok(lst);
-	//ft_free_data(*data);
-	lst = NULL;
-	//*data = NULL;
+	lst = NULL;;
 }

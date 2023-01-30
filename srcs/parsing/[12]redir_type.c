@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 05:20:38 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:10:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		if (!node->is_heredoc)
 			clean_parsing(lst, data);
 		one_node(lst_node);
+		one_node(lst_node);
+		*lst = *lst_node;
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -49,7 +51,9 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		node->is_append = 1;
 		if (!node->outfile)
 			clean_parsing(lst, data);
-		check_out_file(node->outfile,node, lst, data);
+		if(check_out_file(node->outfile,node, lst, data) == -0)
+			return ;
+		one_node(lst_node);
 		one_node(lst_node);
 		return ;
 	}	
@@ -58,7 +62,8 @@ void	app_dir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->outfile = ft_strdup((*lst_node)->next->token);
 	if (!node->outfile)
 		clean_parsing(lst, data);
-	check_out_file(node->outfile,node, lst, data);
+	if(check_out_file(node->outfile,node, lst, data) == -0)
+		return ;
 	node->is_append = 1;
 	multi_node(lst_node, lst);
 }
@@ -69,14 +74,29 @@ void	out_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->outfile)
 		free(node->outfile);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token)|| !(*lst_node)->next->next)
+	if (!(*lst_node)->next->next)
 	{
 		node->outfile = ft_strdup((*lst_node)->next->token);
 		node->is_append = 0;
 		if (!node->outfile)
 			clean_parsing(lst, data);
-		check_out_file(node->outfile,node, lst, data);
+		if(check_out_file(node->outfile,node, lst, data) == -0)
+			return ;
 		one_node(lst_node);
+		one_node(lst_node);
+		return ;
+	}	
+	if (ft_strcmp((*lst_node)->token, (*lst)->token))
+	{
+		node->outfile = ft_strdup((*lst_node)->next->token);
+		node->is_append = 0;
+		if (!node->outfile)
+			clean_parsing(lst, data);
+		if (check_out_file(node->outfile,node, lst, data) == -0)
+			return
+		one_node(lst_node);
+		one_node(lst_node);
+		*lst = *lst_node;
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -95,13 +115,26 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 		return ;
 	if (node->infile)
 		free(node->infile);
-	if (ft_strcmp((*lst_node)->token, (*lst)->token)|| !(*lst_node)->next->next)
+	if ( !(*lst_node)->next->next)
+	{
+		node->infile = ft_strdup((*lst_node)->next->token);
+		if (!node->infile)
+			clean_parsing(lst, data);
+		if (check_in_file(node->infile,node, lst, data) == 0)
+			return ;
+		one_node(lst_node);
+		one_node(lst_node);
+		return ;
+	}
+	if (ft_strcmp((*lst_node)->token, (*lst)->token))
 	{
 		node->infile = ft_strdup((*lst_node)->next->token);
 		if (!node->infile)
 			clean_parsing(lst, data);
 		check_in_file(node->infile,node, lst, data);
 		one_node(lst_node);
+		one_node(lst_node);
+		*lst = *lst_node;
 		return ;
 	}	
 	if (!(*lst_node)->next)
@@ -109,7 +142,8 @@ void	in_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 	node->infile = ft_strdup((*lst_node)->next->token);
 	if (!node->infile)
 		clean_parsing(lst, data);
-	check_in_file(node->infile,node, lst, data);
+	if (check_in_file(node->infile,node, lst, data) == 0)
+		return ;
 	multi_node(lst_node, lst);
 }
 

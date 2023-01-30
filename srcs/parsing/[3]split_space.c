@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 14:20:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:04:37 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_sep(char c)
 		return (3);
 	else if (c == '\'')
 		return (2);
-	else if (c == ' '|| (c >= 9 && c <= 13))
+	else if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
@@ -33,22 +33,18 @@ int	split_space(char *input, int i, t_tok **lst)
 	while (input[len] && is_sep(input[len]) != 1)
 	{
 		if (is_sep(input[len++]) >= 2)
-		{
-			while (input[len] && is_sep(input[len]) < 2)
-				len++;
-			len++;
-		}
+			len = skip_quote(input, len);
 	}
-	tmp = malloc(sizeof(char) * ((len -= i) + 1));
+	tmp = ft_calloc(((len -= i) + 1), sizeof(char));
 	if (!tmp)
 		return (-2);
 	j = -1;
 	i--;
 	while (input[++i] && --len >= 0)
 		tmp[++j] = input[i];
-	tmp[++j] = '\0';
-	lstadd_back_token(lst, lstnew_token(tmp));
-	return (free(tmp), --i);
+	tmp[++j] = 0;
+	lstadd_back_token(lst, lstnew_token2(tmp));
+	return (--i);
 }
 
 t_tok	*init_token_lst(char *input, t_data	**lst)

@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 13:53:50 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:46:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	skip_quote(char *token, int i)
 	i++;
 	while (token[i] && token[i] != quote)
 		i++;
+	if(token[i] == '\0')
+		return (i);
 	return (i + 1);
 }
 
@@ -65,9 +67,12 @@ int	has_a_sep(char *token)
 	{
 		if(token[i] == '\'' || token[i] == '\"')
 			i = skip_quote(token, i);
-		if (token[i] == '>' || token[i] == '<' || token [i] == '|')
+		else if (token[i] == '>' || token[i] == '<' || token [i] == '|')
 			return (1);
-		i++;
+		else if (token[i] == '\'' || token[i] == '\"')
+			i = i;
+		else
+			i++;
 	}
 	return (0);
 }
@@ -103,9 +108,7 @@ int	countword(char *token)
 int	countlen_word(char *token)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 0;
 	while (token[i])
 	{

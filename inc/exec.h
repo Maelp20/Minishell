@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 17:22:37 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/30 10:56:45 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ void	setup_sigint_handler(void);
 
 int		is_sep(char c);
 int		split_space(char *input, int i, t_tok **lst);
+void	o_signal(t_data *data);
+void	pars_token(t_tok *lst, t_data *data);
+int		skip_quote(char *token, int i);
 t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		check_separator(char c);
@@ -122,8 +125,8 @@ int		verif_redir(t_tok **tok_lst, t_data **data);
 int		verif_pipe(t_tok **tok_lst, t_data **data);
 int		check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
 
-void	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data);
-void	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data);
+int		check_in_file(char *str, t_data *node, t_tok **lst, t_data **data);
+int		check_out_file(char *str, t_data *node, t_tok **lst, t_data **data);
 int		check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node);
 void	process_redir(t_tok **lst, t_data **data);
 

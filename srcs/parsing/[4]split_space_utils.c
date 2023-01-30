@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 14:47:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 03:16:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 void	tok_del_one(t_tok *lst)
 {
-	if (lst->token)
+	if (lst && lst->token)
 		free(lst->token);
-	//lst->token = NULL;
 	if (lst)
 		free(lst);
-	//lst = NULL;
 }
 
 t_tok	*lstnew_token(char *content)
 {
 	t_tok	*dest;
 
-	dest = malloc(sizeof(*dest));
+	dest = ft_calloc(1, sizeof(*dest));
 	if (!dest)
 		return (NULL);
 	dest->token = ft_strdup(content);

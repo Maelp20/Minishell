@@ -6,7 +6,8 @@
 #    By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 15:45:58 by mpignet           #+#    #+#              #
-#    Updated: 2023/01/29 16:59:51 by mpignet          ###   ########.fr        #
+
+#    Updated: 2023/01/29 17:01:35 by yanthoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +34,7 @@ SRCS	= \
 			exec/builtin_export_display.c\
 			exec/builtin_export_utils.c\
 			parsing/[0]signal.c\
-			parsing/[1]main.c				parsing/[2]get_env.c\
+			parsing/[1]main.c				parsing/[1]main2.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
 			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\
 			parsing/[7]expand.c 			parsing/[8]expand_utils.c	parsing/[8]expand_utils2.c\
@@ -58,7 +59,7 @@ LIBFT = ${LIBFT_DIR}/libft.a
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
 CC		= cc
-CFLAGS	= -g -Wall -Wextra -Werror -MMD
+CFLAGS	= -g3 -Wall -Wextra -Werror -MMD
 LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG	= -lreadline
 NAME	= minishell

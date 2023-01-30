@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:27:03 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 15:06:38 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:33:11 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	process_node(t_tok **node, t_tok **lst)
 
 	temp = (*node)->next;
 	tok_del_one(*node);
-	//printf("Process_node: %s\n", (*node)->token);
 	*node = temp;
 	*lst = temp;
 }
@@ -26,13 +25,16 @@ void	process_node(t_tok **node, t_tok **lst)
 void	one_node(t_tok **lst)
 {
 	t_tok	*temp;
+	t_tok	*temp2;
 
 	temp = (*lst)->next;
+	temp2 = (*lst)->prev;
 	tok_del_one(*lst);
 	*lst = temp;
-	temp = (*lst)->next;
-	tok_del_one(*lst);
-	*lst = temp;
+	if (temp2)
+		temp2->next = temp;
+	if (temp)
+		temp->prev = temp2;
 }
 
 void	multi_node(t_tok **lst_node, t_tok **lst)

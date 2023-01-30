@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:47:57 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/28 05:17:50 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:17:42 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	ft_free_tok(t_tok **lst_tok)
 	{
 		tmp = *lst_tok;
 		*lst_tok = (*lst_tok)->next;
-		tmp->token = NULL;
 		if (tmp->token)
 			free(tmp->token);
-		tmp = NULL;
+		tmp->token = NULL;
 		free (tmp);
+		tmp = NULL;
 	}
 }

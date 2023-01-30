@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 14:35:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:17:49 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ int	split_sep(t_tok *lst)
 
 	i = 1;
 	splitted = extract(lst->token);
+	int j = 0;
+	while (splitted[j])
+	{
+		j++;
+	}
 	free(lst->token);
 	lst->token = ft_strdup(splitted[0]);
 	while (splitted[i])
@@ -94,7 +99,13 @@ int	split_sep(t_tok *lst)
 		lst->next = insert;
 		insert->next = temp;
 		insert->prev = lst;
+		
+		//pb si premier node
+		if(temp)
+			temp->prev = insert;
+		//if (!temp)
 		lst = lst->next;
+		// lst = temp->next;
 		i++;
 	}
 	ft_free_dble_array((void **)splitted);
