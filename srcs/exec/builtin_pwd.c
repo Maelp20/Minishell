@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:05:54 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 14:24:56 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/30 16:01:18 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	error_pwd_option(char *str)
 static void	error_getcwd(void)
 {
 	g_var.g_status = 1;
-	ft_putstr_fd("minishell: pwd: error retrieving current directory: ", 2); 
+	ft_putstr_fd("minishell: pwd: error retrieving current directory: ", 2);
 	perror("getcwd: cannot access parent directories");
 }
 
