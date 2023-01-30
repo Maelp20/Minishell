@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/29 18:44:08 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:20:41 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	at_heredoc(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node)
 			clean_parsing(lst, data);
 		one_node(lst_node);
 		one_node(lst_node);
-		if (!lst)
-			*lst = *lst_node;
+		*lst = *lst_node;
 		return ;
 	}	
 	if (!(*lst_node)->next)
