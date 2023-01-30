@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 10:08:54 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:50:29 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	process_redir(t_tok **lst, t_data **data)
 	temp_data = *data;
 	while (lst && temp_tok && !ft_strcmp(temp_tok->token, "|"))
 	{
+		printf("%s\n", temp_tok->token);
 		if (lst && check_redir(lst, &temp_tok, data, temp_data))
 			temp_tok = *lst;
 		else

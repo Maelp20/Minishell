@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:29:20 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 10:46:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:44:39 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	has_a_sep(char *token)
 		else if (token[i] == '>' || token[i] == '<' || token [i] == '|')
 			return (1);
 		else if (token[i] == '\'' || token[i] == '\"')
-			i = i;
+			;
 		else
 			i++;
 	}
