@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 10:56:45 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:16:34 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ int		check_for_option_export(char *str);
 int		count_equal_signs(char *arg);
 int		ft_dble_array_len(char **array);
 
+int		ft_check_plus(char *str);
+char	*ft_strtrim_spec(char *s1, char const *set);
+int		increment_var(t_envp *envp, t_envp *new, t_data *data);
 /*-------------------------------------UTILS----------------------------------*/
 
 t_envp	*ft_envpnew(char *var, char *value);
