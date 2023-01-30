@@ -6,17 +6,24 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 18:04:03 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/30 15:29:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+static void	chdir_err_msg(char *str)
+{
+	g_var.g_status = 1;
+	ft_putstr_fd("minishell: chdir: ", 2);
+	perror(str);
+}
+
 static int	ft_change_dir(t_data *data, char *path, char *curr_pwd)
 {
 	if (chdir(path) == -1)
 		return (free(path), free(curr_pwd),
-			cd_err_msg(data->args[1]), g_var.g_status);
+			chdir_err_msg(data->args[1]), g_var.g_status);
 	update_old_pwd_env(data->envp, curr_pwd);
 	update_pwd_env(data->envp);
 	return (free(path), g_var.g_status);
