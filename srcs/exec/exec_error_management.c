@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 00:31:29 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:36:33 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_free_data(t_data *data)
 
 void	clean_exit(t_data *data, int err)
 {
-	printf("exit\n");
 	if (data->envp)
 		ft_envpclear(&(data->envp));
 	ft_free_data(data);

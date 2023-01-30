@@ -33,6 +33,7 @@ SRCS	= \
 			exec/builtin_export.c\
 			exec/builtin_export_display.c\
 			exec/builtin_export_utils.c\
+			exec/builtin_export_plus.c\
 			parsing/[0]signal.c\
 			parsing/[1]main.c				parsing/[1]main2.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\

@@ -6,30 +6,54 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 13:37:16 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/29 17:28:00 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/30 13:19:36 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+int	replace_var(t_envp *envp, t_envp *new, t_data *data)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(envp->var[1]);
+	ft_free_dble_array((void **)envp->var);
+	envp->var = ft_calloc(sizeof(char **), 3);
+	if (!envp->var)
+		return (perror("malloc"), clean_exit(data,
+				set_err_status(1)), 1);
+	envp->var[0] = ft_strdup(new->var[0]);
+	if (new->var[1])
+		envp->var[1] = ft_strdup(new->var[1]);
+	else
+		envp->var[1] = ft_strdup(tmp);
+	envp->var[2] = NULL;
+	ft_free_dble_array((void **)new->var);
+	free(new);
+	free(tmp);
+	return (0);
+}
+
 int	replace_var_in_env(t_envp *envp, t_envp *new, t_data *data)
 {
+	int		plus;
+
+	plus = ft_check_plus(new->var[0]);
+	if (plus)
+	{
+		new->var[0] = ft_strtrim_spec(new->var[0], "+=");
+		new->var[0] = ft_strjoin_spec(new->var[0], "=");
+	}
 	if (!new || !envp)
 		return (0);
 	while (envp)
 	{
 		if (ft_strnstr(envp->var[0], new->var[0], ft_strlen(new->var[0])))
 		{
-			ft_free_dble_array((void **)envp->var);
-			envp->var = ft_calloc(sizeof(char **), 3);
-			if (!envp->var)
-				return (perror("malloc"), clean_exit(data, set_err_status(1)),
-					1);
-			envp->var[0] = ft_strdup(new->var[0]);
-			envp->var[1] = ft_strdup(new->var[1]);
-			envp->var[2] = NULL;
-			ft_free_dble_array((void **)new->var);
-			free(new);
+			if (plus)
+				increment_var(envp, new, data);
+			else
+				replace_var(envp, new, data);
 			return (1);
 		}
 		envp = envp->next;
