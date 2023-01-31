@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 13:29:27 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:18:24 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,6 @@ typedef struct s_envp
 	char			**var;
 	struct s_envp	*next;
 }		t_envp;
-
-/*
-Data struct changes :
-- I will check for access for each cmd right before executing, and put the 
-correct path in *cmd_path;
-- If there are pipes before and/or after the command, in_pipe = 1 and/or 
-out_pipe = 1.
-	I will pipe accordingly using the t_pipes fds struct;
-- If there is a file to read from or to, you must fill *infile and/or 
-*outfile with their names.
-	I will open them in "in_fd" and/or "out_fd";
-- If there is a heredoc, put the limiter in *is_heredoc, I will create it
-during exec.
- */
 
 typedef struct s_data
 {
