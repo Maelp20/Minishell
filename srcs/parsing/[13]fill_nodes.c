@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:05:32 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 03:21:53 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:46:59 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	create_data_args(t_tok **lst, t_data **data)
 		if (i[1] == 0 && is_builtin(temp->token))
 			data_tmp->is_builtin = 1;
 		data_tmp->args[i[1]++] = ft_strdup(temp->token);
+		if (!data_tmp->args[i[1]])
+			return (ft_free_tok(lst), clean_exit(*data, 0), 0);
 		process_node(&temp, &(*lst));
 	}
 	if (temp && ft_strcmp(temp->token, "|"))

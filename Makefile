@@ -60,7 +60,7 @@ LIBFT = ${LIBFT_DIR}/libft.a
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 
 CC		= cc
-CFLAGS	= -g3 -Wall -Wextra -Werror -MMD
+CFLAGS	= -g -Wall -Wextra -Werror -MMD
 LFLAGS	= -L ${LIBFT_DIR} -lft
 MFLAG	= -lreadline
 NAME	= minishell
