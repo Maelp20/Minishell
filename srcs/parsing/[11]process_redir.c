@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 03:08:41 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:45:52 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	process_node_redir(t_tok *node, t_tok **lst)
 	if (ft_strcmp(node->token, (*lst)->token))
 	{
 		temp = (*lst)->next;
-		tok_delone(*lst);
+		tok_del_one(*lst);
 		*lst = temp;
 		temp = (*lst)->next;
-		tok_delone(*lst);
+		tok_del_one(*lst);
 		*lst = temp;
 		return ;
 	}
@@ -31,13 +31,13 @@ void	process_node_redir(t_tok *node, t_tok **lst)
 	while (!ft_strcmp(temp->next->token, node->token))
 		temp = temp->next;
 	temp2 = temp->next->next;
-	tok_delone(temp->next);
+	tok_del_one(temp->next);
 	temp->next = temp2;
 	if (temp->next->next)
 		temp2 = temp->next->next;
 	else
 		temp2 = NULL;
-	tok_delone(temp->next);
+	tok_del_one(temp->next);
 	temp->next = temp2;
 }
 

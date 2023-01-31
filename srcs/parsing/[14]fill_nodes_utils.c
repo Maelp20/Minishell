@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:27:03 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 02:18:25 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:47:50 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,7 @@ void	process_node(t_tok **node, t_tok **lst)
 	t_tok	*temp;
 
 	temp = (*node)->next;
-	tok_delone(*node);
+	tok_del_one(*node);
 	*node = temp;
 	*lst = temp;
-}
-
-void	tok_delone(t_tok *node)
-{
-	free(node->token);
-	free(node);
-}
-
-void	clean_tok(t_tok **lst)
-{
-	t_tok	*temp;
-
-	if (!lst)
-		return ;
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		if ((*lst)->token)
-			free((*lst)->token);
-		free((*lst));
-		*lst = temp;
-	}
 }

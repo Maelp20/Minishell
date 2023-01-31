@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 03:35:22 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:48:26 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,7 @@ t_envp	*get_env(char **envi);
 char	**parse_env(t_envp *envir);
 
 /*--------------------------------------PATH---------------------------------*/
-void	tok_addback(t_tok **lst, t_tok *node);
-t_tok	*tok_new(char *str);
-void	clean_tok(t_tok **lst);
-void	tok_delone(t_tok *node);
+
 /*---------------------EXEC----------------------*/
 
 int		ft_exec(t_data *data);
