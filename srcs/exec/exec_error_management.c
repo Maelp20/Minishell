@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:20:41 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 11:36:33 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:57:50 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	ft_free_dble_array(void **tab)
 		return ;
 	i = -1;
 	while (tab[++i])
-		free(tab[i]);
+	{
+		if (tab[i])
+			free(tab[i]);
+	}
 	free(tab);
 }
 

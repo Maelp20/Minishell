@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 02:44:47 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:07:01 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ t_tok	*init_token_lst(char *input, t_data	**lst)
 	while (i >= 0 && input[i])
 	{
 		if (i >= 0 && input[i] && is_sep(input[i]) != 1)
+		{
 			i = split_space(input, i, &tok_lst);
+			if (i == -2)
+				clean_parsing(&tok_lst, lst);
+		}
 		i++;
 	}
 	if (i < 0)
