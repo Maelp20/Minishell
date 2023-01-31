@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:22:40 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 17:53:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:49:20 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,10 +184,10 @@ void	delete_token_redir(t_tok *node, t_tok **lst)
 	if (ft_strcmp(node->token, (*lst)->token))
 	{
 		temp = (*lst)->next;
-		tok_delone(*lst);
+		tok_del_one(*lst);
 		*lst = temp;
 		temp = (*lst)->next;
-		tok_delone(*lst);
+		tok_del_one(*lst);
 		*lst = temp;
 		return ;
 	}
@@ -195,13 +195,13 @@ void	delete_token_redir(t_tok *node, t_tok **lst)
 	while (!ft_strcmp(temp->next->token, node->token))
 		temp = temp->next;
 	temp2 = temp->next->next;
-	tok_delone(temp->next);
+	tok_del_one(temp->next);
 	temp->next = temp2;
 	if (temp->next->next)
 		temp2 = temp->next->next;
 	else
 		temp2 = NULL;
-	tok_delone(temp->next);
+	tok_del_one(temp->next);
 	temp->next = temp2;
 }
 
@@ -209,65 +209,67 @@ void	delete_token_redir(t_tok *node, t_tok **lst)
 
 void	at_heredoc(t_tok *r_token, t_data *c_node, t_tok **lst, t_data **mini)
 {
-	if (check_next_operator(r_token->next, lst, mini) == 1)
-		return ;
+	// if (check_next_operator(r_token->next, lst, mini) == 1)
+	// 	return ;
 	if (c_node)
 	{
 		if (c_node->is_heredoc)
 			free(c_node->is_heredoc);
 		c_node->is_heredoc = ft_strdup(r_token->next->token);
+		if (!c_node->is_heredoc)
+			clean_parsing(lst, mini);
 		ft_heredoc(c_node);
-		// if (!c_node->infile)
-		// 	ut_clean_parsing_n_quit(mini, lst, errno);
-		
 	}
 	delete_token_redir(r_token, lst);
 }
 
 void	in_redir(t_tok *r_token, t_data *c_node, t_tok **lst, t_data **mini)
 {
-	if (check_next_operator(r_token->next, lst, mini) == 1)
-		return ;
+	// if (check_next_operator(r_token->next, lst, mini) == 1)
+	// 	return ;
 	if (c_node)
 	{
 		if (c_node->infile)
 			free(c_node->infile);
 		c_node->infile = ft_strdup(r_token->next->token);
-		// if (!c_node->infile)
-		// 	ut_clean_parsing_n_quit(mini, lst, errno);
-		check_in_file(c_node->infile, c_node, lst, mini);
+		if (!c_node->infile)
+		 	clean_parsing(lst, mini);
+		if (check_in_file(c_node->infile, c_node, lst, mini) == 0)
+			return ;
 	}
 	delete_token_redir(r_token, lst);
 }
 
 void	out_redir(t_tok *r_token, t_data *c_node, t_tok **lst, t_data **mini)
 {
-	if (check_next_operator(r_token->next, lst, mini) == 1)
-		return ;
+	// if (check_next_operator(r_token->next, lst, mini) == 1)
+	// 	return ;
 	if (c_node)
 	{
 		if (c_node->outfile)
 			free(c_node->outfile);
 		c_node->outfile = ft_strdup(r_token->next->token);
-		// if (!c_node->outfile)
-		// 	ut_clean_parsing_n_quit(mini, lst, errno);
-		check_out_file(c_node->outfile, c_node, lst, mini);
+		if (!c_node->outfile)
+		 	clean_parsing(lst, mini);
+		if (check_out_file(c_node->outfile, c_node, lst, mini) ==0)
+			return ;
 	}
 	delete_token_redir(r_token, lst);
 }
 
 void	app_dir(t_tok *r_token, t_data *c_node, t_tok **lst, t_data **mini)
 {
-	if (check_next_operator(r_token->next, lst, mini) == 1)
-		return ;
+	// if (check_next_operator(r_token->next, lst, mini) == 1)
+	// 	return ;
 	if (c_node)
 	{
 		if (c_node->outfile)
 			free(c_node->outfile);
 		c_node->outfile = ft_strdup(r_token->next->token);
-		// if (!c_node->outfile)
-		// 	ut_clean_parsing_n_quit(mini, lst, errno);
-		check_out_file(c_node->outfile, c_node, lst, mini);
+		if (!c_node->outfile)
+		 	clean_parsing(lst, mini);
+		if (check_out_file(c_node->outfile, c_node, lst, mini) == 0)
+			return ;
 		c_node->is_append = 1;
 	}
 	delete_token_redir(r_token, lst);
