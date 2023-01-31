@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 03:20:21 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:35:22 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_tok
 {
 	char			*token;
 	struct s_tok	*next;
-	//struct s_tok	*prev;
 }	t_tok;
 
 typedef struct s_glob
@@ -169,7 +168,7 @@ char	**parse_env(t_envp *envir);
 /*--------------------------------------PATH---------------------------------*/
 void	tok_addback(t_tok **lst, t_tok *node);
 t_tok	*tok_new(char *str);
-void	clean_tok(t_tok **lst); 
+void	clean_tok(t_tok **lst);
 void	tok_delone(t_tok *node);
 /*---------------------EXEC----------------------*/
 
