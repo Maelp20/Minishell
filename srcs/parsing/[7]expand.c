@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 03:10:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 20:05:22 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:43:02 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	*expand_from(char *token, t_data *data)
 	i = 0;
 	i = trigger_expand(token, i, data);
 	temp = ft_calloc(i + 1, sizeof(char));
+	if (!temp)
+		return (NULL);
 	fill_expand(temp, token, data);
 	return (temp);
 }
@@ -114,7 +116,11 @@ void	expand(t_tok **lst, t_data **data)
 	tmp = *lst;
 	while (tmp)
 	{
-		expand_extension(tmp, &dbl, &sq, data);
+		if (expand_extension(tmp, &dbl, &sq, data) == 0)
+		{
+			ft_free_tok(lst);
+			clean_exit(*data, 0);
+		}
 		tmp = tmp->next;
 	}
 }
