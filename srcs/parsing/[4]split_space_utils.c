@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 03:16:42 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 02:45:00 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void	tok_del_one(t_tok *lst)
 {
 	if (lst && lst->token)
+	{
 		free(lst->token);
+		lst->token = NULL;
+	}	
 	if (lst)
+	{
 		free(lst);
+		lst = NULL;
+	}	
 }
 
 t_tok	*lstnew_token(char *content)
@@ -29,7 +35,6 @@ t_tok	*lstnew_token(char *content)
 		return (NULL);
 	dest->token = ft_strdup(content);
 	dest->next = NULL;
-	dest->prev = NULL;
 	return (dest);
 }
 
@@ -42,7 +47,6 @@ t_tok	*lstnew_token2(char *content)
 		return (NULL);
 	dest->token = ft_strdup(content);
 	dest->next = NULL;
-	dest->prev = NULL;
 	free(content);
 	return (dest);
 }
@@ -53,8 +57,6 @@ void	lstadd_back_token(t_tok **lst, t_tok *new)
 		*lst = new;
 	else
 	{
-		if ((*lst)->next == NULL)
-				new->prev = *lst;
 		lstadd_back_token(&((*lst)->next), new);
 	}
 }

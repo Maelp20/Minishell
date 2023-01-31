@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 08:25:04 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 11:04:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 02:44:47 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ int	split_space(char *input, int i, t_tok **lst)
 	len = i;
 	while (input[len] && is_sep(input[len]) != 1)
 	{
-		if (is_sep(input[len++]) >= 2)
+		if (is_sep(input[len]) >= 2)
 			len = skip_quote(input, len);
+		if (!input[len])
+			break ;
+		len++;
 	}
 	tmp = ft_calloc(((len -= i) + 1), sizeof(char));
 	if (!tmp)
@@ -43,8 +46,8 @@ int	split_space(char *input, int i, t_tok **lst)
 	while (input[++i] && --len >= 0)
 		tmp[++j] = input[i];
 	tmp[++j] = 0;
-	lstadd_back_token(lst, lstnew_token2(tmp));
-	return (--i);
+	lstadd_back_token(lst, lstnew_token(tmp));
+	return (free(tmp), --i);
 }
 
 t_tok	*init_token_lst(char *input, t_data	**lst)

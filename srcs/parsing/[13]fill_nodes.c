@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:05:32 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 22:56:18 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:21:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	create_data_args(t_tok **lst, t_data **data)
 	data_tmp = (*data);
 	ft_bzero(i, sizeof(int) * 2);
 	trigger_creation(&i[0], temp, data_tmp);
-	if (i[0] == 0)
+	if (i[0] == 0 && temp && !ft_strcmp(temp->token, "|"))
 		return (0);
 	temp = *lst;
 	while (i[0]-- > 0 && temp && !ft_strcmp(temp->token, "|"))
@@ -80,11 +80,7 @@ int	create_data_args(t_tok **lst, t_data **data)
 		process_node(&temp, &(*lst));
 	}
 	if (temp && ft_strcmp(temp->token, "|"))
-	{
-		process_node(&temp, &(*lst));
-		data_tmp->out_pipe = 1;
-		data_tmp->next->in_pipe = 1;
-	}
+		process_pipes(temp, lst, data_tmp);
 	return (1);
 }
 
@@ -101,7 +97,7 @@ void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir)
 	while (data_temp)
 	{
 		process_redir(lst, &data_temp);
-		if (create_data_args(lst, &data_temp) == 0)
+		if (create_data_args(lst, &data_temp) == 0 && !*lst)
 			return ;
 		data_temp = data_temp->next;
 	}

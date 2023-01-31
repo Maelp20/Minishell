@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 09:17:49 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 02:44:31 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ char	**extract(char *token)
 	return (extracted);
 }
 
-
-
 int	split_sep(t_tok *lst)
 {
 	char	**splitted;
@@ -85,11 +83,6 @@ int	split_sep(t_tok *lst)
 
 	i = 1;
 	splitted = extract(lst->token);
-	int j = 0;
-	while (splitted[j])
-	{
-		j++;
-	}
 	free(lst->token);
 	lst->token = ft_strdup(splitted[0]);
 	while (splitted[i])
@@ -98,14 +91,7 @@ int	split_sep(t_tok *lst)
 		temp = lst->next;
 		lst->next = insert;
 		insert->next = temp;
-		insert->prev = lst;
-		
-		//pb si premier node
-		if(temp)
-			temp->prev = insert;
-		//if (!temp)
 		lst = lst->next;
-		// lst = temp->next;
 		i++;
 	}
 	ft_free_dble_array((void **)splitted);
@@ -121,7 +107,7 @@ void	clean_token(t_tok **lst)
 	tmp = *lst;
 	while (tmp)
 	{
-		if (has_a_sep ((tmp)->token))
+		if (has_a_sep (tmp->token) && (int)ft_strlen(tmp->token) > 1)
 		{
 			i = split_sep(tmp);
 			while (i > 0)
