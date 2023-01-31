@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 12:56:43 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:03:20 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,23 @@ t_envp	*lstnew_env(char **content)
 	t_envp	*dest;
 	char	*temp;
 
-	dest = ft_calloc(1, sizeof(t_envp));
-	if (!dest)
-		return (NULL);
-	dest->var = content;
-	temp = dest->var[0];
-	dest->var[0] = ft_strjoin(dest->var[0], "=");
-	if (!dest->var[0])
-		return (ft_free_dble_array((void **)dest->var), NULL);
-	free(temp);
-	if (ft_strcmp(dest->var[0], "SHLVL="))
-		update_shlvl(dest, temp);
-	dest->next = NULL;
-	return (dest);
+	if (content)
+	{
+		dest = ft_calloc(1, sizeof(t_envp));
+		if (!dest)
+			return (NULL);
+		dest->var = content;
+		temp = dest->var[0];
+		dest->var[0] = ft_strjoin(dest->var[0], "=");
+		if (!dest->var[0])
+			return (ft_free_dble_array((void **)dest->var), NULL);
+		free(temp);
+		if (ft_strcmp(dest->var[0], "SHLVL="))
+			update_shlvl(dest, temp);
+		dest->next = NULL;
+		return (dest);
+	}
+	return (NULL);
 }
 
 //protect the malloc otherwise it's a fail
@@ -58,8 +62,12 @@ char	**split_at_first_equal(char *input)
 	{
 		first_len = equal_pos - input + 1;
 		output[0] = ft_substr(input, 0, first_len - 1);
+		if (!output[0])
+			return (ft_free_dble_array((void **)output), NULL);
 		second_len = ft_strlen(input) - first_len + 1;
 		output[1] = ft_substr(input, first_len, second_len);
+		if (!output[1])
+			return (ft_free_dble_array((void **)output), NULL);
 		output[2] = NULL;
 		return (output);
 	}
