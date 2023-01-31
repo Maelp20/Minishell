@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 14:18:40 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:44:52 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static void	child(t_data *data, t_data *first_node)
 	}
 	else
 	{
+		if (check_cmd_empty(data))
+			clean_exit(first_node, g_var.g_status);
 		if (data->args && ft_strchr(data->args[0], '/'))
-			exec_path_given(data, first_node);		
+			exec_path_given(data, first_node);
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
 			clean_exit(first_node, g_var.g_status);
