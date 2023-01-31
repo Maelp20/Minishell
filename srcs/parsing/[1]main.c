@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:28:49 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 01:56:13 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:29:40 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	init_data(t_data **data, t_envp *envi)
 	(*data)->envp = envi;
 	(*data)->env = parse_env((*data)->envp);
 	(*data)->fds = ft_calloc(1, sizeof(t_pipes));
+	if (!(*data)->fds)
+	{
+		ft_free_data(*data);
+		ft_envpclear(&envi);
+	}
 }
 
 void	verif_quotes(char *input, t_data *data, t_envp *envir)

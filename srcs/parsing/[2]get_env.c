@@ -6,11 +6,23 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 02:36:07 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:56:43 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	update_shlvl(t_envp *dest, char *temp)
+{
+	temp = ft_strdup(dest->var[1]);
+	if (!temp)
+		ft_free_dble_array((void **)dest->var);
+	free(dest->var[1]);
+	dest->var[1] = ft_itoa(ft_atoi(temp) + 1);
+	if (!dest->var[1])
+		ft_free_dble_array((void **)dest->var);
+	free(temp);
+}
 
 t_envp	*lstnew_env(char **content)
 {
@@ -23,14 +35,11 @@ t_envp	*lstnew_env(char **content)
 	dest->var = content;
 	temp = dest->var[0];
 	dest->var[0] = ft_strjoin(dest->var[0], "=");
+	if (!dest->var[0])
+		return (ft_free_dble_array((void **)dest->var), NULL);
 	free(temp);
 	if (ft_strcmp(dest->var[0], "SHLVL="))
-	{
-		temp = ft_strdup(dest->var[1]);
-		free (dest->var[1]);
-		dest->var[1] = ft_itoa(ft_atoi(temp) + 1);
-		free (temp);
-	}
+		update_shlvl(dest, temp);
 	dest->next = NULL;
 	return (dest);
 }
