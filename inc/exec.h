@@ -95,7 +95,7 @@ int		skip_non_separator(char *token, int i);
 int		has_a_sep(char *token);
 int		countword(char *token);
 int		countlen_word(char *token);
-void	clean_token(t_tok **lst);
+void	clean_token(t_tok **lst, t_data *data);
 
 int		is_char_var(char c);
 int		len_status(int status);
@@ -104,7 +104,7 @@ int		len_expanded(char *str, int len_env, t_data *data);
 int		write_status(char *temp);
 int		write_t_envp(int *len, t_envp *tmp, char *temp);
 void	process_token(char *tk, int *i, char **temp);
-void	expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data);
+int		expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data);
 char	*expand_from(char *token, t_data *data);
 void	expand(t_tok **lst, t_data **data);
 

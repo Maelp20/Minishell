@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:54:33 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/27 20:04:37 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:42:53 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	process_token(char *tk, int *i, char **temp)
 	(*i)++;
 }
 
-void	expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data)
+int	expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data)
 {
 	int		i;
 	char	*temp;
@@ -73,8 +73,11 @@ void	expand_extension(t_tok *tmp, int *dbl, int *sq, t_data **data)
 			temp = ft_strdup(tmp->token);
 			free (tmp->token);
 			tmp->token = expand_from(temp, *data);
+			if (!tmp->token)
+				return (free (temp), 0);
 			free(temp);
 			break ;
 		}
 	}
+	return (1);
 }

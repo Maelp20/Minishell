@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:58:23 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 02:44:31 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:18:02 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	**extract(char *token)
 	i = 0;
 	nb_word = countword(token);
 	extracted = ft_calloc(nb_word + 1, sizeof(char *));
+	if (!extracted)
+		return (NULL);
 	while (i < nb_word)
 	{
 		len = countlen_word(token);
@@ -74,7 +76,7 @@ char	**extract(char *token)
 	return (extracted);
 }
 
-int	split_sep(t_tok *lst)
+int	split_sep(t_tok *lst, t_tok **head, t_data *data)
 {
 	char	**splitted;
 	t_tok	*insert;
@@ -83,6 +85,8 @@ int	split_sep(t_tok *lst)
 
 	i = 1;
 	splitted = extract(lst->token);
+	if (!splitted)
+		return (ft_free_tok(head), clean_exit(data, 0), 0);
 	free(lst->token);
 	lst->token = ft_strdup(splitted[0]);
 	while (splitted[i])
@@ -98,7 +102,7 @@ int	split_sep(t_tok *lst)
 	return (i);
 }
 
-void	clean_token(t_tok **lst)
+void	clean_token(t_tok **lst, t_data *data)
 {
 	t_tok	*tmp;
 	int		i;
@@ -109,7 +113,7 @@ void	clean_token(t_tok **lst)
 	{
 		if (has_a_sep (tmp->token) && (int)ft_strlen(tmp->token) > 1)
 		{
-			i = split_sep(tmp);
+			i = split_sep(tmp, lst, data);
 			while (i > 0)
 			{
 				tmp = tmp->next;

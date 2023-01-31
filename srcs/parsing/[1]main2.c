@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 22:37:41 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 09:16:54 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:13:28 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	pars_token(t_tok *lst, t_data *data)
 {
-	clean_token(&lst);
+	clean_token(&lst, data);
 	expand(&lst, &data);
 	clean_quotes(&lst);
 }

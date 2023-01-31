@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:24:09 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/31 03:45:52 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:21:01 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	check_out_file(char *str, t_data *node, t_tok **lst, t_data **data)
 	fd = open(str, O_RDONLY | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		perror(str);
 		free_structures(lst, data);
 		return (0);
 	}
@@ -89,7 +88,6 @@ int	check_in_file(char *str, t_data *node, t_tok **lst, t_data **data)
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(str);
 		free_structures(lst, data);
 		return (0);
 	}
