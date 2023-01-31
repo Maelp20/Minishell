@@ -37,7 +37,7 @@ SRCS	= \
 			parsing/[0]signal.c\
 			parsing/[1]main.c				parsing/[1]main2.c				parsing/[2]get_env.c\
 			parsing/[3]split_space.c		parsing/[4]split_space_utils.c\
-			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c\
+			parsing/[5]split_separator.c	parsing/[6]split_separator_utils.c	parsing/[6]split_separator_utils2.c\
 			parsing/[7]expand.c 			parsing/[8]expand_utils.c	parsing/[8]expand_utils2.c\
 			parsing/[9]clean_quotes.c\
 			parsing/[10]check_tok_err.c\

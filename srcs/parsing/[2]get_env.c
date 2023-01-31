@@ -6,23 +6,11 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:17:27 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/21 13:28:11 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 02:36:07 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-void	print_env(t_envp *list)
-{
-	t_envp	*current;
-
-	current = list;
-	while (current)
-	{
-		printf("%s%s\n", current->var[0], current->var[1]);
-		current = current->next;
-	}
-}
 
 t_envp	*lstnew_env(char **content)
 {
