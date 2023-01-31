@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 14:15:42 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:37:45 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,19 @@ int	go_home(t_data *data)
 	tmp = data->envp;
 	while (tmp)
 	{
-		if (ft_strcmp("HOME=", tmp->var[0]) &&tmp->var[1])
+		if (ft_strcmp("HOME=", tmp->var[0]) && tmp->var[1])
 		{
 			if (chdir("/mnt/nfs/homes/mpignet") == -1)
 				return (cd_err_msg(tmp->var[1]), g_var.g_status);
 			home = ft_strdup(tmp->var[1]);
 			update_old_pwd_env(data->envp, home);
 			update_pwd_env(data->envp);
+			return (0);
 		}
 		tmp = tmp->next;
 	}
-	return (g_var.g_status);
+	g_var.g_status = 1;
+	return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
 }
 
 int	ft_cd(t_data *data)

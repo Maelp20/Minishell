@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/31 14:18:24 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:44:13 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ int		ft_strcmp_spec(const char *s1, const char *s2);
 int		ft_data_size(t_data *data);
 char	*ft_get_path(t_data *data);
 char	*ft_strjoin_free_s2(char *s1, char *s2);
+int		check_cmd_empty(t_data *data);
 /*-----------------------------------ERR/CLEAN--------------------------------*/
 
 void	ft_wait(t_data *data);
