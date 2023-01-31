@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 12:20:13 by yanthoma          #+#    #+#             */
-/*   Updated: 2023/01/30 17:40:58 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 02:45:00 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	tok_del_one(t_tok *lst)
 	{
 		free(lst);
 		lst = NULL;
-		
 	}	
 }
 
@@ -36,7 +35,6 @@ t_tok	*lstnew_token(char *content)
 		return (NULL);
 	dest->token = ft_strdup(content);
 	dest->next = NULL;
-	// dest->prev = NULL;
 	return (dest);
 }
 
@@ -49,7 +47,6 @@ t_tok	*lstnew_token2(char *content)
 		return (NULL);
 	dest->token = ft_strdup(content);
 	dest->next = NULL;
-	// dest->prev = NULL;
 	free(content);
 	return (dest);
 }

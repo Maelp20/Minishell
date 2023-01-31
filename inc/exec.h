@@ -6,7 +6,7 @@
 /*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:48:43 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 18:03:38 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:20:21 by yanthoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ t_tok	*init_token_lst(char *input, t_data	**lst);
 
 int		check_separator(char c);
 int		is_separator(char c1, char c2);
+int		skip_separator(char *token, int i);
+int		skip_non_separator(char *token, int i);
 int		has_a_sep(char *token);
 int		countword(char *token);
 int		countlen_word(char *token);
@@ -128,12 +130,14 @@ int		check_next_operator(t_tok *node, t_tok **tok_lst, t_data **data);
 int		check_in_file(char *str, t_data *node, t_tok **lst, t_data **data);
 int		check_out_file(char *str, t_data *node, t_tok **lst, t_data **data);
 int		check_redir(t_tok **lst, t_tok **lst_node, t_data **data, t_data *node);
+void	process_node_redir(t_tok *node, t_tok **lst);
 void	process_redir(t_tok **lst, t_data **data);
 
 void	process_node(t_tok **node, t_tok **lst);
 void	one_node(t_tok **lst);
 void	multi_node(t_tok **lst_node, t_tok **lst);
 void	trigger_creation(int *i, t_tok *temp, t_data *data_tmp);
+void	process_pipes(t_tok *temp, t_tok **lst, t_data *data_tmp);
 void	fill_node_with_tok(t_tok **lst, t_data **data, t_envp *envir);
 
 void	clean_quotes(t_tok **lst);
