@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanthoma <yanthoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:42:05 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 00:27:34 by yanthoma         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:18:40 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static void	child(t_data *data, t_data *first_node)
 	}
 	else
 	{
-		if (ft_strchr(data->args[0], '/'))
-			exec_path_given(data, first_node);
+		if (data->args && ft_strchr(data->args[0], '/'))
+			exec_path_given(data, first_node);		
 		data->cmd_path = ft_get_path(data);
 		if (!data->cmd_path)
 			clean_exit(first_node, g_var.g_status);
@@ -92,8 +92,6 @@ int	ft_exec(t_data *data)
 {
 	t_data	*first_node;
 
-	if (!data->args)
-		return (ft_free_data(data), g_var.g_status);
 	first_node = data;
 	data->pid = -2;
 	if (ft_data_size(data) == 1 && data->is_builtin && !data->outfile
