@@ -6,7 +6,7 @@
 /*   By: mpignet <mpignet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:39:48 by mpignet           #+#    #+#             */
-/*   Updated: 2023/01/30 15:29:52 by mpignet          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:15:42 by mpignet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,22 @@ char	*prepare_path(t_data *data)
 
 int	go_home(t_data *data)
 {
-	char	*curr_pwd;
+	t_envp	*tmp;
+	char	*home;
 
-	curr_pwd = getcwd(NULL, 0);
-	if (!curr_pwd)
-		return (cd_err_msg(data->args[1]), g_var.g_status);
-	if (chdir("/mnt/nfs/homes/mpignet") == -1)
-		return (cd_err_msg(data->args[1]), g_var.g_status);
-	update_old_pwd_env(data->envp, curr_pwd);
-	update_pwd_env(data->envp);
+	tmp = data->envp;
+	while (tmp)
+	{
+		if (ft_strcmp("HOME=", tmp->var[0]) &&tmp->var[1])
+		{
+			if (chdir("/mnt/nfs/homes/mpignet") == -1)
+				return (cd_err_msg(tmp->var[1]), g_var.g_status);
+			home = ft_strdup(tmp->var[1]);
+			update_old_pwd_env(data->envp, home);
+			update_pwd_env(data->envp);
+		}
+		tmp = tmp->next;
+	}
 	return (g_var.g_status);
 }
 
